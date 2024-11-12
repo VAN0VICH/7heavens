@@ -1,0 +1,20 @@
+{
+	"extends": "@7heavens/tsconfig/base.json",
+	"compilerOptions": {
+		"lib": ["DOM", "DOM.Iterable", "ES2022", "ESNext"],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+
+		// Vite takes care of building everything, not tsc.
+		"noEmit": true
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
+}
