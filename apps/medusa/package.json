@@ -43,8 +43,6 @@
 		"resend": "^4.0.0"
 	},
 	"devDependencies": {
-		"@7heavens/tailwind-config": "workspace:*",
-		"@7heavens/tsconfig": "workspace:*",
 		"@biomejs/biome": "^1.9.4",
 		"@medusajs/test-utils": "2.0.4",
 		"@mikro-orm/cli": "5.9.7",
