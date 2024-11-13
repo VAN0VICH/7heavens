@@ -134,7 +134,6 @@ export const DashboardStoreMutator = ({
 				.toArray();
 			setIsInitialized(!!isInitialized);
 			setActiveStoreID(activeStoreID?.value ?? null);
-			//@ts-ignore
 			setPaymentProfile(paymentProfile ?? null);
 		},
 		{ dependencies: [], default: null },

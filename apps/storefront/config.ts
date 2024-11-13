@@ -3,8 +3,7 @@ import { env } from "./env";
 const baseUrl = env.WEB_URL ?? "";
 
 const config = {
-	backendUrl:
-		process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000/store",
+	backendUrl: env.NEXT_PUBLIC_MEDUSA_BACKEND_URL,
 	baseUrl,
 	defaultCountryCode: "us",
 	sanity: {

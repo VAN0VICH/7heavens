@@ -4,7 +4,7 @@ import { getAuthHeaders, getCacheHeaders } from "./cookies";
 export const getCustomer = async () => {
 	"use cache";
 
-	await medusa.store.customer
+	return await medusa.store.customer
 		.retrieve(
 			{},
 			{

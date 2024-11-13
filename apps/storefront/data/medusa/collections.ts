@@ -36,7 +36,7 @@ export const getCollectionByHandle = async (handle: string, page: number) => {
 };
 
 export const getCollections = async () => {
-	await medusa.store.collection.list(
+	return await medusa.store.collection.list(
 		{ fields: "id,title" },
 		{ next: { tags: ["collections"] } },
 	);

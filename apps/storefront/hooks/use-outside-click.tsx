@@ -5,7 +5,7 @@ import {useEffect, useRef} from "react";
 export const useOutsideClick = <T extends HTMLElement>(
   callback: () => void,
   initRef = null,
-): RefObject<T | null> => {
+): RefObject<T > => {
   const ref = useRef<T>(initRef);
 
   useEffect(() => {

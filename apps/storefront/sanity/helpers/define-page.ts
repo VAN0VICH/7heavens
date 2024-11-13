@@ -1,4 +1,4 @@
-import type { DocumentDefinition } from "sanity";
+import type { DocumentDefinition, DocumentOptions } from "sanity";
 
 import { ComposeIcon } from "@sanity/icons";
 import { definePathname } from "@tinloof/sanity-studio";
@@ -17,6 +17,8 @@ type PageDefinition = {
 		hideSeo?: boolean;
 	} & SchemaDefinition["options"];
 } & Omit<DocumentDefinition, "options">;
+
+type Check = DocumentOptions;
 
 export default function definePage(schema: PageDefinition) {
 	const groups = uniqBy(

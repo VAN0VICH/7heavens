@@ -31,7 +31,6 @@ function CharacterCount(
 		tone = "caution";
 	}
 	return (
-		// @ts-ignore
 		<Badge mode="outline" tone={tone}>
 			{value.length} / {props.maxLength}
 		</Badge>
@@ -61,11 +60,9 @@ export function InputWithCharacterCount(props: TextInputProps) {
 	props.elementProps.placeholder = defaultTitle ?? "";
 
 	return (
-		// @ts-ignore
 		<Stack space={2}>
 			{props.renderDefault(props)}
 
-			{/* @ts-ignore */}
 			<Flex justify="flex-end">
 				<CharacterCount
 					value={props.value}

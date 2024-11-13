@@ -52,5 +52,10 @@ export default function defineSchema(schema: SchemaDefinition) {
 		orderings: schema.options?.orderable
 			? [...(schema.orderings || []), orderRankOrdering as SortOrdering]
 			: (schema.orderings ?? []),
+		options: {
+			sanityCreate: {
+				exclude: !!schema.options?.disableCreation,
+			},
+		},
 	};
 }

@@ -48,7 +48,7 @@ export const getCategoryByHandle = async (handle: string[], page: number) => {
 export const getCategories = async () => {
 	"use cache";
 	cacheTag("categories");
-	await medusa.store.category.list(
+	return await medusa.store.category.list(
 		{ fields: "id,name" },
 		{ next: { tags: ["categories"] } },
 	);
