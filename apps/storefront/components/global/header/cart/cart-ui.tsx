@@ -1,7 +1,5 @@
 "use client";
 
-import type { Header } from "@/types/sanity.generated";
-
 import Icon from "@/components/shared/icon";
 import {
 	CloseDialog,

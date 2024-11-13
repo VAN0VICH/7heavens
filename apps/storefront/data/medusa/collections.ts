@@ -1,43 +1,51 @@
+import { unstable_cache } from "next/cache";
+
 import medusa from "./client";
 
-export const getCollectionByHandle = async (handle: string, page: number) => {
-	"use cache";
-	const limit = 12;
-	const offset = (page - 1) * limit;
+export const getCollectionByHandle = unstable_cache(
+	async (handle: string, page: number) => {
+		const limit = 12;
+		const offset = (page - 1) * limit;
 
-	const collection = await medusa.store.collection
-		.list(
+		const collection = await medusa.store.collection
+			.list(
+				{
+					handle,
+				},
+				{ next: { tags: ["collections"] } },
+			)
+			.then(({ collections }) => collections[0]);
+
+		const { count, products } = await medusa.store.product.list(
 			{
-				handle,
+				collection_id: collection.id,
+				fields: "+images.*,+variants.*",
+				limit,
+				offset,
 			},
+			{ next: { tags: ["products"] } },
+		);
+
+		return {
+			collection,
+			hasNextPage: count > offset + limit,
+			products,
+		};
+	},
+	["collection"],
+	{
+		revalidate: 120,
+	},
+);
+
+export const getCollections = unstable_cache(
+	async () =>
+		await medusa.store.collection.list(
+			{ fields: "id,title" },
 			{ next: { tags: ["collections"] } },
-		)
-		.then(({ collections }) => collections[0]);
-
-	if (!collection) {
-		return null;
-	}
-
-	const { count, products } = await medusa.store.product.list(
-		{
-			collection_id: collection.id,
-			fields: "+images.*,+variants.*",
-			limit,
-			offset,
-		},
-		{ next: { tags: ["products"] } },
-	);
-
-	return {
-		collection,
-		hasNextPage: count > offset + limit,
-		products,
-	};
-};
-
-export const getCollections = async () => {
-	return await medusa.store.collection.list(
-		{ fields: "id,title" },
-		{ next: { tags: ["collections"] } },
-	);
-};
+		),
+	["collections"],
+	{
+		revalidate: 120,
+	},
+);

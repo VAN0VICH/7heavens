@@ -54,6 +54,7 @@ function CollectionCard({
 			{cta && (
 				<div className="absolute bottom-lg left-1/2 flex -translate-x-1/2 items-center justify-center">
 					<div className="relative flex h-[80px] w-fit items-center justify-center px-2xl">
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							className="absolute left-1/2 top-1/2 h-full w-[280px] -translate-x-1/2 -translate-y-1/2 lg:w-[305px]"
 							fill="none"

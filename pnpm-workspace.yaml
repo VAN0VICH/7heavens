@@ -1,5 +1,6 @@
 packages:
-  - apps/*
+  - apps/storefront
+  - apps/dashboard
   - packages/*
   - tooling/*
 

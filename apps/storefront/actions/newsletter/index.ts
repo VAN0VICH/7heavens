@@ -1,6 +1,6 @@
 "use server";
 
-import { env } from "@/env";
+import { env } from "@/app/env";
 import { z } from "zod";
 
 const newsletterSchema = z.object({

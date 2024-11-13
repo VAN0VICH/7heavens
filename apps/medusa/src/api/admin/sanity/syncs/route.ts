@@ -1,7 +1,8 @@
 import type { MedusaRequest } from "@medusajs/framework";
 import { Modules } from "@medusajs/framework/utils";
 import type { IWorkflowEngineService } from "@medusajs/types";
-import { sanityFullSyncWorkflow } from "src/workflows/sanity-full-sync";
+import { sanityFullSyncWorkflow } from "../../../../workflows/sanity-full-sync";
+
 export const POST = async (req, res) => {
 	const { transaction } = await sanityFullSyncWorkflow(req.scope).run({
 		input: {},
