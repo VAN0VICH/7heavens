@@ -184,16 +184,16 @@ importers:
   apps/medusa:
     dependencies:
       '@medusajs/admin-sdk':
-        specifier: 2.0.4
+        specifier: latest
         version: 2.0.4(zod@3.23.8)
       '@medusajs/cli':
-        specifier: 2.0.4
+        specifier: latest
         version: 2.0.4(@mikro-orm/core@5.9.7)(@mikro-orm/knex@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3)(pg@8.13.1))(@mikro-orm/migrations@5.9.7)(@mikro-orm/postgresql@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3))(awilix@8.0.1)(ioredis@5.4.1)(pg@8.13.1)(vite@5.4.10(@types/node@20.16.11)(lightningcss@1.22.0)(terser@5.36.0))
       '@medusajs/framework':
-        specifier: 2.0.4
+        specifier: latest
         version: 2.0.4(@medusajs/cli@2.0.4(@mikro-orm/core@5.9.7)(@mikro-orm/knex@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3)(pg@8.13.1))(@mikro-orm/migrations@5.9.7)(@mikro-orm/postgresql@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3))(awilix@8.0.1)(ioredis@5.4.1)(pg@8.13.1)(vite@5.4.10(@types/node@20.16.11)(lightningcss@1.22.0)(terser@5.36.0)))(@mikro-orm/cli@5.9.7(@mikro-orm/migrations@5.9.7)(@mikro-orm/postgresql@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3))(mysql2@3.11.3)(pg@8.13.1))(@mikro-orm/core@5.9.7)(@mikro-orm/knex@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3)(pg@8.13.1))(@mikro-orm/migrations@5.9.7)(@mikro-orm/postgresql@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3))(awilix@8.0.1)(ioredis@5.4.1)(pg@8.13.1)(vite@5.4.10(@types/node@20.16.11)(lightningcss@1.22.0)(terser@5.36.0))
       '@medusajs/medusa':
-        specifier: 2.0.4
+        specifier: latest
         version: 2.0.4(mcpxsgeolaag3epi36smr6okqa)
       '@mikro-orm/core':
         specifier: 5.9.7
@@ -208,13 +208,13 @@ importers:
         specifier: 5.9.7
         version: 5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(mysql2@3.11.3)
       '@react-email/components':
-        specifier: ^0.0.25
-        version: 0.0.25(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+        specifier: ^0.0.28
+        version: 0.0.28(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/render':
-        specifier: ^1.0.1
+        specifier: ^1.0.2
         version: 1.0.2(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
       '@sanity/client':
-        specifier: ^6.22.1
+        specifier: ^6.22.4
         version: 6.22.4(debug@4.3.7)
       awilix:
         specifier: ^8.0.1
@@ -226,17 +226,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
     devDependencies:
-      '@7heavens/tailwind-config':
-        specifier: workspace:*
-        version: link:../../tooling/tailwind
-      '@7heavens/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript
-      '@biomejs/biome':
-        specifier: ^1.9.4
-        version: 1.9.4
       '@medusajs/test-utils':
-        specifier: 2.0.4
+        specifier: latest
         version: 2.0.4(p2tivojhjw6hqqwmj7jj5hpeq4)
       '@mikro-orm/cli':
         specifier: 5.9.7
@@ -401,12 +392,6 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
-      '@7heavens/tailwind-config':
-        specifier: workspace:*
-        version: link:../../tooling/tailwind
-      '@7heavens/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript
       '@biomejs/biome':
         specifier: ^1.9.4
         version: 1.9.4
@@ -5359,14 +5344,14 @@ packages:
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/button@0.0.17':
-    resolution: {integrity: sha512-ioHdsk+BpGS/PqjU6JS7tUrVy9yvbUx92Z+Cem2+MbYp55oEwQ9VHf7u4f5NoM0gdhfKSehBwRdYlHt/frEMcg==}
+  '@react-email/button@0.0.18':
+    resolution: {integrity: sha512-uNUnpeDzz1o9HAky47JSTsUN/Ih0A3Az165AAOgAy8XOVzQJPrltUBRzHkScSVJTwRqKLASkie1yZbtNGIcRdA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/code-block@0.0.9':
-    resolution: {integrity: sha512-Zrhc71VYrSC1fVXJuaViKoB/dBjxLw6nbE53Bm/eUuZPdnnZ1+ZUIh8jfaRKC5MzMjgnLGQTweGXVnfIrhyxtQ==}
+  '@react-email/code-block@0.0.10':
+    resolution: {integrity: sha512-xx4m5Ir1cSFbz1bhyZfETUW34iQg+WRLTItW7Qv2arnFr6Ec0u8AWi4lUUqkpmbXzeuY8U8lV+2awDerwRpW6g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
@@ -5383,8 +5368,8 @@ packages:
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/components@0.0.25':
-    resolution: {integrity: sha512-lnfVVrThEcET5NPoeaXvrz9UxtWpGRcut2a07dLbyKgNbP7vj/cXTI5TuHtanCvhCddFpMDnElNRghDOfPzwUg==}
+  '@react-email/components@0.0.28':
+    resolution: {integrity: sha512-90ayLWy1g2uqlZVcwonfq1oKUlAnQBUJ4iUnGXg0UuBPAeoqxSG1BFrVDmLSX0u5MG/wtmFPFPxhq+v8roq+sA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
@@ -5430,8 +5415,8 @@ packages:
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/link@0.0.10':
-    resolution: {integrity: sha512-tva3wvAWSR10lMJa9fVA09yRn7pbEki0ZZpHE6GD1jKbFhmzt38VgLO9B797/prqoDZdAr4rVK7LJFcdPx3GwA==}
+  '@react-email/link@0.0.11':
+    resolution: {integrity: sha512-o1/BgPn2Fi+bN4Nh+P64t4tulaOyPhkBNSpNmiYL1Ar+ilw8q0BmUAqM+lvHy8Qr/4K7BjkgFoc4GoYkoEjOig==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
@@ -5455,13 +5440,6 @@ packages:
       react: ^18.2.0
       react-dom: ^18.2.0
 
-  '@react-email/render@1.0.1':
-    resolution: {integrity: sha512-W3gTrcmLOVYnG80QuUp22ReIT/xfLsVJ+n7ghSlG2BITB8evNABn1AO2rGQoXuK84zKtDAlxCdm3hRyIpZdGSA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      react: ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^18.0 || ^19.0 || ^19.0.0-rc
-
   '@react-email/render@1.0.2':
     resolution: {integrity: sha512-q82eBd39TepzA/xjlm8szqJlrQk/gh7mgtxXMGlJ4dcdx89go1m9YBDpZY98SFy+2r2KAOd5A1mxvUbsPwoATg==}
     engines: {node: '>=18.0.0'}
@@ -5469,20 +5447,20 @@ packages:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
       react-dom: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/row@0.0.10':
-    resolution: {integrity: sha512-jPyEhG3gsLX+Eb9U+A30fh0gK6hXJwF4ghJ+ZtFQtlKAKqHX+eCpWlqB3Xschd/ARJLod8WAswg0FB+JD9d0/A==}
+  '@react-email/row@0.0.11':
+    resolution: {integrity: sha512-ra09h7BMoGa14ds3vh7KVuj1N3astTstEC1YbMdCiHcx/nxylglNaT7qJXU74ZTzyHiGabyiNuyabTS+HLoMCA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/section@0.0.14':
-    resolution: {integrity: sha512-+fYWLb4tPU1A/+GE5J1+SEMA7/wR3V30lQ+OR9t2kAJqNrARDbMx0bLnYnR1QL5TiFRz0pCF05SQUobk6gHEDQ==}
+  '@react-email/section@0.0.15':
+    resolution: {integrity: sha512-xfM3Qy5eU7fbkwvktlTeQgad7uo+1Z7YVh1aowSZaRBvKbkEXgoH/XssRYQmQL8ZrZGXbEJMujwtf4fsQL6vrg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@react-email/tailwind@0.1.0':
-    resolution: {integrity: sha512-qysVUEY+M3SKUvu35XDpzn7yokhqFOT3tPU6Mj/pgc62TL5tQFj6msEbBtwoKs2qO3WZvai0DIHdLhaOxBQSow==}
+  '@react-email/tailwind@1.0.2':
+    resolution: {integrity: sha512-P106AouxGQCCvapE5/HJT5rmNma+UJwG3A0MF6+4me7Usf+VNyJ5Jk0eSdsZ1zEfY3AbUSs+F7ql3oWztCg9nw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
@@ -20465,11 +20443,11 @@ snapshots:
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
-  '@react-email/button@0.0.17(react@19.0.0-rc-65a56d0e-20241020)':
+  '@react-email/button@0.0.18(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
-  '@react-email/code-block@0.0.9(react@19.0.0-rc-65a56d0e-20241020)':
+  '@react-email/code-block@0.0.10(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       prismjs: 1.29.0
       react: 19.0.0-rc-65a56d0e-20241020
@@ -20482,11 +20460,11 @@ snapshots:
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
-  '@react-email/components@0.0.25(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)':
+  '@react-email/components@0.0.28(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       '@react-email/body': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
-      '@react-email/button': 0.0.17(react@19.0.0-rc-65a56d0e-20241020)
-      '@react-email/code-block': 0.0.9(react@19.0.0-rc-65a56d0e-20241020)
+      '@react-email/button': 0.0.18(react@19.0.0-rc-65a56d0e-20241020)
+      '@react-email/code-block': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/code-inline': 0.0.4(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/column': 0.0.12(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/container': 0.0.14(react@19.0.0-rc-65a56d0e-20241020)
@@ -20496,13 +20474,13 @@ snapshots:
       '@react-email/hr': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/html': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/img': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
-      '@react-email/link': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
+      '@react-email/link': 0.0.11(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/markdown': 0.0.12(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/preview': 0.0.11(react@19.0.0-rc-65a56d0e-20241020)
-      '@react-email/render': 1.0.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
-      '@react-email/row': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
-      '@react-email/section': 0.0.14(react@19.0.0-rc-65a56d0e-20241020)
-      '@react-email/tailwind': 0.1.0(react@19.0.0-rc-65a56d0e-20241020)
+      '@react-email/render': 1.0.2(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@react-email/row': 0.0.11(react@19.0.0-rc-65a56d0e-20241020)
+      '@react-email/section': 0.0.15(react@19.0.0-rc-65a56d0e-20241020)
+      '@react-email/tailwind': 1.0.2(react@19.0.0-rc-65a56d0e-20241020)
       '@react-email/text': 0.0.10(react@19.0.0-rc-65a56d0e-20241020)
       react: 19.0.0-rc-65a56d0e-20241020
     transitivePeerDependencies:
@@ -20536,7 +20514,7 @@ snapshots:
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
-  '@react-email/link@0.0.10(react@19.0.0-rc-65a56d0e-20241020)':
+  '@react-email/link@0.0.11(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
@@ -20557,14 +20535,6 @@ snapshots:
       react-dom: 19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020)
       react-promise-suspense: 0.3.4
 
-  '@react-email/render@1.0.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)':
-    dependencies:
-      html-to-text: 9.0.5
-      js-beautify: 1.15.1
-      react: 19.0.0-rc-65a56d0e-20241020
-      react-dom: 19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020)
-      react-promise-suspense: 0.3.4
-
   '@react-email/render@1.0.2(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       html-to-text: 9.0.5
@@ -20573,15 +20543,15 @@ snapshots:
       react-dom: 19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020)
       react-promise-suspense: 0.3.4
 
-  '@react-email/row@0.0.10(react@19.0.0-rc-65a56d0e-20241020)':
+  '@react-email/row@0.0.11(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
-  '@react-email/section@0.0.14(react@19.0.0-rc-65a56d0e-20241020)':
+  '@react-email/section@0.0.15(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
-  '@react-email/tailwind@0.1.0(react@19.0.0-rc-65a56d0e-20241020)':
+  '@react-email/tailwind@1.0.2(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
