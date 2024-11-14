@@ -34,7 +34,6 @@ export default async function Layout(props: LayoutProps) {
 	const { children } = props;
 
 	const data = await loadGlobalData();
-	console.log("global data", data);
 
 	return (
 		<>

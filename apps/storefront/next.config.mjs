@@ -9,6 +9,7 @@ const config = {
 	images: {
 		remotePatterns: [
 			{ hostname: "cdn.sanity.io" },
+			{ hostname: "pstgvehexiavdctgqhpn.supabase.co" },
 			{ hostname: "munchies.medusajs.app" },
 			{ hostname: "tinloof-munchies.s3.eu-north-1.amazonaws.com" },
 			{ hostname: "medusa-public-images.s3.eu-west-1.amazonaws.com" },
