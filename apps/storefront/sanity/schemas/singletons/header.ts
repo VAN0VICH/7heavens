@@ -162,11 +162,6 @@ export default defineType({
 	],
 	icon: InsertAboveIcon,
 	name: "header",
-	options: {
-		sanityCreate: {
-			exclude: true,
-		},
-	},
 	preview: {
 		prepare: () => ({
 			title: "Header",

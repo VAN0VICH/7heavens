@@ -51,12 +51,12 @@ const ProfileDropdown = () => {
 					{/* {isLoggingOut ? (
 						<Spinner />
 					) : ( */}
-						<Avatar
-							src={undefined}
-							fallback={<Icons.User className="size-5" strokeWidth="1.5px" />}
-							alt="Avatar"
-							className="size-[43px] bg-transparent"
-						/>
+					<Avatar
+						src={undefined}
+						fallback={<Icons.User className="size-5" strokeWidth="1.5px" />}
+						alt="Avatar"
+						className="size-[43px] bg-transparent"
+					/>
 					{/* )} */}
 				</button>
 			</DropdownMenu.Trigger>

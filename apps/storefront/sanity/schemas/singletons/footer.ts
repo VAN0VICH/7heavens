@@ -166,11 +166,6 @@ export default defineType({
 	],
 	icon: InsertBelowIcon,
 	name: "footer",
-	options: {
-		sanityCreate: {
-			exclude: true,
-		},
-	},
 
 	preview: {
 		prepare: () => ({

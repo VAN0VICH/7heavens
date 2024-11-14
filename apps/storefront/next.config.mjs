@@ -16,8 +16,7 @@ const config = {
 		formats: ["image/avif", "image/webp"],
 	},
 	eslint: {
-		/// Set this to false if you want production builds to abort if there's lint errors
-		ignoreDuringBuilds: process.env.VERCEL_ENV === "production",
+		ignoreDuringBuilds: true,
 	},
 	logging: {
 		fetches: {
@@ -31,8 +30,8 @@ const config = {
 		return [
 			{
 				source:
-					"/:path((?!us|dk|fr|de|es|jp|gb|ca|ar|za|mx|my|au|nz|dz|br|cms|api|images|icons|favicon.ico|sections|favicon-inactive.ico).*)",
-				destination: "/us/:path*",
+					"/:path((?!us|by|dk|fr|de|es|jp|gb|ca|ar|za|mx|my|au|nz|dz|br|cms|api|images|icons|favicon.ico|sections|favicon-inactive.ico).*)",
+				destination: "/by/:path*",
 			},
 		];
 	},

@@ -1,6 +1,6 @@
-import {defineQuery, groq} from "next-sanity";
+import { defineQuery, groq } from "next-sanity";
 
-import {SECTIONS_BODY_FRAGMENT} from "./section";
+import { SECTIONS_BODY_FRAGMENT } from "./section";
 
 export const MODULAR_PAGE_QUERY = groq`*[pathname.current == $pathname && _type == "modular.page"][0]{
   ...,
@@ -16,8 +16,8 @@ export const NOT_FOUND_PAGE_QUERY = groq`*[_type == "not.found" && pathname.curr
 export const COOKIE_BANNER_QUERY = groq`*[_type == "cookie.banner"][0]`;
 export const GLOBAL_QUERY = groq`{
   "fallbackOGImage": *[_type == "settings"][0].fallbackOgImage,
-  "footer": *[_id == "footer" && _type == "footer"][0],
-  "header": *[_id == "header" && _type == "header"][0],
+  "footer": *[_type == "footer"][0],
+  "header": *[_type == "header"][0],
 }`;
 
 export const ROUTE_QUERY = defineQuery(`

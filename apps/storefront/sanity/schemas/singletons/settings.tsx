@@ -28,11 +28,6 @@ export const settings = defineType({
 	],
 	icon: CogIcon,
 	name: "settings",
-	options: {
-		sanityCreate: {
-			exclude: true,
-		},
-	},
 	preview: {
 		prepare: () => ({
 			title: "Settings",

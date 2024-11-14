@@ -16,6 +16,8 @@ export default async function Hotspots({
 	const region = await getRegion(countryCode);
 
 	if (!region) {
+		console.log("region", region);
+		console.log("countryCode", countryCode);
 		console.log("No region found");
 		return null;
 	}

@@ -11,11 +11,6 @@ export default defineType({
 		},
 	],
 	name: "category",
-	options: {
-		sanityCreate: {
-			exclude: true,
-		},
-	},
 	preview: {
 		select: {
 			title: "internalTitle",

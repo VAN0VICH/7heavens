@@ -25,11 +25,6 @@ export const cookieBanner = defineType({
 		},
 	],
 	name: "cookie.banner",
-	options: {
-		sanityCreate: {
-			exclude: true,
-		},
-	},
 	preview: {
 		select: {
 			title: "title",

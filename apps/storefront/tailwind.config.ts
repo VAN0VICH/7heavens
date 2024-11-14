@@ -28,20 +28,7 @@ const config: Config = {
 				"accent-40": "var(--accent-40)",
 				secondary: "var(--secondary)",
 				error: "#FF0000",
-				accent: {
-					1: "var(--accent-1)",
-					2: "var(--accent-2)",
-					3: "var(--accent-3)",
-					4: "var(--accent-4)",
-					5: "var(--accent-5)",
-					6: "var(--accent-6)",
-					7: "var(--accent-7)",
-					8: "var(--accent-8)",
-					9: "var(--accent-9)",
-					10: "var(--accent-10)",
-					11: "var(--accent-11)",
-					12: "var(--accent-12)",
-				},
+				accent: "var(--accent)",
 			},
 			fontSize: {
 				// body

@@ -26,11 +26,6 @@ export const dictionary = defineType({
 	],
 	icon: InsertAboveIcon,
 	name: "dictionary",
-	options: {
-		sanityCreate: {
-			exclude: true,
-		},
-	},
 	preview: {
 		prepare: () => ({
 			title: "Dictionary",

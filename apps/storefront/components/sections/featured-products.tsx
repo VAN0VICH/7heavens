@@ -13,6 +13,8 @@ export default async function FeaturedProducts(
 	const region = await getRegion(props.countryCode);
 
 	if (!region) {
+		console.log("region", region);
+		console.log("countryCode", props.countryCode);
 		console.log("No region found");
 		return null;
 	}

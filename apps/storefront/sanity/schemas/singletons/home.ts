@@ -16,9 +16,6 @@ export default definePage({
 		},
 	],
 	name: "home",
-	options: {
-		disableCreation: true,
-	},
 	preview: {
 		select: {
 			title: "title",
