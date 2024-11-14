@@ -32,7 +32,7 @@ export default defineConfig({
 				api_token: process.env.SANITY_API_TOKEN ?? "",
 				project_id: process.env.SANITY_PROJECT_ID ?? "",
 				api_version: new Date().toISOString().split("T")[0],
-				dataset: "production",
+				dataset: "development",
 				studio_url: process.env.SANITY_STUDIO_URL ?? "",
 				type_map: {
 					collection: "collection",

@@ -51,6 +51,7 @@ export default class SanityModuleService {
 	private updateTransformationMap: TransformationMap<SyncDocumentTypes>;
 
 	constructor(options: SanityOptions) {
+		console.log("--------->project_id<--------", options.project_id);
 		this.client = createClient({
 			projectId: options.project_id,
 			apiVersion: options.api_version,
