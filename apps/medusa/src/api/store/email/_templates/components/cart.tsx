@@ -23,7 +23,7 @@ export default function Cart({
 		<Section className="mb-10">
 			<Section className="mb-4">
 				<Text className="w-fit uppercase font-bold" style={bodySmall}>
-					Order summary
+					Заказ
 				</Text>
 			</Section>
 			{items.map((item) => {

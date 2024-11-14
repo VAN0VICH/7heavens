@@ -1,16 +1,7 @@
 import { Clock, Effect, Layer } from "effect";
 
-import { entries } from "remeda";
-import { AuthContext, Database, ReplicacheContext } from "./context";
-import {
-	DashboardMutatorsMap,
-	UserMutators,
-	UserMutatorsMap,
-	affectedSpaces,
-	type AffectedSpaces,
-	type DashboardMutatorsMapType,
-	type UserMutatorsMapType,
-} from "./mutators/server";
+import { schema, type Db } from "../db";
+import { MutatorNotFoundError, NeonDatabaseError } from "../types/errors";
 import type {
 	Mutation,
 	PushRequest,
@@ -18,10 +9,9 @@ import type {
 	SpaceID,
 	SpaceRecord,
 } from "../types/replicache";
-import { schema, type Db } from "../db";
-import { MutatorNotFoundError, NeonDatabaseError } from "../types/errors";
+import { Database } from "./context";
 
-const publicMutators = new Set(Object.keys(UserMutators));
+// const publicMutators = new Set(Object.keys(UserMutators));
 
 export const push = ({
 	body: push,
@@ -36,12 +26,13 @@ export const push = ({
 		yield* Effect.log("----------------------------------------------------");
 
 		yield* Effect.log(`PROCESSING PUSH: ${JSON.stringify(push, null, "")}`);
-		const { spaceID } = yield* ReplicacheContext;
-		const { authUser } = yield* AuthContext;
+		// const { spaceID } = yield* ReplicacheContext;
+		// const { authUser } = yield* AuthContext;
 
 		const startTime = yield* Clock.currentTimeMillis;
-		const mutators =
-			spaceID === "dashboard" ? DashboardMutatorsMap : UserMutatorsMap;
+		// const mutators =
+		// 	spaceID === "dashboard" ? DashboardMutatorsMap : UserMutatorsMap;
+		const mutators = new Map();
 
 		const affectedSpacesMap = new Map<
 			SpaceID,
@@ -50,7 +41,7 @@ export const push = ({
 
 		yield* Effect.forEach(push.mutations, (mutation) =>
 			Effect.gen(function* () {
-				if (!authUser && !publicMutators.has(mutation.name)) return;
+				// if (!authUser && !publicMutators.has(mutation.name)) return;
 				// 1: START TRANSACTION FOR EACH MUTATION
 				const mutationEffect = yield* Effect.tryPromise(() =>
 					db.transaction(
@@ -163,11 +154,12 @@ const processMutation = ({
 	mutation,
 	lastMutationID,
 	mutators,
-	affectedSpacesMap,
+	// affectedSpacesMap,
 }: {
 	mutation: Mutation;
 	lastMutationID: number;
-	mutators: DashboardMutatorsMapType | UserMutatorsMapType;
+	// mutators: DashboardMutatorsMapType | UserMutatorsMapType;
+	mutators: Map<string, any>;
 	affectedSpacesMap: Map<SpaceID, Set<SpaceRecord[SpaceID][number]>>;
 }) =>
 	Effect.gen(function* () {
@@ -220,25 +212,25 @@ const processMutation = ({
 			Effect.orDie,
 		);
 
-		const affectedSpace = affectedSpaces[name as keyof AffectedSpaces];
-		if (!affectedSpace) {
-			yield* Effect.fail(
-				new MutatorNotFoundError({
-					message: `You forgot to add a mutator ${name} to affected space `,
-				}),
-			);
-		}
-		yield* Effect.forEach(entries(affectedSpace), ([spaceID, subspaceIDs]) =>
-			Effect.gen(function* () {
-				const subspaces = affectedSpacesMap.get(spaceID) ?? new Set();
-				yield* Effect.forEach(
-					subspaceIDs,
-					(subspaceID) => Effect.sync(() => subspaces.add(subspaceID)),
-					{ concurrency: "unbounded" },
-				);
-				affectedSpacesMap.set(spaceID, subspaces);
-			}),
-		);
+		// const affectedSpace = affectedSpaces[name as keyof AffectedSpaces];
+		// if (!affectedSpace) {
+		// 	yield* Effect.fail(
+		// 		new MutatorNotFoundError({
+		// 			message: `You forgot to add a mutator ${name} to affected space `,
+		// 		}),
+		// 	);
+		// }
+		// yield* Effect.forEach(entries(affectedSpace), ([spaceID, subspaceIDs]) =>
+		// 	Effect.gen(function* () {
+		// 		const subspaces = affectedSpacesMap.get(spaceID) ?? new Set();
+		// 		yield* Effect.forEach(
+		// 			subspaceIDs,
+		// 			(subspaceID) => Effect.sync(() => subspaces.add(subspaceID)),
+		// 			{ concurrency: "unbounded" },
+		// 		);
+		// 		affectedSpacesMap.set(spaceID, subspaces);
+		// 	}),
+		// );
 
 		const end = yield* Clock.currentTimeMillis;
 

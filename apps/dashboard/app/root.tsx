@@ -12,8 +12,7 @@ import { Toploader } from "./components/top-loader";
 // import { MobileSidebar, Sidebar } from "./components/layout/sidebar";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { ClientOnly } from "remix-utils/client-only";
-import { PartykitProvider } from "./client/partykit.client";
+// import { PartykitProvider } from "./client/partykit.client";
 import { ClientHintCheck, getHints } from "./hooks/use-hints";
 import { useNonce } from "./hooks/use-nonce";
 import { useUserPreferences } from "./hooks/use-user-preferences";
@@ -24,7 +23,6 @@ import type { Preferences } from "./types/state";
 import { Toaster } from "./ui/toaster";
 import { getDomainUrl } from "./utils/helpers";
 import vaulStyles from "./vaul.css?url";
-import { MarketplaceStoreMutator } from "./zustand/store-mutator";
 export const links: LinksFunction = () => {
 	return [
 		// Preload svg sprite as a resource to avoid render blocking
@@ -48,8 +46,7 @@ export const loader: LoaderFunction = async (args) => {
 		request,
 		context: { authUser, cloudflare, userSession },
 	} = args;
-	const { REPLICACHE_KEY, PARTYKIT_HOST, WORKER_URL, LIVEKIT_SERVER_URL } =
-		cloudflare.env;
+	const { REPLICACHE_KEY, PARTYKIT_HOST, WORKER_URL } = cloudflare.env;
 
 	const cookieHeader = request.headers.get("Cookie");
 	const prefsCookie = (await prefs.parse(cookieHeader)) || {};
@@ -59,7 +56,6 @@ export const loader: LoaderFunction = async (args) => {
 			REPLICACHE_KEY,
 			PARTYKIT_HOST,
 			WORKER_URL,
-			LIVEKIT_SERVER_URL,
 		},
 
 		requestInfo: {
@@ -88,21 +84,19 @@ function App() {
 	const preferences = useUserPreferences();
 	return (
 		<Document nonce={nonce} env={data.ENV} theme={preferences.theme ?? "light"}>
-			<MarketplaceStoreMutator>
-				<Theme
-					accentColor={preferences.accentColor ?? "ruby"}
-					grayColor={preferences.grayColor ?? "mauve"}
-					radius="large"
-					panelBackground="solid"
-					appearance={preferences.theme ?? "light"}
-				>
-					<Toploader />
-					<Outlet />
-					<Toaster />
+			<Theme
+				accentColor={preferences.accentColor ?? "ruby"}
+				grayColor={preferences.grayColor ?? "mauve"}
+				radius="large"
+				panelBackground="solid"
+				appearance={preferences.theme ?? "light"}
+			>
+				<Toploader />
+				<Outlet />
+				<Toaster />
 
-					<ClientOnly>{() => <PartykitProvider />}</ClientOnly>
-				</Theme>
-			</MarketplaceStoreMutator>
+				{/* <ClientOnly>{() => <PartykitProvider />}</ClientOnly> */}
+			</Theme>
 		</Document>
 	);
 }

@@ -22,7 +22,6 @@
 		"test:unit": "TEST_TYPE=unit NODE_OPTIONS=--experimental-vm-modules jest --silent --runInBand --forceExit",
 		"predeploy": "medusa db:migrate",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
-		"beautify": "biome format app --write",
 		"lint": "biome lint src",
 		"format": "biome format src"
 	},

@@ -18,6 +18,7 @@ export const SpaceRecordGetter: SpaceRecordGetterType = {
 };
 export const fullRowsGetter = (tableName: TableName, keys: string[]) =>
 	Effect.gen(function* () {
+		console.log("keys", keys);
 		if (tableName === "orders") {
 			return yield* Effect.succeed([] as Array<{ id: string | null }>);
 		}

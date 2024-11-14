@@ -1,10 +1,5 @@
-import type {
-	WebEnv,
-	WebBindings,
-	AuthUser,
-	AuthSession,
-} from "@7heavens/validators";
 import type { Session, SessionData } from "@remix-run/cloudflare";
+import type { WebBindings, WebEnv } from "~/types/env";
 
 declare module "@remix-run/cloudflare" {
 	interface AppLoadContext {
@@ -12,8 +7,6 @@ declare module "@remix-run/cloudflare" {
 			env: WebEnv;
 			bindings: WebBindings;
 		};
-		authUser: AuthUser | null;
 		session: Session<SessionData, SessionData>;
-		userSession: AuthSession;
 	}
 }
