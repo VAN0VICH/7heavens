@@ -996,7 +996,7 @@ export type AllSanitySchemaTypes =
 	| Seo
 	| Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: data/sanity/queries/index.ts
+// Source: src/data/sanity/queries/index.ts
 // Variable: MODULAR_PAGE_QUERY
 // Query: *[pathname.current == $pathname && _type == "modular.page"][0]{  ...,  sections[] {    ...,    _type == "section.testimonials" => {    ...,    testimonials[] -> },},}
 export type MODULAR_PAGE_QUERYResult = {
@@ -2546,7 +2546,7 @@ export type PRODUCT_QUERYResult = {
 	> | null;
 } | null;
 
-// Source: data/sanity/queries/section.ts
+// Source: src/data/sanity/queries/section.ts
 // Variable: TESTIMONIALS_SECTION_QUERY
 // Query: {    ...,    testimonials[] -> }
 export type TESTIMONIALS_SECTION_QUERYResult = never;

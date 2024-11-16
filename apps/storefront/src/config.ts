@@ -1,4 +1,4 @@
-import { env } from "./src/app/env";
+import { env } from "./app/env";
 
 const baseUrl = process.env.WEB_URL ?? "http://localhost:3000";
 

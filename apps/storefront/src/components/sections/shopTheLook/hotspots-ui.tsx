@@ -132,7 +132,7 @@ export default function HotspotsUi({
 							font="sans"
 							mobileSize="sm"
 						>
-							{cheapestPrice?.calculated_price || "NA"}
+							от {cheapestPrice?.calculated_price || "NA"}
 						</Body>
 					</div>
 				</div>
@@ -143,7 +143,7 @@ export default function HotspotsUi({
 					size="xl"
 					variant="outline"
 				>
-					Shop now
+					Купить сейчас
 				</Link>
 			</LocalizedLink>
 			<div className="flex flex-col gap-xs lg:hidden">
@@ -173,7 +173,7 @@ export default function HotspotsUi({
 									{product?.title}
 								</Body>
 								<Body font="sans" mobileSize="sm">
-									{cheapestPrice?.calculated_price || "NA"}
+									от{cheapestPrice?.calculated_price || "NA"}
 								</Body>
 							</div>
 						</LocalizedLink>
@@ -186,7 +186,7 @@ export default function HotspotsUi({
 					size="xl"
 					variant="outline"
 				>
-					Shop now
+					Купить сейчас
 				</Link>
 			</div>
 		</div>

@@ -19,8 +19,6 @@ export default function ProductCard({
 }) {
 	if (!product) return null;
 
-	const { cheapestPrice } = getProductPrice({ product });
-
 	const thumbnail = product.thumbnail || product.images?.[0]?.url;
 
 	return (

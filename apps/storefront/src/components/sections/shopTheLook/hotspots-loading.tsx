@@ -32,7 +32,7 @@ export default function HotspotsLoading({
 					</div>
 				</div>
 				<Cta className="w-full" loading={true} size="xl" variant="outline">
-					Shop now
+					Купить сейчас
 				</Cta>
 			</div>
 
@@ -52,7 +52,7 @@ export default function HotspotsLoading({
 					</div>
 				</div>
 				<Cta className="w-full" loading={true} size="xl" variant="outline">
-					Shop now
+					Купить сейчас
 				</Cta>
 			</div>
 		</div>

@@ -11,7 +11,6 @@ import { useFormStatus } from "react-dom";
 
 export default function Newsletter(props: NonNullable<Footer>) {
 	const [state, action] = useActionState(newsletterForm, "idle");
-	console.log("props", props);
 
 	return (
 		<section className="mx-auto flex w-full max-w-max-screen flex-col gap-s px-m py-2xl lg:px-xl">

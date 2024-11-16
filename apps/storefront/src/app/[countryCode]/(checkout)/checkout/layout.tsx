@@ -6,9 +6,9 @@ import Footer from "@/components/global/footer";
 import BottomBorder from "@/components/global/header/parts/bottom-border";
 import PreventBackNavigationSmoothScroll from "@/components/prevent-back-navigation-smooth-scroll";
 import LocalizedLink from "@/components/shared/localized-link";
-import config from "@/config";
 import { loadGlobalData } from "@/data/sanity";
 import { getOgImages } from "@/data/sanity/resolve-sanity-route-metadata";
+import config from "@/config";
 
 type LayoutProps = PropsWithChildren<
 	Omit<PageProps<"countryCode">, "searchParams">

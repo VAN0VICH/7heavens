@@ -5,17 +5,17 @@ import { defineConfig, isDev } from "sanity";
 import { structureTool } from "sanity/structure";
 import { imageHotspotArrayPlugin } from "sanity-plugin-hotspot-array";
 
-import { StudioLogo } from "./components/studio/logo";
-import schemas from "./sanity/schemas";
+import { StudioLogo } from "./src/components/studio/logo";
+import schemas from "./src/sanity/schemas";
 import {
 	defaultDocumentNode,
 	disableCreationDocumentTypes,
 	structure,
-} from "./sanity/schemas/structure";
+} from "./src/sanity/schemas/structure";
 import {
 	singletonActions,
 	singletonsTypes,
-} from "./sanity/schemas/structure/singletons";
+} from "./src/sanity/schemas/structure/singletons";
 
 export default defineConfig({
 	dataset: config.sanity.dataset,

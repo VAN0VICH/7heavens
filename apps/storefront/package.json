@@ -10,10 +10,10 @@
 		"start": "next start",
 		"lint:fix": "next lint --fix",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
-		"sanity:typegen:watch": "watch \"npm run sanity:typegen\" ./sanity ./data",
-		"sanity:typegen": "sanity schema extract --path ./types/schema.json && sanity typegen generate",
+		"sanity:typegen:watch": "watch \"npm run sanity:typegen\" ./src/sanity ./src/data",
+		"sanity:typegen": "sanity schema extract --path ./src/types/schema.json && sanity typegen generate",
 		"beautify": "biome format ./src --write",
-		"lint": "biome lint app",
+		"lint": "biome lint ./src/app",
 		"format": "biome format ./src"
 	},
 	"dependencies": {

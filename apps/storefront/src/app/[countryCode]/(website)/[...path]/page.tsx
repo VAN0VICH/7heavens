@@ -36,6 +36,7 @@ export async function generateMetadata(
 export default async function DynamicRoute(props: DynamicRouteProps) {
 	const params = await props.params;
 	const initialData = await loadPageByPathname({ params });
+	console.log("initialData", initialData);
 	if (!initialData) return notFound();
 
 	switch (initialData._type) {

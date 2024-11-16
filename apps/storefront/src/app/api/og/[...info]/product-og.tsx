@@ -23,11 +23,11 @@ export default function ProductOg({ product }: { product: StoreProduct }) {
 						style={{ fontFamily: "Instrument Sans" }}
 						tw="font-sans text-[20px] leading-[150%] flex"
 					>
-						from {cheapestPrice?.calculated_price}
+						от {cheapestPrice?.calculated_price}
 					</div>
 				</div>
 				<div tw="flex py-[6px] px-[36px] text-[#FFF6E6] bg-[#FF5227] rounded-full text-[40px] leading-[150%] tracking-[-1px]">
-					Shop now
+					Купить сейчас
 				</div>
 			</div>
 			<div tw="flex h-full w-[46%]">

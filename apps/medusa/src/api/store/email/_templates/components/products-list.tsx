@@ -39,7 +39,10 @@ export default function ProductsList({ products }: { products: ProductDTO[] }) {
 					})}
 				</Row>
 			</Section>
-			<CtaButton href="https://munchies-tinloof.vercel.app" label="Shop now" />
+			<CtaButton
+				href="https://munchies-tinloof.vercel.app"
+				label="Купить сейчас"
+			/>
 		</Section>
 	);
 }
