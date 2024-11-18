@@ -2,7 +2,8 @@
 
 import type { StoreUpdateCart } from "@medusajs/types";
 
-import { getCart } from "@/data/medusa/cart";
+import medusaError from "@/utils/medusa/error";
+import { revalidateTag } from "next/cache";
 import medusa from "@/data/medusa/client";
 import {
 	getAuthHeaders,
@@ -10,10 +11,8 @@ import {
 	getCartId,
 	setCartId,
 } from "@/data/medusa/cookies";
+import { getCart } from "@/data/medusa/cart";
 import { getRegion } from "@/data/medusa/regions";
-import medusaError from "@/utils/medusa/error";
-import { revalidateTag } from "next/cache";
-
 async function createCart(region_id: string) {
 	const body = {
 		region_id,

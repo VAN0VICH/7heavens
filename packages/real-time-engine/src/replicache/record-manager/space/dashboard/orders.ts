@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import type { GetRowsWTableName } from "../types";
+import type { GetRows } from "../types";
 
-export const ordersCVD: GetRowsWTableName = () =>
+export const ordersCVD: GetRows = () =>
 	Effect.gen(function* (_) {
 		return yield* Effect.succeed([]);
 	});

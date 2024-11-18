@@ -1,10 +1,9 @@
-import { getProductsByHandles } from "@/data/medusa/products";
-import { getRegion } from "@/data/medusa/regions";
-
 import type { ModularPageSection } from "../types";
 
 import { cleanHandle } from "@/sanity/lib/utils";
 import HotspotsUi from "./hotspots-ui";
+import { getRegion } from "@/data/medusa/regions";
+import { getProductsByHandles } from "@/data/medusa/products";
 
 export default async function Hotspots({
 	countryCode,

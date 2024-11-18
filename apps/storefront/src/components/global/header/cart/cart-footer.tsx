@@ -41,7 +41,7 @@ export default function CartFooter() {
 				</div>
 				{!cartIsEmpty && (
 					<Link className="w-full" href="/checkout" size="lg" variant="primary">
-						Go to checkout
+						Оформить заказ
 					</Link>
 				)}
 			</div>

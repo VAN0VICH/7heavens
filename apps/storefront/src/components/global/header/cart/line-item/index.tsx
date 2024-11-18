@@ -6,10 +6,18 @@ import Body from "@/components/shared/typography/body";
 import { convertToLocale } from "@/utils/medusa/money";
 import Image from "next/image";
 
-import { isOptimisticItemId, useCart } from "../cart-context";
+import { useCart } from "../cart-context";
 
-export default function LineItem(props: StoreCartLineItem) {
-	const { cart, handleDeleteItem, handleUpdateCartQuantity } = useCart();
+export default function LineItem({
+	props,
+	deleteItem,
+	updateItem,
+}: {
+	props: StoreCartLineItem;
+	deleteItem?: (id: string) => Promise<void>;
+	updateItem?: (id: string, quantity: number) => Promise<void>;
+}) {
+	const { cart } = useCart();
 
 	const item = cart?.items?.find(({ id }) => id === props.id);
 
@@ -19,8 +27,15 @@ export default function LineItem(props: StoreCartLineItem) {
 		amount: (item?.unit_price || 0) * (item?.quantity || 1),
 		currency_code: (item?.variant?.calculated_price?.currency_code || null)!,
 	});
+	if (!item) return null;
+	const reduceQuantity = async () => {
+		if (item.quantity === 1) return await deleteItem?.(item.id);
+		await updateItem?.(item.id, item.quantity - 1);
+	};
 
-	const isOptimisticLine = isOptimisticItemId(props.id);
+	const increaseQuantity = async () => {
+		await updateItem?.(item.id, item.quantity + 1);
+	};
 
 	return (
 		<div className="flex items-start justify-between gap-2 space-x-4">
@@ -50,10 +65,7 @@ export default function LineItem(props: StoreCartLineItem) {
 						<button
 							type="button"
 							className="group flex h-full w-full flex-1 items-center justify-center hover:bg-secondary active:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
-							disabled={isOptimisticLine}
-							onClick={() =>
-								handleUpdateCartQuantity(props.id, (item?.quantity || 0) - 1)
-							}
+							onClick={reduceQuantity}
 						>
 							<span className="h-[1.5px] w-2 bg-accent transition-all duration-300 group-active:bg-background" />
 						</button>
@@ -63,10 +75,7 @@ export default function LineItem(props: StoreCartLineItem) {
 						<button
 							type="button"
 							className="group relative flex h-full w-full flex-1 items-center justify-center hover:bg-secondary active:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
-							disabled={isOptimisticLine}
-							onClick={() =>
-								handleUpdateCartQuantity(props.id, (item?.quantity || 0) + 1)
-							}
+							onClick={increaseQuantity}
 						>
 							<span className="h-[1.5px] w-2 bg-accent transition-all duration-300 group-active:bg-background" />
 							<span className="absolute left-1/2 top-1/2 h-2 w-[1.5px] -translate-x-1/2 -translate-y-1/2 bg-accent transition-all duration-300 group-active:bg-background" />
@@ -75,8 +84,7 @@ export default function LineItem(props: StoreCartLineItem) {
 					<button
 						type="button"
 						className="bg-transparent disabled:pointer-events-none disabled:opacity-50"
-						disabled={isOptimisticLine}
-						onClick={() => handleDeleteItem(props.id)}
+						onClick={async () => await deleteItem?.(item.id)}
 					>
 						<Icon className="size-6" name="Trash" />
 					</button>

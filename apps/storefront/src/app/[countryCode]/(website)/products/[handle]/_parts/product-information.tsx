@@ -1,4 +1,3 @@
-import type { PRODUCT_QUERYResult } from "@/types/sanity.generated";
 import type { StoreProduct } from "@medusajs/types";
 
 import Body from "@/components/shared/typography/body";
@@ -11,6 +10,7 @@ import BreadCrumbs from "./breadcrumbs";
 import OptionsSelect from "./options";
 import Price from "./price";
 import ProductSpecs from "./specs";
+import type { PRODUCT_QUERYResult } from "@/types/sanity.generated";
 
 type Props = {
 	content: PRODUCT_QUERYResult;

@@ -1,16 +1,16 @@
 import type { PageProps } from "@/types";
 import type { HttpTypes } from "@medusajs/types";
 
-import { getCart } from "@/data/medusa/cart";
-import {
-	listCartPaymentMethods,
-	listCartShippingMethods,
-} from "@/data/medusa/fullfilment";
 import { redirect } from "next/navigation";
 
 import CartDetails from "./_parts/cart-details";
 import CheckoutForm from "./_parts/checkout-form";
 import { enrichLineItems } from "@/data/medusa/line-items";
+import {
+	listCartPaymentMethods,
+	listCartShippingMethods,
+} from "@/data/medusa/fullfilment";
+import { getCart } from "@/data/medusa/cart";
 
 export default async function CheckoutPage(props: PageProps<"countryCode">) {
 	const params = await props.params;

@@ -3,18 +3,19 @@ import type { z, ZodError } from "zod";
 
 import type {
 	InvalidValue,
+	MedusaError,
 	NeonDatabaseError,
 	NotFound,
 } from "../../types/errors";
-import type { AuthContext, Database } from "../context";
+import type { AuthContext, Cloudflare, Database } from "../../context";
 
 export function fn<Schema extends z.ZodSchema>(
 	schema: Schema,
 	func: (
 		value: z.infer<Schema>,
 	) => Effect.Effect<
-		void,
-		ZodError | NeonDatabaseError | NotFound | InvalidValue,
+		any,
+		ZodError | NeonDatabaseError | NotFound | InvalidValue | MedusaError,
 		Database | Cloudflare | AuthContext
 	>,
 ) {

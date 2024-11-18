@@ -1,67 +1,52 @@
 import { eq, inArray } from "drizzle-orm";
 import { Effect, pipe } from "effect";
-import { isDefined, keys, mapToObj } from "remeda";
+import { isDefined, mapToObj } from "remeda";
 import type { PatchOperation, ReadonlyJSONObject } from "replicache";
-
-import { type AuthContext, ReplicacheContext } from "../context";
-import { SpaceRecordGetter, fullRowsGetter } from "./space/getter";
+import { schema } from "../../db";
+import type { ExtractEffectValue } from "../../types/effect";
+import {
+	InvalidValue,
+	type MedusaError,
+	NeonDatabaseError,
+	type NotFound,
+} from "../../types/errors";
 import {
 	SPACE_RECORD,
 	type ClientGroupObject,
 	type ClientViewRecord,
 	type ReplicacheClient,
 	type ReplicacheSubspaceRecord,
-	type RowsWTableName,
+	type Row,
 	type SpaceID,
 	type SpaceRecord,
-	type TableName,
 } from "../../types/replicache";
-import { InvalidValue, NeonDatabaseError } from "../../types/errors";
-import { Database } from "../context/database";
-import type { ExtractEffectValue } from "../../types/effect";
-import { schema } from "../../db";
-
-interface SpaceRecordDiff {
-	newIDs: Map<TableName, Set<string>>;
-	deletedIDs: string[];
-}
+import { SpaceRecordGetter } from "./space/getter";
+import {
+	type AuthContext,
+	type Cloudflare,
+	Database,
+	ReplicacheContext,
+} from "../../context";
+import type { ZodError } from "zod";
 
 type SubspaceRecord = Omit<ReplicacheSubspaceRecord, "version">;
 
 type ClientRecordDiff = Record<string, number>;
 
-export const makeClientViewRecord = (
-	data: RowsWTableName[],
-): Record<string, number> => {
-	const clientViewRecord: Record<string, number> = {};
-
-	for (const { rows } of data) {
-		for (const row of rows) {
-			clientViewRecord[row.id] = row.version;
-		}
-	}
-
-	return clientViewRecord;
-};
-
-export const getRowsWTableName = <T extends SpaceID>({
+export const getRows = <T extends SpaceID>({
 	spaceID,
-	fullRows,
 	subspaceID,
 }: {
-	fullRows: boolean;
 	spaceID: T;
 	subspaceID: SpaceRecord[T][number];
 }): Effect.Effect<
-	RowsWTableName[],
-	InvalidValue | NeonDatabaseError,
+	Row[],
+	InvalidValue | NeonDatabaseError | MedusaError | ZodError<any> | NotFound,
 	Cloudflare | ReplicacheContext | Database | AuthContext
 > => {
-	const getRowsWTableName = SpaceRecordGetter[spaceID][subspaceID];
-	if (getRowsWTableName) {
-		return getRowsWTableName({
-			fullRows,
-		});
+	const rowsGetter = SpaceRecordGetter[spaceID][subspaceID];
+	if (rowsGetter) {
+		return rowsGetter();
 	}
 
 	return Effect.fail(
@@ -71,54 +56,9 @@ export const getRowsWTableName = <T extends SpaceID>({
 	);
 };
 
-const getOldSpaceRecord = ({
-	key,
-}: {
-	key: string | undefined;
-}): Effect.Effect<
-	Array<SubspaceRecord> | undefined,
-	NeonDatabaseError,
-	ReplicacheContext | Database
-> => {
-	return Effect.gen(function* () {
-		const { spaceID, subspaceIDs } = yield* ReplicacheContext;
-		const { manager } = yield* Database;
-		if (!key) return undefined;
-		const subIDs = subspaceIDs ?? SPACE_RECORD[spaceID];
-
-		const result = yield* pipe(
-			Effect.tryPromise(() =>
-				manager.query.replicacheSubspaceRecords.findMany({
-					columns: {
-						id: true,
-						subspaceID: true,
-						record: true,
-					},
-					where: ({ subspaceID, id }, { inArray, eq, and }) =>
-						//@ts-ignore
-						and(eq(id, key), inArray(subspaceID, subIDs)),
-				}),
-			),
-			Effect.catchTags({
-				UnknownException: (error) =>
-					new NeonDatabaseError({ message: error.message }),
-			}),
-		);
-		if (result.length === 0) return undefined;
-		return result;
-	});
-};
-
-const getNewSpaceRecord = ({
-	newSpaceRecordKey,
-}: {
-	newSpaceRecordKey: string;
-}): Effect.Effect<
-	Array<{
-		rows: Array<RowsWTableName>;
-		subspaceRecord: SubspaceRecord;
-	}>,
-	InvalidValue | NeonDatabaseError,
+export const getSpaceRecord = (): Effect.Effect<
+	Row[],
+	InvalidValue | NeonDatabaseError | MedusaError | ZodError<any> | NotFound,
 	Cloudflare | Database | ReplicacheContext | AuthContext
 > => {
 	return Effect.gen(function* () {
@@ -126,106 +66,19 @@ const getNewSpaceRecord = ({
 
 		const subIDs = subspaceIDs ?? SPACE_RECORD[spaceID];
 
-		return yield* Effect.forEach(
+		const result = yield* Effect.forEach(
 			subIDs,
 			(subspaceID) =>
-				pipe(
-					getRowsWTableName({
-						spaceID,
-						subspaceID,
-						fullRows: false,
-					}),
-					Effect.map((rows) => ({
-						rows,
-						subspaceRecord: {
-							id: newSpaceRecordKey,
-							subspaceID,
-							record: makeClientViewRecord(rows),
-						},
-					})),
-				),
+				getRows({
+					spaceID,
+					subspaceID,
+				}),
 
 			{
 				concurrency: "unbounded",
 			},
 		);
-	});
-};
-
-const diffSpaceRecords = ({
-	currentRecord,
-	prevRecord,
-}: {
-	prevRecord: ExtractEffectValue<ReturnType<typeof getOldSpaceRecord>>;
-	currentRecord: ExtractEffectValue<ReturnType<typeof getNewSpaceRecord>>;
-}): Effect.Effect<SpaceRecordDiff, never, never> => {
-	return Effect.gen(function* () {
-		const diff: SpaceRecordDiff = {
-			deletedIDs: [],
-			newIDs: new Map(),
-		};
-
-		if (!prevRecord) {
-			return diff;
-		}
-
-		const prevSpaceRecordObj = mapToObj(prevRecord, (data) => [
-			data.subspaceID,
-			data.record,
-		]);
-
-		yield* Effect.forEach(
-			currentRecord,
-			({ rows, subspaceRecord }) => {
-				return Effect.gen(function* () {
-					const prevClientViewRecord =
-						prevSpaceRecordObj[subspaceRecord.subspaceID] ?? {};
-
-					for (const { tableName, rows: _rows } of rows) {
-						const newIDs = diff.newIDs.get(tableName) ?? new Set();
-
-						yield* Effect.all(
-							[
-								Effect.forEach(
-									_rows,
-									({ id, version }) =>
-										Effect.sync(() => {
-											const prevVersion = prevClientViewRecord[id];
-
-											if (
-												version < 0 ||
-												!isDefined(prevVersion) ||
-												prevVersion < version
-											) {
-												newIDs.add(id);
-											}
-										}),
-									{ concurrency: "unbounded" },
-								),
-								Effect.forEach(
-									keys(prevClientViewRecord),
-									(id) =>
-										Effect.sync(() => {
-											if (!isDefined(subspaceRecord.record[id])) {
-												diff.deletedIDs.push(id);
-											}
-										}),
-									{ concurrency: "unbounded" },
-								),
-							],
-							{
-								concurrency: 2,
-							},
-						);
-
-						diff.newIDs.set(tableName, newIDs);
-					}
-				});
-			},
-			{ concurrency: "unbounded" },
-		);
-
-		return diff;
+		return result.flat();
 	});
 };
 
@@ -318,37 +171,15 @@ const diffClientRecords = ({
 };
 
 const createSpacePatch = ({
-	diff,
+	spaceRecord,
 }: {
-	diff: SpaceRecordDiff;
+	spaceRecord: Row[];
 }): Effect.Effect<PatchOperation[], NeonDatabaseError, Database> => {
 	return Effect.gen(function* () {
 		const patch: PatchOperation[] = [];
-		const fullRows = yield* Effect.forEach(
-			Array.from(diff.newIDs.entries()),
-			([tableName, ids]) => {
-				return getFullRows({
-					keys: Array.from(ids),
-					tableName,
-				});
-			},
-			{ concurrency: "unbounded" },
-		).pipe(Effect.map((fullRows) => fullRows.flat()));
 
-		const deletePatchEffect = Effect.forEach(
-			diff.deletedIDs,
-			(id) => {
-				return Effect.sync(() => {
-					patch.push({
-						op: "del",
-						key: id,
-					});
-				});
-			},
-			{ concurrency: "unbounded" },
-		);
-		const putPatchEffect = Effect.forEach(
-			fullRows,
+		yield* Effect.forEach(
+			spaceRecord,
 			(item) => {
 				return Effect.sync(() => {
 					if (item.id) {
@@ -363,82 +194,9 @@ const createSpacePatch = ({
 			{ concurrency: "unbounded" },
 		);
 
-		yield* Effect.all([deletePatchEffect, putPatchEffect], {
-			concurrency: 2,
-		});
-
 		return patch;
 	});
 };
-
-const createSpaceResetPatch = (): Effect.Effect<
-	PatchOperation[],
-	InvalidValue | NeonDatabaseError,
-	Cloudflare | ReplicacheContext | Database | AuthContext
-> =>
-	Effect.gen(function* () {
-		yield* Effect.log("RESET PATCH");
-		const { spaceID } = yield* ReplicacheContext;
-		const patch: PatchOperation[] = [
-			{
-				op: "clear" as const,
-			},
-		];
-		const subspaceIDs = SPACE_RECORD[spaceID];
-
-		yield* Effect.forEach(
-			subspaceIDs,
-			(subspaceID) =>
-				pipe(
-					getRowsWTableName({
-						spaceID,
-						subspaceID,
-						fullRows: true,
-					}),
-					Effect.flatMap((data) =>
-						Effect.gen(function* () {
-							yield* Effect.forEach(
-								data,
-								({ rows }) =>
-									Effect.gen(function* () {
-										yield* Effect.forEach(
-											rows,
-											(item) =>
-												Effect.sync(() =>
-													patch.push({
-														op: "put",
-														key: item.id,
-														value: item as ReadonlyJSONObject,
-													}),
-												),
-											{ concurrency: "unbounded" },
-										);
-									}),
-								{ concurrency: "unbounded" },
-							);
-						}),
-					),
-				),
-			{
-				concurrency: "unbounded",
-			},
-		);
-		return patch;
-	});
-
-const getFullRows = ({
-	tableName,
-	keys,
-}: {
-	tableName: TableName;
-	keys: string[];
-}): Effect.Effect<Array<{ id: string | null }>, NeonDatabaseError, Database> =>
-	Effect.gen(function* () {
-		if (keys.length === 0) {
-			return yield* Effect.succeed([]);
-		}
-		return yield* fullRowsGetter(tableName, keys);
-	});
 
 export const getClientGroupObject = (): Effect.Effect<
 	ClientGroupObject,
@@ -589,11 +347,7 @@ export const deleteSpaceRecord = ({
 
 export {
 	createSpacePatch,
-	createSpaceResetPatch,
 	diffClientRecords,
-	diffSpaceRecords,
 	getNewClientRecord,
-	getNewSpaceRecord,
 	getOldClientRecord,
-	getOldSpaceRecord,
 };

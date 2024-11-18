@@ -25,6 +25,7 @@
 	"dependencies": {
 		"@effect/platform": "^0.69.20",
 		"@effect/schema": "^0.75.5",
+		"@hono/zod-validator": "^0.4.1",
 		"@neondatabase/serverless": "^0.10.3",
 		"drizzle-orm": "^0.36.1",
 		"drizzle-zod": "^0.5.1",
@@ -41,7 +42,9 @@
 		"@7heavens/tsconfig": "workspace:*",
 		"@biomejs/biome": "^1.9.4",
 		"@cloudflare/workers-types": "^4.20241106.0",
+		"@medusajs/types": "2.0.4",
 		"@types/ws": "^8.5.12",
+		"drizzle-kit": "^0.28.1",
 		"wrangler": "^3.83.0"
 	}
 }

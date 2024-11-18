@@ -2,12 +2,16 @@
 import type { ButtonProps } from "@/components/shared/button";
 import type { StoreProductVariant } from "@medusajs/types";
 
-import { addToCartEventBus } from "@/components/global/header/cart/event-bus";
 import { Cta } from "@/components/shared/button";
 import { track } from "@vercel/analytics";
 import { cx } from "cva";
 
+import { useCart } from "@/components/global/header/cart/cart-context";
+import { generateID } from "@/utils/generate";
+import { useReplicache } from "@/zustand/replicache";
 import { useProductVariants } from "../product-context";
+import React from "react";
+import { setCartId } from "@/actions/set-cart-id";
 
 export default function AddToCart({
 	region_id,
@@ -44,12 +48,44 @@ export function AddToCartButton({
 	regionId,
 	...buttonProps
 }: AddToCartButtonProps) {
-	const handleAddToCart = () => {
+	const { cart } = useCart();
+	const rep = useReplicache((state) => state.storeRep);
+	const [isLoading, setIsLoading] = React.useState(false);
+	const handleAddToCart = async () => {
+		setIsLoading(true);
+
 		if (!productVariant) return;
 
-		addToCartEventBus.emitCartAdd({
-			productVariant,
-			regionId,
+		if (cart) {
+			const item = cart.items?.find(
+				(item) => item.variant_id === productVariant.id,
+			);
+			if (item) {
+				await rep?.mutate.updateLineItem({
+					id: item.id,
+					quantity: item.quantity + 1,
+					cartId: cart.id,
+				});
+			}
+		}
+		const newId = generateID({ prefix: "line_item" });
+		const newCartId = generateID({ prefix: "cart" });
+
+		if (!cart) {
+			setCartId(newCartId);
+		}
+
+		await rep?.mutate.createLineItem({
+			lineItemInput: {
+				cartId: cart?.id || newCartId,
+				quantity: 1,
+				variantId: productVariant.id,
+				regionId,
+				id: newId,
+			},
+			...(!cart && {
+				newCartId,
+			}),
 		});
 
 		track("add-to-cart", {
@@ -57,12 +93,16 @@ export function AddToCartButton({
 			region_id: regionId,
 			variantId: productVariant.id,
 		});
+
+		setIsLoading(false);
 	};
+	console.log("isLoading", isLoading);
 
 	return (
 		<Cta
 			{...buttonProps}
-			disabled={!addToCartEventBus.handler || !productVariant}
+			disabled={!productVariant || isLoading}
+			loading={isLoading}
 			onClick={(e) => {
 				e.preventDefault();
 				if (productVariant) {

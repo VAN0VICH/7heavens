@@ -1,13 +1,19 @@
-import { Clock, Effect, Layer } from "effect";
+import { Clock, Console, Effect, Layer } from "effect";
 import type { PatchOperation, PullResponseOKV1 } from "replicache";
 
 import { ulid } from "ulidx";
-import { ReplicacheContext } from "./context/replicache";
-import { RecordManager } from "./record-manager";
 import type { Db } from "../db";
+import {
+	type InvalidValue,
+	type MedusaError,
+	NeonDatabaseError,
+	type NotFound,
+} from "../types/errors";
 import type { Cookie, PullRequest } from "../types/replicache";
-import { NeonDatabaseError, type InvalidValue } from "../types/errors";
-import { AuthContext, Database } from "./context";
+import { AuthContext, type Cloudflare, Database } from "../context";
+import { ReplicacheContext } from "../context/replicache";
+import { RecordManager } from "./record-manager";
+import type { ZodError } from "zod";
 
 export const pull = ({
 	body: pull,
@@ -17,7 +23,7 @@ export const pull = ({
 	db: Db;
 }): Effect.Effect<
 	PullResponseOKV1,
-	NeonDatabaseError | InvalidValue,
+	NeonDatabaseError | InvalidValue | MedusaError | ZodError<any> | NotFound,
 	ReplicacheContext | Cloudflare | AuthContext
 > =>
 	Effect.gen(function* (_) {
@@ -45,7 +51,6 @@ export const pull = ({
 		const startTransact = yield* _(Clock.currentTimeMillis);
 
 		// 1: GET PREVIOUS SPACE RECORD AND CLIENT RECORD KEYS
-		const oldSpaceRecordKey = requestCookie?.spaceRecordKey;
 		const oldClientRecordKey = requestCookie?.clientRecordKey;
 
 		// 2: BEGIN PULL TRANSACTION
@@ -54,32 +59,30 @@ export const pull = ({
 				db.transaction(
 					async (transaction) =>
 						Effect.gen(function* (_) {
-							const newSpaceRecordKey = ulid();
 							const newClientRecordKey = ulid();
 
 							// 4: GET PREVIOUS AND CURRENT RECORDS. (1 ROUND TRIP TO THE DATABASE)
 							const [
-								oldSpaceRecord,
+								spaceRecord,
 								oldClientRecord,
-								newSpaceRecord,
 								newClientRecord,
 								clientGroupObject,
 							] = yield* _(
 								Effect.all(
 									[
-										RecordManager.getOldSpaceRecord({ key: oldSpaceRecordKey }),
+										RecordManager.getSpaceRecord(),
 										RecordManager.getOldClientRecord({
 											key: oldClientRecordKey,
 										}),
-										RecordManager.getNewSpaceRecord({ newSpaceRecordKey }),
 										RecordManager.getNewClientRecord(),
 										RecordManager.getClientGroupObject(),
 									],
 									{
-										concurrency: 5,
+										concurrency: 4,
 									},
 								),
 							);
+							yield* Console.log("space record", spaceRecord);
 
 							const currentTime = yield* _(Clock.currentTimeMillis);
 
@@ -92,24 +95,15 @@ export const pull = ({
 							);
 
 							// 5: GET RECORDS DIFF
-							const [spaceDiff, clientDiff] = yield* _(
-								Effect.all([
-									RecordManager.diffSpaceRecords({
-										prevRecord: oldSpaceRecord,
-										currentRecord: newSpaceRecord,
-									}),
-									RecordManager.diffClientRecords({
-										prevRecord: oldClientRecord,
-										currentRecord: newClientRecord,
-									}),
-								]),
-							);
-							// 5: GET THE PATCH: THE DIFF TO THE SPACE RECORD. (2D ROUND TRIP TO THE DATABASE)
-							// IF PREVIOUS SPACE RECORD IS NOT FOUND, THEN RESET THE SPACE RECORD
+							const clientDiff = yield* RecordManager.diffClientRecords({
+								prevRecord: oldClientRecord,
+								currentRecord: newClientRecord,
+							});
+							// 5: GET THE PATCH
 
-							const spacePatch = oldSpaceRecord
-								? yield* _(RecordManager.createSpacePatch({ diff: spaceDiff }))
-								: yield* _(RecordManager.createSpaceResetPatch());
+							const spacePatch = yield* RecordManager.createSpacePatch({
+								spaceRecord,
+							});
 
 							// ADD INDICATION THAT THE CLIENT HAS PULLED.
 							spacePatch.push({
@@ -134,9 +128,6 @@ export const pull = ({
 								lastMutationIDChanges: clientDiff,
 								cookie: {
 									...requestCookie,
-									spaceRecordKey: nothingToUpdate
-										? oldSpaceRecordKey
-										: newSpaceRecordKey,
 									clientRecordKey: nothingToUpdate
 										? oldClientRecordKey
 										: newClientRecordKey,
@@ -154,17 +145,7 @@ export const pull = ({
 								yield* _(
 									Effect.all(
 										[
-											RecordManager.setSpaceRecord({
-												spaceRecord: newSpaceRecord.map(
-													(record) => record.subspaceRecord,
-												),
-											}),
 											RecordManager.setClientGroupObject({ clientGroupObject }),
-											RecordManager.deleteSpaceRecord({
-												keys: oldSpaceRecord
-													? oldSpaceRecord.map((r) => r.id)
-													: undefined,
-											}),
 											RecordManager.setClientRecord({
 												newClientRecord,
 												newKey: newClientRecordKey,
@@ -174,7 +155,7 @@ export const pull = ({
 											}),
 										],
 										{
-											concurrency: 5,
+											concurrency: 3,
 										},
 									),
 								);

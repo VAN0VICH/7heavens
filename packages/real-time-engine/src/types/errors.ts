@@ -7,6 +7,10 @@ export class NeonDatabaseError extends Data.TaggedError("NeonDatabaseError")<{
 	readonly message: string;
 }> {}
 
+export class MedusaError extends Data.TaggedError("MedusaError")<{
+	readonly message: string;
+}> {}
+
 export class NotFound extends Data.TaggedError("NotFound")<{
 	readonly message: string;
 }> {}

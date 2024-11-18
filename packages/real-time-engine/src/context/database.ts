@@ -1,5 +1,5 @@
 import { Context } from "effect";
-import type { Db, Transaction } from "../../db";
+import type { Db, Transaction } from "../db";
 
 class Database extends Context.Tag("Database")<
 	Database,

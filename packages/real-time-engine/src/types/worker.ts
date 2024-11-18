@@ -6,8 +6,10 @@ type WorkerEnv = {
 	WEB_URL: string;
 	DATABASE_URL: string;
 	PARTYKIT_ORIGIN: string;
-	SESSION_SECRET?: string;
 	ENVIRONMENT: "development" | "production" | "staging";
+	MEDUSA_BACKEND_URL: string;
+	MEDUSA_PUBLISHABLE_KEY: string;
+	SESSION_SECRET?: string;
 };
 
 export type { WorkerBindings, WorkerEnv };

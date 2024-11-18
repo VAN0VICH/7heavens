@@ -1,16 +1,22 @@
 import type { Effect } from "effect";
 
-import type { AuthContext, ReplicacheContext } from "../../context";
-import type { Database } from "../../context/database";
-import type { NeonDatabaseError } from "../../../types/errors";
-import type { RowsWTableName } from "../../../types/replicache";
-
-export type GetRowsWTableName = ({
-	fullRows,
-}: {
-	fullRows: boolean;
-}) => Effect.Effect<
-	RowsWTableName[],
+import type {
+	InvalidValue,
+	MedusaError,
 	NeonDatabaseError,
+	NotFound,
+} from "../../../types/errors";
+import type { Row } from "../../../types/replicache";
+import type {
+	AuthContext,
+	Cloudflare,
+	Database,
+	ReplicacheContext,
+} from "../../../context";
+import type { ZodError } from "zod";
+
+export type GetRows = () => Effect.Effect<
+	Row[],
+	NeonDatabaseError | MedusaError | ZodError<any> | NotFound | InvalidValue,
 	Cloudflare | ReplicacheContext | Database | AuthContext
 >;

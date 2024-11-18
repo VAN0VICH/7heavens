@@ -32,19 +32,12 @@ export type ReplicacheSubspaceRecord = z.infer<
 	typeof ReplicacheSubspaceRecordSchema
 >;
 export type ClientViewRecord = Record<string, number>;
-export type Row = Record<string, unknown> & {
-	id: string;
-	version: number;
-};
-export type RowsWTableName = { tableName: TableName; rows: Row[] };
+export type Row = Record<string, unknown> & { id: string };
 export const SPACE_RECORD = {
-	// store: ["user" as const, "cart" as const, "orders" as const],
+	store: ["cart" as const, "region" as const, "products" as const],
 	dashboard: ["orders" as const],
 };
-export const SpaceIDSchema = Schema.Literal(
-	"dashboard",
-	// "store"
-);
+export const SpaceIDSchema = Schema.Literal("dashboard", "store");
 export type SpaceID = Schema.Schema.Type<typeof SpaceIDSchema>;
 
 export type SpaceRecord = typeof SPACE_RECORD;

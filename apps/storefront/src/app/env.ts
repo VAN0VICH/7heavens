@@ -13,6 +13,9 @@ export const env = createEnv({
 		NEXT_PUBLIC_MEDUSA_BACKEND_URL: z.string(),
 		NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: z.string(),
 		NEXT_PUBLIC_SANITY_DATASET: z.string(),
+		NEXT_PUBLIC_REPLICACHE_KEY: z.string(),
+		NEXT_PUBLIC_REAL_TIME_ENGINE_URL: z.string(),
+		NEXT_PUBLIC_PARTYKIT_HOST: z.string(),
 	},
 	experimental__runtimeEnv: {
 		NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
@@ -21,6 +24,10 @@ export const env = createEnv({
 		NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY:
 			process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
 		NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
+		NEXT_PUBLIC_REPLICACHE_KEY: process.env.NEXT_PUBLIC_REPLICACHE_KEY,
+		NEXT_PUBLIC_REAL_TIME_ENGINE_URL:
+			process.env.NEXT_PUBLIC_REAL_TIME_ENGINE_URL,
+		NEXT_PUBLIC_PARTYKIT_HOST: process.env.NEXT_PUBLIC_PARTYKIT_HOST,
 	},
 	// For Next.js >= 13.4.4, you only need to destructure client variables:
 	// experimental__runtimeEnv: {

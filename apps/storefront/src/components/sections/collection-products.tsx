@@ -1,14 +1,11 @@
-import {
-	getProductsByCollectionHandle,
-	getProductsByIds,
-} from "@/data/medusa/products";
-import { getRegion } from "@/data/medusa/regions";
-
 import type { ModularPageSection } from "./types";
 
 import CarouselSection from "../shared/carousel-section";
 import ProductCard from "../shared/product-card";
 import Heading from "../shared/typography/heading";
+import { cleanHandle } from "@/sanity/lib/utils";
+import { getRegion } from "@/data/medusa/regions";
+import { getProductsByCollectionHandle } from "@/data/medusa/products";
 
 export default async function CollectionProducts(
 	props: ModularPageSection<"section.collection">,
@@ -27,7 +24,7 @@ export default async function CollectionProducts(
 	}
 
 	const { products } = await getProductsByCollectionHandle(
-		props.handle,
+		cleanHandle(props.handle)!,
 		region.id,
 	);
 

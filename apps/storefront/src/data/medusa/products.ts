@@ -3,7 +3,6 @@ import type { StoreProductParams } from "@medusajs/types";
 import { unstable_cache } from "next/cache";
 
 import medusa from "./client";
-import { cleanHandle } from "@/sanity/lib/utils";
 
 export const getProductByHandle = unstable_cache(
 	async (handle: string, region_id: string) =>
@@ -93,10 +92,9 @@ export const getProducts = unstable_cache(
 export const getProductsByCollectionHandle =
 	// unstable_cache(
 	async (handle: string, region_id: string) => {
-		const cleanedHandle = cleanHandle(handle);
 		const { collections } = await medusa.store.collection.list(
 			{
-				handle: cleanedHandle,
+				handle,
 			},
 			{ next: { tags: ["collection"] } },
 		);

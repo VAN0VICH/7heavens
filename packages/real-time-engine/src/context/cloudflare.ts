@@ -1,5 +1,5 @@
 import { Context } from "effect";
-import type { WorkerBindings, WorkerEnv } from "../../types/worker";
+import type { WorkerBindings, WorkerEnv } from "../types/worker";
 
 class Cloudflare extends Context.Tag("Cloudflare")<
 	Cloudflare,

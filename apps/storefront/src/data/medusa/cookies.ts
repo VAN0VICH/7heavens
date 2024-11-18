@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import "server-only";
 
+import "server-only";
 export const getAuthHeaders = async (): Promise<
 	{ authorization: string } | NonNullable<unknown>
 > => {
@@ -53,11 +53,18 @@ export const getCartId = async () => {
 };
 
 export const setCartId = async (cartId: string) => {
-	(await cookies()).set("_medusa_cart_id", cartId, {
+	if (!cartId) {
+		throw new Error("cartId is required");
+	}
+
+	const cookieStore = cookies();
+
+	(await cookieStore).set("_medusa_cart_id", cartId, {
 		httpOnly: true,
-		maxAge: 60 * 60 * 24 * 7,
-		sameSite: "strict",
 		secure: process.env.NODE_ENV === "production",
+		sameSite: "strict",
+		maxAge: 60 * 60 * 24 * 7, // 7 days
+		path: "/",
 	});
 };
 

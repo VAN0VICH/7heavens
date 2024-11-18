@@ -1,5 +1,5 @@
 import { Context } from "effect";
-import type { SpaceID, SpaceRecord } from "../../types/replicache";
+import type { SpaceID, SpaceRecord } from "../types/replicache";
 
 class ReplicacheContext extends Context.Tag("TableMutator")<
 	ReplicacheContext,
