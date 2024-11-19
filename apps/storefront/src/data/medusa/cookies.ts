@@ -53,18 +53,11 @@ export const getCartId = async () => {
 };
 
 export const setCartId = async (cartId: string) => {
-	if (!cartId) {
-		throw new Error("cartId is required");
-	}
-
-	const cookieStore = cookies();
-
-	(await cookieStore).set("_medusa_cart_id", cartId, {
+	(await cookies()).set("_medusa_cart_id", cartId, {
 		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
+		maxAge: 60 * 60 * 24 * 7,
 		sameSite: "strict",
-		maxAge: 60 * 60 * 24 * 7, // 7 days
-		path: "/",
+		secure: process.env.NODE_ENV === "production",
 	});
 };
 

@@ -6,7 +6,7 @@ import type { Routes } from "@7heavens/real-time-engine";
 import { hc } from "hono/client";
 import usePartySocket from "partysocket/react";
 
-function PartykitProvider({ cartId }: { cartId: string | undefined }) {
+function PartykitProvider() {
 	const globalRep = useReplicache((state) => state.storeRep);
 	const client = hc<Routes>(env.NEXT_PUBLIC_REAL_TIME_ENGINE_URL);
 
@@ -26,22 +26,14 @@ function PartykitProvider({ cartId }: { cartId: string | undefined }) {
 			if (globalRep) {
 				//@ts-ignore
 				globalRep.puller = async (req) => {
-					const response = await client.pull.$post(
-						{
-							//@ts-ignore
-							json: req,
-							query: {
-								spaceID: "store" as const,
-								subspaces,
-							},
+					const response = await client.pull.$post({
+						//@ts-ignore
+						json: req,
+						query: {
+							spaceID: "store" as const,
+							subspaces,
 						},
-						{
-							headers: {
-								...(cartId && { "x-cart-id": cartId }),
-								"Content-Type": "application/json",
-							},
-						},
-					);
+					});
 
 					return {
 						response:

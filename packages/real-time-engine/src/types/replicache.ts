@@ -34,7 +34,7 @@ export type ReplicacheSubspaceRecord = z.infer<
 export type ClientViewRecord = Record<string, number>;
 export type Row = Record<string, unknown> & { id: string };
 export const SPACE_RECORD = {
-	store: ["cart" as const, "region" as const, "products" as const],
+	store: ["products" as const],
 	dashboard: ["orders" as const],
 };
 export const SpaceIDSchema = Schema.Literal("dashboard", "store");

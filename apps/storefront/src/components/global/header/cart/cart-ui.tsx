@@ -1,5 +1,7 @@
 "use client";
 
+import type { Header } from "@/types/sanity.generated";
+
 import Icon from "@/components/shared/icon";
 import {
 	CloseDialog,
@@ -13,29 +15,14 @@ import CartFooter from "./cart-footer";
 import CartHeading from "./cart-heading";
 import LineItem from "./line-item";
 import OpenCart from "./open-cart-button";
-import { useReplicache } from "@/zustand/replicache";
-import React from "react";
+
+type Props = Pick<Header, "cartAddons">;
 
 export default function CartUI({
 	addons,
-}: { addons: React.ReactElement | null }) {
+}: { addons: React.ReactElement | null } & Props) {
 	const { cart } = useCart();
 	const isEmptyCart = !cart?.items || cart.items.length === 0;
-	const rep = useReplicache((state) => state.storeRep);
-
-	const deleteItem = React.useCallback(
-		async (id: string) => {
-			cart && (await rep?.mutate.deleteLineItem({ id, cartId: cart.id }));
-		},
-		[rep, cart],
-	);
-	const updateItem = React.useCallback(
-		async (id: string, quantity: number) => {
-			cart &&
-				(await rep?.mutate.updateLineItem({ id, quantity, cartId: cart.id }));
-		},
-		[rep, cart],
-	);
 
 	return (
 		<Dialog>
@@ -54,17 +41,10 @@ export default function CartUI({
 						<div className="flex flex-col gap-4 p-4">
 							{isEmptyCart ? (
 								<Body font="sans" mobileSize="base">
-									Корзина пустая.
+									Your bag is currently empty.
 								</Body>
 							) : (
-								cart.items?.map((item) => (
-									<LineItem
-										key={item.id}
-										props={item}
-										deleteItem={deleteItem}
-										updateItem={updateItem}
-									/>
-								))
+								cart.items?.map((item) => <LineItem key={item.id} {...item} />)
 							)}
 						</div>
 						{addons}

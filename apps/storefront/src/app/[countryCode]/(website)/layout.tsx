@@ -29,7 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Layout(props: LayoutProps) {
 	const params = await props.params;
-	console.log("params", params);
 
 	const { children } = props;
 

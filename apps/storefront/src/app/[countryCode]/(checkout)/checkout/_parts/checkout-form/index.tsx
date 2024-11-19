@@ -8,11 +8,10 @@ import type {
 import Heading from "@/components/shared/typography/heading";
 import { useState } from "react";
 
+import Checkbox from "@/components/shared/checkbox";
 import AddressForm from "./address-form";
 import Delivery from "./delivery";
-import Payment from "./payment";
 import StripeWrapper from "./payment/wrapper";
-import Review from "./review";
 
 export default function CheckoutForm({
 	cart,
@@ -30,8 +29,22 @@ export default function CheckoutForm({
 	return (
 		<StripeWrapper cart={cart}>
 			<div className="w-full">
+				<div className="w-full flex flex-wrap gap-6 md:gap-10 items-center">
+					<div className="flex gap-3 items-center">
+						<Checkbox />
+						<p className="text-base md:text-lg font-medium whitespace-nowrap">
+							Достaвка
+						</p>
+					</div>
+					<div className="flex gap-3 items-center">
+						<Checkbox />
+						<p className="text-base md:text-lg font-medium whitespace-nowrap">
+							На месте
+						</p>
+					</div>
+				</div>
 				<Heading desktopSize="2xl" font="serif" mobileSize="xl" tag="h3">
-					Checkout
+					Оформление заказа
 				</Heading>
 				<AddressForm
 					active={step === "addresses"}
@@ -48,13 +61,6 @@ export default function CheckoutForm({
 						setStep={setStep}
 					/>
 				)}
-				<Payment
-					active={step === "payment"}
-					cart={cart}
-					methods={paymentMethods}
-					setStep={setStep}
-				/>
-				<Review active={step === "review"} cart={cart} />
 			</div>
 		</StripeWrapper>
 	);

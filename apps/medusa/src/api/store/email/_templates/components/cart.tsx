@@ -33,12 +33,12 @@ export default function Cart({
 			})}
 			{details && (
 				<Section className="max-w-[365px]" align="right">
-					<CheckoutLine title="Subtotal" price={details.subtotal} />
+					<CheckoutLine title="Цена" price={details.subtotal} />
 					<CheckoutLine title="Order discount" price={details.discount} />
-					<CheckoutLine title="Shipping" price={details.shipping} />
-					<CheckoutLine title="Taxes" price={details.taxes} />
+					<CheckoutLine title="Доставка" price={details.shipping} />
+					<CheckoutLine title="Налог" price={details.taxes} />
 					<Hr className="h-px bg-accent mb-4" />
-					<CheckoutLine title="Total" price={details.total} />
+					<CheckoutLine title="Итого" price={details.total} />
 				</Section>
 			)}
 		</Section>

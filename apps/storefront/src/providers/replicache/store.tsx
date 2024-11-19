@@ -1,17 +1,15 @@
 "use client";
 import { env } from "@/app/env";
 import { useReplicache } from "@/zustand/replicache";
-import { type Routes, StoreMutators } from "@7heavens/real-time-engine";
+import type { Routes } from "@7heavens/real-time-engine";
 import { hc } from "hono/client";
 import React from "react";
 import { Replicache } from "replicache";
 
 export function StoreReplicacheProvider({
 	children,
-	cartId,
 }: Readonly<{
 	children: React.ReactNode;
-	cartId: string | undefined;
 }>) {
 	const rep = useReplicache((state) => state.storeRep);
 	const setRep = useReplicache((state) => state.setStoreRep);
@@ -27,25 +25,16 @@ export function StoreReplicacheProvider({
 		const r = new Replicache({
 			name: "store",
 			licenseKey: env.NEXT_PUBLIC_REPLICACHE_KEY,
-			mutators: StoreMutators,
 			pullInterval: null,
 			//@ts-ignore
 			puller: async (req) => {
-				const response = await client.pull.$post(
-					{
-						//@ts-ignore
-						json: req,
-						query: {
-							spaceID: "store" as const,
-						},
+				const response = await client.pull.$post({
+					//@ts-ignore
+					json: req,
+					query: {
+						spaceID: "store" as const,
 					},
-					{
-						headers: {
-							"Content-Type": "application/json",
-							...(cartId && { "x-cart-id": cartId }),
-						},
-					},
-				);
+				});
 
 				return {
 					response: response.status === 200 ? await response.json() : undefined,
@@ -72,7 +61,7 @@ export function StoreReplicacheProvider({
 			},
 		});
 		setRep(r);
-	}, [rep, setRep, cartId]);
+	}, [rep, setRep]);
 
 	return <>{children}</>;
 }

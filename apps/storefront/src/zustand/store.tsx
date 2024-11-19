@@ -10,7 +10,6 @@ import React from "react";
 import type { ExperimentalDiff, ReadonlyJSONValue } from "replicache";
 import { createStore, useStore } from "zustand";
 import type { SearchWorkerRequest } from "../types/worker";
-import { setCartId } from "@/actions/set-cart-id";
 type Entity = ReadonlyJSONValue & { id: string };
 type ExtractState<S> = S extends {
 	getState: () => infer T;
@@ -32,11 +31,6 @@ function commonDiffReducer({
 	async function add(key: string, newValue: Entity) {
 		newMap.set(key, newValue);
 
-		if (key.startsWith("cart")) {
-			if (!cartId) {
-				await setCartId(key);
-			}
-		}
 		searchWorker?.postMessage({
 			type: "ADD",
 			payload: {
@@ -94,7 +88,7 @@ interface GlobalStore {
 	orders: StoreOrder[];
 	orderMap: Map<string, StoreOrder>;
 	setIsInitialized(newValue: boolean): void;
-	diffCarts(diff: ExperimentalDiff, cartId?: string): void;
+	diffCarts(diff: ExperimentalDiff): void;
 	diffOrders(diff: ExperimentalDiff): void;
 	diffProducts(diff: ExperimentalDiff): void;
 	diffVariants(diff: ExperimentalDiff): void;

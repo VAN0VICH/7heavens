@@ -7,8 +7,7 @@ import { useGlobalStore } from "./store";
 
 export const GlobalStoreMutator = ({
 	children,
-	cartId,
-}: { children: React.ReactNode; cartId: string | undefined }) => {
+}: { children: React.ReactNode }) => {
 	const setIsInitialized = useGlobalStore((state) => state.setIsInitialized);
 	const diffProducts = useGlobalStore((state) => state.diffProducts);
 	const diffVariants = useGlobalStore((state) => state.diffVariants);
@@ -39,11 +38,11 @@ export const GlobalStoreMutator = ({
 		});
 	}, [rep, diffVariants]);
 	React.useEffect(() => {
-		return rep?.experimentalWatch((diff) => diffCarts(diff, cartId), {
+		return rep?.experimentalWatch(diffCarts, {
 			prefix: "cart",
 			initialValuesInFirstDiff: true,
 		});
-	}, [rep, diffCarts, cartId]);
+	}, [rep, diffCarts]);
 	React.useEffect(() => {
 		return rep?.experimentalWatch(diffOrders, {
 			prefix: "ord",

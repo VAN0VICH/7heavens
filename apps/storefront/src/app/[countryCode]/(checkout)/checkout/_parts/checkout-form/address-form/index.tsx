@@ -2,16 +2,14 @@
 import type { StoreCart, StoreCartAddress } from "@medusajs/types";
 import type { BaseRegionCountry } from "@medusajs/types/dist/http/region/common";
 import type { Dispatch, SetStateAction } from "react";
-
 import { setCheckoutAddresses } from "@/actions/medusa/order";
 import { Cta } from "@/components/shared/button";
-import Checkbox from "@/components/shared/checkbox";
 import Input from "@/components/shared/input";
 import InputCombobox from "@/components/shared/input-combobox";
 import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
 import { useResetableActionState } from "@/hooks/use-resetable-action-state";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 
 export default function AddressForm({
@@ -27,7 +25,6 @@ export default function AddressForm({
 		SetStateAction<"addresses" | "delivery" | "payment" | "review">
 	>;
 }) {
-	const [checked, setChecked] = useState(true);
 	const [, startTransition] = useTransition();
 
 	const [{ status }, action, , reset] = useResetableActionState(
@@ -54,7 +51,7 @@ export default function AddressForm({
 		>
 			<div className="flex items-center justify-between">
 				<Heading desktopSize="xs" font="sans" mobileSize="xs" tag="h6">
-					Shipping Address
+					Адрес доставки
 				</Heading>
 				{isFilled && (
 					<Cta onClick={() => setStep("addresses")} size="sm" variant="outline">
@@ -66,7 +63,7 @@ export default function AddressForm({
 				<div className="flex w-full flex-col gap-4 lg:flex-row">
 					<div className="flex flex-1 flex-col gap-4">
 						<Body className="font-semibold" font="sans">
-							Shipping address
+							Адрес доставки
 						</Body>
 						<div className="flex flex-col gap-[6px]">
 							<Body font="sans">
@@ -97,12 +94,6 @@ export default function AddressForm({
 							countries={cart.region?.countries}
 						/>
 					</div>
-					<Checkbox
-						checked={checked}
-						onCheckedChange={(v) =>
-							setChecked(v === "indeterminate" ? false : v)
-						}
-					/>
 					<div className="grid gap-4 lg:grid-cols-2">
 						<Input
 							defaultValue={cart.email}
@@ -118,25 +109,6 @@ export default function AddressForm({
 						/>
 					</div>
 
-					{!checked && (
-						<>
-							<Heading desktopSize="xs" font="sans" mobileSize="xs" tag="h6">
-								Billing address
-							</Heading>
-							<div className="grid gap-4 lg:grid-cols-2">
-								<AddressInputs
-									address={cart.billing_address}
-									addressName="billing_address"
-									countries={cart.region?.countries}
-								/>
-								<Input
-									defaultValue={cart.billing_address?.phone}
-									name="billing_address.phone"
-									placeholder="Phone"
-								/>
-							</div>
-						</>
-					)}
 					<SubmitButton />
 				</div>
 			)}
@@ -169,7 +141,7 @@ function AddressInputs({
 			<Input
 				defaultValue={address?.first_name}
 				name={inputName("first_name")}
-				placeholder="First name"
+				placeholder="Имя"
 				required
 			/>
 			<Input

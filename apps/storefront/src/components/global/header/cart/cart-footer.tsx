@@ -27,10 +27,7 @@ export default function CartFooter() {
 				<div className="flex w-full justify-between gap-4">
 					<div>
 						<Body className="font-semibold" font="sans" mobileSize="base">
-							Subtotal
-						</Body>
-						<Body font="sans" mobileSize="sm">
-							Taxes and shipping calculated at checkout
+							Заказ
 						</Body>
 					</div>
 					{item_total && (

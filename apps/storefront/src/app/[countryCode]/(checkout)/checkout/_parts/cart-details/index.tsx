@@ -10,7 +10,7 @@ export default function CartDetails({ cart }: { cart: HttpTypes.StoreCart }) {
 	return (
 		<div className="flex h-fit w-full flex-col gap-4 rounded-lg border border-accent p-4 md:max-w-[420px]">
 			<Heading desktopSize="xl" font="serif" mobileSize="lg" tag="h3">
-				Order details
+				Заказ
 			</Heading>
 			{cart.items?.map((item) => (
 				<LineItem key={item.id} {...item} />
@@ -23,9 +23,9 @@ export default function CartDetails({ cart }: { cart: HttpTypes.StoreCart }) {
 
 export function CheckoutSummary({ cart }: { cart: HttpTypes.StoreCart }) {
 	const summaryItems = [
-		{ amount: cart.subtotal, label: "Subtotal" },
-		{ amount: cart.tax_total, label: "Taxes" },
-		{ amount: cart.shipping_total, label: "Shipping" },
+		{ amount: cart.subtotal, label: "Цена" },
+		{ amount: cart.tax_total, label: "Налоги" },
+		{ amount: cart.shipping_total, label: "Доставка" },
 	];
 
 	const total = { amount: cart.total, label: "Total", type: "total" };
