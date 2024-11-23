@@ -27,7 +27,27 @@ export default definePage({
 				{ name: "title", title: "Title", type: "string" },
 				{
 					name: "products",
-					of: [{ to: [{ type: "product" }], type: "reference" }],
+					of: [
+						{
+							type: "object",
+							name: "productWithHandle",
+							fields: [
+								{
+									name: "product",
+									title: "Product",
+									type: "reference",
+									to: [{ type: "product" }],
+								},
+								{
+									name: "handle",
+									title: "Handle",
+									type: "string",
+									description:
+										"A unique identifier for this product in the addons",
+								},
+							],
+						},
+					],
 					title: "Addons",
 					type: "array",
 					validation: (Rule) => Rule.max(3),

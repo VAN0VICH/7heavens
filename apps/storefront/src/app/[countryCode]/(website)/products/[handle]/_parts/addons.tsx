@@ -2,28 +2,24 @@ import type { Product } from "@/types/sanity.generated";
 
 import { AddonsItem } from "@/components/shared/addons-item";
 import Heading from "@/components/shared/typography/heading";
-import { getProductsByIds } from "@/data/medusa/products";
+import { getProductsByHandles } from "@/data/blazzing-app/product-and-variant";
 
-export default async function Addons({
-	products: productRefs,
-	region_id,
-	title,
-}: {
-	region_id: string;
-} & Product["addons"]) {
-	const ids = productRefs?.map(({ _ref }) => _ref);
+export async function Addons({ addons }: { addons: Product["addons"] }) {
+	const handle = (addons?.products ?? [])
+		.map(({ handle }) => handle)
+		.filter(Boolean) as string[];
 
-	if (!ids || ids.length === 0) return null;
+	if (!handle || handle.length === 0) return null;
 
-	const { products } = await getProductsByIds(ids, region_id);
+	const products = await getProductsByHandles(handle);
 
 	return (
 		<div className="flex flex-col gap-xs rounded-lg bg-secondary p-s">
 			<Heading desktopSize="lg" mobileSize="base" tag={"h4"}>
-				{title}
+				{addons?.title}
 			</Heading>
 			{products.map((product) => (
-				<AddonsItem key={product.id} region_id={region_id} {...product} />
+				<AddonsItem key={product.id} product={product} />
 			))}
 		</div>
 	);

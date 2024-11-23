@@ -1,20 +1,16 @@
 import { AddonsItem } from "@/components/shared/addons-item";
 import CarouselSection from "@/components/shared/carousel-section";
 import Heading from "@/components/shared/typography/heading";
-import { getProductsByIds } from "@/data/medusa/products";
+import { getProductsByHandles } from "@/data/blazzing-app/product-and-variant";
 
-type Props = { ids: string[]; isEmptyCart: boolean; region_id: string };
+type Props = { handles: string[]; isEmptyCart: boolean };
 
-export default async function CartAddons({
-	ids,
-	isEmptyCart,
-	region_id,
-}: Props) {
-	const { products } = await getProductsByIds(ids, region_id);
+export default async function CartAddons({ handles, isEmptyCart }: Props) {
+	const products = await getProductsByHandles(handles);
 
-	const slides = products.map((item) => (
-		<div className="w-[380px]" key={item.id}>
-			<AddonsItem region_id={region_id} variant="cart" {...item} />
+	const slides = products.map((product) => (
+		<div className="w-[380px]" key={product.id}>
+			<AddonsItem variant="cart" product={product} />
 		</div>
 	));
 

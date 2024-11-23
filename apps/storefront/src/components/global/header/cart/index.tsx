@@ -1,35 +1,28 @@
+"use client";
 import type { Header } from "@/types/sanity.generated";
 
-import { getEnrichedCart } from "@/data/medusa/cart";
-import { getRegion } from "@/data/medusa/regions";
 import { Suspense } from "react";
 
 import CartAddons from "./cart-addons";
-import { CartProvider } from "./cart-context";
+import { CartProvider, useCart } from "./cart-context";
 import CartUI from "./cart-ui";
 
 type Props = Pick<Header, "cartAddons">;
 
-export default async function Cart({
-	cartAddons,
-	countryCode,
-}: { countryCode: string } & Props) {
-	const cart = await getEnrichedCart();
+export function Cart({ cartAddons }: Props) {
+	const { lineItems } = useCart();
 
-	const region = await getRegion(countryCode);
+	const addonHandles = (
+		cartAddons?.map(({ handle }) => handle).filter(Boolean) || []
+	).filter(
+		(handle) => !lineItems?.some(({ variant }) => variant?.handle === handle),
+	) as string[];
 
-	const addonIds = (cartAddons?.map(({ _ref }) => _ref) ?? []).filter(
-		(id) => !cart?.items?.map(({ product_id }) => product_id)?.includes(id),
-	);
-	const isEmptyCart = !cart?.items || cart.items.length === 0;
+	const isEmptyCart = !lineItems || lineItems.length === 0;
 	const addons =
-		region && addonIds.length > 0 ? (
+		addonHandles.length > 0 ? (
 			<Suspense>
-				<CartAddons
-					ids={addonIds}
-					isEmptyCart={isEmptyCart}
-					region_id={region.id}
-				/>
+				<CartAddons handles={addonHandles} isEmptyCart={isEmptyCart} />
 			</Suspense>
 		) : null;
 

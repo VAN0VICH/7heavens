@@ -1,21 +1,8 @@
-"use client";
-import type { StoreProduct } from "@medusajs/types";
-
 import ProductCard from "@/components/shared/product-card";
-import { useEffect, useState } from "react";
+import type { Product } from "@blazzing-app/validators/client";
 
-export default function ProductGrid({
-	products,
-}: { products: StoreProduct[] }) {
-	const [paginatedProducts, setPaginatedProducts] = useState<StoreProduct[]>(
-		products || [],
-	);
-
-	useEffect(() => {
-		setPaginatedProducts(products);
-	}, [products]);
-
-	return paginatedProducts?.map((product) => {
+export function ProductGrid({ products }: { products: Product[] }) {
+	return products?.map((product) => {
 		return <ProductCard key={product.id} product={product} size="PLP" />;
 	});
 }

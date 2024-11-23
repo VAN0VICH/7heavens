@@ -2,21 +2,21 @@
 
 import { Link } from "@/components/shared/button";
 import Body from "@/components/shared/typography/body";
-import { convertToLocale } from "@/utils/medusa/money";
+import { convertToLocale } from "@/utils/business/money";
 
 import { useCart } from "./cart-context";
 
 export default function CartFooter() {
-	const { cart } = useCart();
+	const { cart, lineItems, subtotal } = useCart();
 
-	const item_total = cart
+	const total = cart
 		? convertToLocale({
-				amount: cart.item_total,
-				currency_code: cart.currency_code,
+				amount: subtotal,
+				currencyCode: cart.currencyCode,
 			})
 		: null;
 
-	const cartIsEmpty = cart?.items?.length === 0;
+	const cartIsEmpty = lineItems.length === 0;
 
 	if (cartIsEmpty) return null;
 
@@ -30,9 +30,9 @@ export default function CartFooter() {
 							Заказ
 						</Body>
 					</div>
-					{item_total && (
+					{total && (
 						<Body font="sans" mobileSize="base">
-							{item_total}
+							{total}
 						</Body>
 					)}
 				</div>

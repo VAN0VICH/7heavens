@@ -6,9 +6,9 @@ import Body from "@/components/shared/typography/body";
 import { useCart } from "./cart-context";
 
 export default function OpenCart() {
-	const { cart } = useCart();
+	const { lineItems } = useCart();
 
-	const count = (cart?.items?.length || 0).toFixed();
+	const count = (lineItems?.length || 0).toFixed();
 
 	return (
 		<OpenDialog>

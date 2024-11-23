@@ -1,15 +1,16 @@
 "use client";
 
-import type {
-	StoreCart,
-	StoreOrder,
-	StoreProduct,
-	StoreProductVariant,
-} from "@medusajs/types";
 import React from "react";
 import type { ExperimentalDiff, ReadonlyJSONValue } from "replicache";
 import { createStore, useStore } from "zustand";
 import type { SearchWorkerRequest } from "../types/worker";
+import type {
+	Cart,
+	LineItem,
+	Order,
+	Product,
+	Variant,
+} from "@blazzing-app/validators/client";
 type Entity = ReadonlyJSONValue & { id: string };
 type ExtractState<S> = S extends {
 	getState: () => infer T;
@@ -20,12 +21,10 @@ function commonDiffReducer({
 	diff,
 	map,
 	searchWorker,
-	cartId,
 }: {
 	diff: ExperimentalDiff;
 	map: Map<string, Entity>;
 	searchWorker?: Worker | undefined;
-	cartId?: string;
 }) {
 	const newMap = new Map(map);
 	async function add(key: string, newValue: Entity) {
@@ -79,19 +78,22 @@ function commonDiffReducer({
 
 interface GlobalStore {
 	isInitialized: boolean;
-	carts: StoreCart[];
-	products: StoreProduct[];
-	variants: StoreProductVariant[];
-	cartMap: Map<string, StoreCart>;
-	productsMap: Map<string, StoreProduct>;
-	variantsMap: Map<string, StoreProductVariant>;
-	orders: StoreOrder[];
-	orderMap: Map<string, StoreOrder>;
+	carts: Cart[];
+	products: Product[];
+	variants: Variant[];
+	lineItems: LineItem[];
+	cartMap: Map<string, Cart>;
+	lineItemMap: Map<string, LineItem>;
+	productsMap: Map<string, Product>;
+	variantsMap: Map<string, Variant>;
+	orders: Order[];
+	orderMap: Map<string, Order>;
 	setIsInitialized(newValue: boolean): void;
 	diffCarts(diff: ExperimentalDiff): void;
 	diffOrders(diff: ExperimentalDiff): void;
 	diffProducts(diff: ExperimentalDiff): void;
 	diffVariants(diff: ExperimentalDiff): void;
+	diffLineItems(diff: ExperimentalDiff): void;
 }
 const createGlobalStore = () =>
 	createStore<GlobalStore>((set, get) => ({
@@ -118,42 +120,52 @@ const createGlobalStore = () =>
 		diffProducts(diff: ExperimentalDiff) {
 			const { newEntities, newMap } = commonDiffReducer({
 				diff,
-				map: get().productsMap as any as Map<string, Entity>,
+				map: get().productsMap,
 			});
 			set({
-				products: newEntities as any as StoreProduct[],
-				productsMap: newMap as any as Map<string, StoreProduct>,
+				products: newEntities as Product[],
+				productsMap: newMap as Map<string, Product>,
 			});
 		},
 		diffVariants(diff: ExperimentalDiff) {
 			const { newEntities, newMap } = commonDiffReducer({
 				diff,
-				map: get().variantsMap as any as Map<string, Entity>,
+				map: get().variantsMap as Map<string, Entity>,
 			});
 			set({
-				variants: newEntities as any as StoreProductVariant[],
-				variantsMap: newMap as any as Map<string, StoreProductVariant>,
+				variants: newEntities as Variant[],
+				variantsMap: newMap as Map<string, Variant>,
 			});
 		},
 		diffCarts(diff: ExperimentalDiff, cartId?: string) {
 			const { newEntities, newMap } = commonDiffReducer({
 				diff,
-				map: get().cartMap as any as Map<string, Entity>,
+				map: get().cartMap as Map<string, Entity>,
 				...(cartId && { cartId }),
 			});
 			set({
-				carts: newEntities as any as StoreCart[],
-				cartMap: newMap as any as Map<string, StoreCart>,
+				carts: newEntities as Cart[],
+				cartMap: newMap as Map<string, Cart>,
 			});
 		},
 		diffOrders(diff: ExperimentalDiff) {
 			const { newEntities, newMap } = commonDiffReducer({
 				diff,
-				map: get().orderMap as any as Map<string, Entity>,
+				map: get().orderMap as Map<string, Entity>,
 			});
 			set({
-				orders: newEntities as any as StoreOrder[],
-				orderMap: newMap as any as Map<string, StoreOrder>,
+				orders: newEntities as Order[],
+				orderMap: newMap as Map<string, Order>,
+			});
+		},
+		diffLineItems(diff: ExperimentalDiff) {
+			const { newEntities, newMap } = commonDiffReducer({
+				diff,
+				map: get().lineItemMap as Map<string, Entity>,
+			});
+			set({
+				lineItems: newEntities as LineItem[],
+				lineItemMap: newMap as Map<string, LineItem>,
 			});
 		},
 	}));

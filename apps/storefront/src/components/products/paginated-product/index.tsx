@@ -1,70 +1,15 @@
-import type { SearchParams } from "@/types";
-
 import Icon from "@/components/shared/icon";
-import Body from "@/components/shared/typography/body";
-import Heading from "@/components/shared/typography/heading";
-import { getProducts } from "@/data/medusa/products";
-import { getRegion } from "@/data/medusa/regions";
-import { loadDictionary } from "@/data/sanity";
 
-import { Link } from "../../shared/button";
-import ClearAllButton from "../product-refinement/filters/clear-button";
-import ProductGrid from "./grid";
+import { getProducts } from "@/data/blazzing-app/product-and-variant";
+import { ProductGrid } from "./grid";
 
-export default async function PaginatedProducts({
-	countryCode,
-	searchParams,
-}: {
-	countryCode: string;
-	searchParams: SearchParams<"category" | "collection" | "page" | "sort">;
-}) {
-	const category = parseSearchParam(searchParams.category)?.split(",");
-	const collection = parseSearchParam(searchParams.collection)?.split(",");
-	const page =
-		typeof searchParams.page === "string"
-			? Number.parseInt(searchParams.page, 10)
-			: 1;
+export default async function PaginatedProducts() {
+	const products = await getProducts();
 
-	const productsDictionary = await loadDictionary();
-
-	const region = await getRegion(countryCode);
-
-	if (!region) {
-		return null;
-	}
-
-	const { hasNextPage, products } = await getProducts(page, region.id, {
-		category_id: category,
-		collection_id: collection,
-	});
-
-	const hasFilters = category || collection;
 	return (
-		<>
-			{products.length === 0 && (
-				<div className="flex w-full flex-1 flex-col items-start gap-xs py-2xl">
-					<Heading font="sans" mobileSize="xs" tag="h2">
-						{productsDictionary?.noResultsText}
-					</Heading>
-					<Body font="sans" mobileSize="lg">
-						{productsDictionary?.noResultsDescription}
-					</Body>
-					{hasFilters && <ClearAllButton variant="button" />}
-				</div>
-			)}
-			<div className="grid grid-cols-2 gap-x-2 gap-y-4 lg:grid-cols-3">
-				<ProductGrid products={products} />
-			</div>
-			{hasNextPage && (
-				<Link
-					className="w-full"
-					href={`?page=${(page + 1).toString()}`}
-					variant="outline"
-				>
-					Load more
-				</Link>
-			)}
-		</>
+		<div className="grid grid-cols-2 gap-x-2 gap-y-4 lg:grid-cols-3">
+			<ProductGrid products={products} />
+		</div>
 	);
 }
 
@@ -89,16 +34,4 @@ export function ProductsSkeleton() {
 			))}
 		</div>
 	);
-}
-
-function parseSearchParam(
-	value: string | string[] | undefined,
-): string | undefined {
-	if (typeof value === "string") {
-		return value;
-	}
-	if (Array.isArray(value)) {
-		return value[0];
-	}
-	return undefined;
 }

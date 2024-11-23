@@ -4,11 +4,11 @@ import Icon from "@/components/shared/icon";
 import LocalizedLink from "@/components/shared/localized-link";
 import { Suspense } from "react";
 
-import Cart from "./cart";
 import AnnouncementBar from "./parts/announcement-bar";
 import BottomBorder from "./parts/bottom-border";
-import HamburgerContainer from "./parts/hamburger/container";
 import Navigation from "./parts/navigation";
+import HamburgerContainer from "./parts/hamburger/container";
+import { Cart } from "./cart";
 
 export default function HeaderComponent(
 	props: { countryCode: string } & Header,
@@ -36,18 +36,15 @@ export default function HeaderComponent(
 					{/* <span className="hidden lg:block">
 						<CountrySelector />
 					</span> */}
-					<Suspense
+					{/* <Suspense
 						fallback={
 							<div className="relative h-10 w-10 p-2">
 								<Icon name="Cart" />
 							</div>
 						}
-					>
-						<Cart
-							cartAddons={props.cartAddons}
-							countryCode={props.countryCode}
-						/>
-					</Suspense>
+					> */}
+					<Cart cartAddons={props.cartAddons} />
+					{/* </Suspense> */}
 				</div>
 			</div>
 			<div className="relative z-30 w-screen" id="navigation-portal" />

@@ -13,8 +13,6 @@ type CollectionPageProps = PageProps<
 >;
 
 export default async function CollectionPage(props: CollectionPageProps) {
-	const searchParams = await props.searchParams;
-	const params = await props.params;
 	return (
 		<section className="mx-auto flex max-w-max-screen flex-col gap-10 px-m pb-10 pt-[3rem] lg:px-xl">
 			<div>
@@ -25,10 +23,7 @@ export default async function CollectionPage(props: CollectionPageProps) {
 			<div className="flex flex-col gap-6">
 				{/* <Refinement /> */}
 				<Suspense fallback={<ProductsSkeleton />}>
-					<PaginatedProducts
-						countryCode={params.countryCode}
-						searchParams={searchParams}
-					/>
+					<PaginatedProducts />
 				</Suspense>
 			</div>
 		</section>

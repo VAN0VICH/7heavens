@@ -1,25 +1,24 @@
 "use client";
-import type { StoreProduct } from "@medusajs/types";
 
 import { Link } from "@/components/shared/button";
 import LocalizedLink from "@/components/shared/localized-link";
 import { SanityImage } from "@/components/shared/sanity-image";
 import Tag from "@/components/shared/tag";
 import Body from "@/components/shared/typography/body";
-import { getProductPrice } from "@/utils/medusa/get-product-price";
 import { cx } from "cva";
 import Image from "next/image";
 import { useState } from "react";
 
 import type { ModularPageSection } from "../types";
 import { cleanHandle } from "@/sanity/lib/utils";
+import type { Product } from "@blazzing-app/validators/client";
 
 export default function HotspotsUi({
 	image,
 	productHotSpots,
 	products,
 }: {
-	products: StoreProduct[];
+	products: Product[];
 } & Pick<
 	ModularPageSection<"section.shopTheLook">,
 	"image" | "productHotSpots"
@@ -29,17 +28,16 @@ export default function HotspotsUi({
 	);
 	const referencedProducts = products.filter((product) =>
 		productHotSpots?.some(
-			(hotspot) => cleanHandle(hotspot.handle) === product.handle,
+			(hotspot) => cleanHandle(hotspot.handle) === product.baseVariant.handle,
 		),
 	);
 
 	const product = referencedProducts.find(
-		(product) => product.handle === selectedProduct,
+		(product) => product.baseVariant.handle === selectedProduct,
 	);
 	if (!product) return null;
-	const { cheapestPrice } = getProductPrice({ product });
 
-	const thumbnailUrl = product?.thumbnail || product?.images?.[0].url;
+	const thumbnailUrl = product?.baseVariant.thumbnail?.url;
 
 	return (
 		<div className="flex w-full flex-col items-stretch justify-start gap-xs lg:flex-row lg:gap-s">
@@ -96,26 +94,26 @@ export default function HotspotsUi({
 			)}
 			<LocalizedLink
 				className="hidden w-full max-w-[450px] flex-col justify-between gap-2xl rounded-lg lg:flex"
-				href={`/products/${product?.handle}`}
+				href={`/products/${product?.baseVariant.handle}`}
 				prefetch
 			>
 				<div className="flex w-full max-w-[450px] flex-1 flex-col items-center justify-center rounded-lg">
 					<div className="relative w-full">
 						{thumbnailUrl ? (
 							<Image
-								alt={product.title}
+								alt={product.baseVariant.title ?? "Product image"}
 								className="aspect-square w-full rounded-lg"
 								height={450}
 								src={thumbnailUrl}
 								width={450}
 							/>
 						) : null}
-						{product.type?.value && (
+						{/* {product.type?.value && (
 							<Tag
 								className="absolute right-4 top-3"
 								text={product.type.value || ""}
 							/>
-						)}
+						)} */}
 					</div>
 					<div className="flex flex-1 flex-col items-center justify-center gap-1 px-lg py-s">
 						<Body
@@ -124,7 +122,7 @@ export default function HotspotsUi({
 							font="sans"
 							mobileSize="lg"
 						>
-							{product.title}
+							{product.baseVariant.title}
 						</Body>
 						<Body
 							className="text-center"
@@ -132,13 +130,14 @@ export default function HotspotsUi({
 							font="sans"
 							mobileSize="sm"
 						>
-							от {cheapestPrice?.calculated_price || "NA"}
+							от{" "}
+							{`${product.baseVariant.prices?.[0].amount} ${product.baseVariant.prices?.[0].currencyCode}`}
 						</Body>
 					</div>
 				</div>
 				<Link
 					className="w-full"
-					href={`/products/${product?.handle}`}
+					href={`/products/${product?.baseVariant.handle}`}
 					renderAsChild
 					size="xl"
 					variant="outline"
@@ -148,20 +147,19 @@ export default function HotspotsUi({
 			</LocalizedLink>
 			<div className="flex flex-col gap-xs lg:hidden">
 				{referencedProducts.map((product) => {
-					const { cheapestPrice } = getProductPrice({ product });
-					const thumbnailUrl = product?.thumbnail || product?.images?.[0].url;
+					const thumbnailUrl = product?.baseVariant.thumbnail?.url;
 					return (
 						<LocalizedLink
 							className={cx("flex w-full gap-[10px] rounded-2xl p-xs", {
 								"bg-secondary": selectedProduct === product.id,
 							})}
-							href={`/products/${product?.handle}`}
+							href={`/products/${product?.baseVariant.handle}`}
 							key={product.id}
 							prefetch
 						>
 							{thumbnailUrl ? (
 								<Image
-									alt={product?.title}
+									alt={product?.baseVariant.title ?? "Product title"}
 									className="aspect-square w-full max-w-[100px] rounded-lg border border-accent"
 									height={100}
 									src={thumbnailUrl}
@@ -170,10 +168,11 @@ export default function HotspotsUi({
 							) : null}
 							<div className="flex flex-col items-start justify-start gap-1 py-xs">
 								<Body className="text-pretty" font="sans" mobileSize="lg">
-									{product?.title}
+									{product?.baseVariant.title}
 								</Body>
 								<Body font="sans" mobileSize="sm">
-									от{cheapestPrice?.calculated_price || "NA"}
+									от{" "}
+									{`${product.baseVariant.prices?.[0].amount} ${product.baseVariant.prices?.[0].currencyCode}`}
 								</Body>
 							</div>
 						</LocalizedLink>

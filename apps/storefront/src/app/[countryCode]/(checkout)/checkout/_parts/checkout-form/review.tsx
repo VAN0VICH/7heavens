@@ -1,18 +1,17 @@
 "use client";
 
-import type { StoreCart } from "@medusajs/types";
-
 import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
 
-import PaymentButton from "./payment/button";
+// import PaymentButton from "./payment/button";
+import type { Cart } from "@blazzing-app/validators/client";
 
 export default function Review({
 	active,
 	cart,
 }: {
 	active: boolean;
-	cart: StoreCart;
+	cart: Cart;
 }) {
 	if (!active) return null;
 
@@ -28,7 +27,7 @@ export default function Review({
 					Returns Policy and acknowledge that you have read Medusa Store’s
 					Privacy Policy.
 				</Body>
-				<PaymentButton cart={cart} />
+				{/* <PaymentButton cart={cart} /> */}
 			</>
 		</div>
 	);

@@ -6,9 +6,9 @@ import { Title } from "@radix-ui/react-dialog";
 import { useCart } from "./cart-context";
 
 export default function CartHeading() {
-	const { cart } = useCart();
+	const { lineItems } = useCart();
 
-	const count = (cart?.items?.length ?? 0).toString();
+	const count = (lineItems?.length ?? 0).toString();
 
 	return (
 		<div className="flex min-h-[calc(var(--header-height))] items-center justify-start px-4">

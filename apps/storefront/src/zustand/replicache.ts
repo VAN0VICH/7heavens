@@ -1,10 +1,13 @@
 import type { Replicache } from "replicache";
 import { create } from "zustand";
-import type { StoreMutatorsType } from "@7heavens/real-time-engine";
+import type {
+	StorefrontMutators,
+	StorefrontMutatorsType,
+} from "@blazzing-app/replicache";
 
 interface ReplicacheState {
-	storeRep: Replicache<StoreMutatorsType> | null;
-	setStoreRep: (rep: Replicache<StoreMutatorsType> | null) => void;
+	storeRep: Replicache<StorefrontMutatorsType> | null;
+	setStoreRep: (rep: Replicache<StorefrontMutatorsType> | null) => void;
 }
 
 export const useReplicache = create<ReplicacheState>((set) => ({

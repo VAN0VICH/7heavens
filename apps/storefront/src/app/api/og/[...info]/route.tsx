@@ -1,11 +1,11 @@
 import type { PageProps } from "@/types";
 import type { ImageResponseOptions, NextRequest } from "next/server";
 
-import { getProductByHandle } from "@/data/medusa/products";
-import { getRegion } from "@/data/medusa/regions";
 import { ImageResponse } from "next/og";
 
 import ProductOg from "./product-og";
+import { getProductByHandle } from "@/data/blazzing-app/product-and-variant";
+import type { Product } from "@blazzing-app/validators/client";
 
 export const runtime = "edge";
 
@@ -53,23 +53,18 @@ export async function GET(_: NextRequest, props: PageProps<"...info">) {
 			return new Response("Invalid type", { status: 400 });
 		}
 
-		const countryCode = params.info[0];
 		const handle = params.info[2];
+		console.log("handle from og", handle);
 
-		const region = countryCode ? await getRegion(countryCode) : undefined;
-		if (!region) {
-			console.log("No region found");
-			return new Response("Region not found", { status: 404 });
-		}
-
-		const product = handle
-			? await getProductByHandle(handle, region.id)
-			: undefined;
+		const product = handle ? await getProductByHandle(handle) : undefined;
 		if (!product) {
 			console.log("No product found");
 			return new Response("Product not found", { status: 404 });
 		}
-		return new ImageResponse(<ProductOg product={product} />, responseOptions);
+		return new ImageResponse(
+			<ProductOg product={product as Product} />,
+			responseOptions,
+		);
 	} catch (error) {
 		console.error(error);
 		return new Response("Internal server error", { status: 500 });

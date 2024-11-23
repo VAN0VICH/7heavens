@@ -1,7 +1,8 @@
 "use client";
 import { env } from "@/app/env";
 import { useReplicache } from "@/zustand/replicache";
-import type { Routes } from "@7heavens/real-time-engine";
+import type { Routes } from "@blazzing-app/functions";
+import { StorefrontMutators } from "@blazzing-app/replicache";
 import { hc } from "hono/client";
 import React from "react";
 import { Replicache } from "replicache";
@@ -19,16 +20,16 @@ export function StoreReplicacheProvider({
 			return;
 		}
 
-		const client = hc<Routes>(env.NEXT_PUBLIC_REAL_TIME_ENGINE_URL);
+		const client = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL);
 
-		//@ts-ignore
 		const r = new Replicache({
 			name: "store",
 			licenseKey: env.NEXT_PUBLIC_REPLICACHE_KEY,
 			pullInterval: null,
+			mutators: StorefrontMutators,
 			//@ts-ignore
 			puller: async (req) => {
-				const response = await client.pull.$post({
+				const response = await client.replicache.pull.$post({
 					//@ts-ignore
 					json: req,
 					query: {
@@ -45,7 +46,7 @@ export function StoreReplicacheProvider({
 				};
 			},
 			pusher: async (req) => {
-				const response = await client.push.$post({
+				const response = await client.replicache.push.$post({
 					//@ts-ignore
 					json: req,
 					query: {

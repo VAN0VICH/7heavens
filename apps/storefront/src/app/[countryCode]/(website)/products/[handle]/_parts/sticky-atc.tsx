@@ -1,18 +1,18 @@
 "use client";
 
-import type { StoreProduct } from "@medusajs/types";
-
 import { cx } from "cva";
 import { useEffect, useState } from "react";
 
 import { ProductVariantsProvider } from "../product-context";
 import AddToCart from "./add-to-cart";
 import OptionsSelect from "./options";
+import type { Product, Variant } from "@blazzing-app/validators/client";
 
 export default function StickyAtc({
-	region_id,
-	...product
-}: { region_id: string } & StoreProduct) {
+	product,
+	handle,
+	variant,
+}: { product: Product; variant: Variant; handle: string }) {
 	const [isVisible, setIsVisible] = useState(true);
 
 	useEffect(() => {
@@ -31,7 +31,11 @@ export default function StickyAtc({
 	}, []);
 
 	return (
-		<ProductVariantsProvider product={product}>
+		<ProductVariantsProvider
+			product={product}
+			handle={handle}
+			variant={variant}
+		>
 			<div
 				className={cx(
 					"fixed bottom-0 left-0 right-0 z-[80] w-screen min-w-[320px] border-t border-accent bg-background p-m transition-transform duration-300 lg:hidden",
@@ -43,13 +47,13 @@ export default function StickyAtc({
 			>
 				<div className="flex items-center justify-center gap-3">
 					{product.options?.some(
-						(option) => (option.values?.length || 0) > 1,
+						(option) => (option.optionValues?.length || 0) > 1,
 					) && (
 						<div className="w-fit">
 							<OptionsSelect options={product.options} />
 						</div>
 					)}
-					<AddToCart region_id={region_id} variant="sticky" />
+					<AddToCart product={product} variant="sticky" />
 				</div>
 			</div>
 		</ProductVariantsProvider>

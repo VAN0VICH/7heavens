@@ -3,7 +3,7 @@ import type { SectionList } from "./types";
 import Assurance from "./assurance";
 import CenteredText from "./centered-text";
 import CollectionList from "./collection-list";
-import FeaturedProducts from "./collection-products";
+import { CollectionProducts } from "./collection-products";
 import Hero from "./hero";
 import Marquee from "./marquee";
 import MediaText from "./media-text";
@@ -14,7 +14,7 @@ export const sectionsList: SectionList = {
 	"section.assurance": Assurance,
 	"section.centeredText": CenteredText,
 	"section.collectionList": CollectionList,
-	"section.collection": FeaturedProducts,
+	"section.collection": CollectionProducts,
 	"section.hero": Hero,
 	"section.marquee": Marquee,
 	"section.mediaText": MediaText,

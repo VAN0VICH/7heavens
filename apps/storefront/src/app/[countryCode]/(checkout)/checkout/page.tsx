@@ -1,49 +1,96 @@
-import type { PageProps } from "@/types";
-import type { HttpTypes } from "@medusajs/types";
+"use client";
 
-import { redirect } from "next/navigation";
-
-import CartDetails from "./_parts/cart-details";
-import CheckoutForm from "./_parts/checkout-form";
-import { enrichLineItems } from "@/data/medusa/line-items";
+import { CartDetails } from "./_parts/cart-details";
+import { CheckoutForm } from "./_parts/checkout-form";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useCart } from "@/components/global/header/cart/cart-context";
 import {
-	listCartPaymentMethods,
-	listCartShippingMethods,
-} from "@/data/medusa/fullfilment";
-import { getCart } from "@/data/medusa/cart";
-import Checkbox from "@/components/shared/checkbox";
+	DeliveryCheckoutFormSchema,
+	OnsiteCheckoutFormSchema,
+	type DeliveryCheckoutForm,
+	type OnsiteCheckoutForm,
+} from "@blazzing-app/validators";
+import { client } from "@/data/blazzing-app/client";
+import { env } from "@/app/env";
+import React from "react";
+import { useRouter } from "next/navigation";
+import { Cta } from "@/components/shared/button";
 
-export default async function CheckoutPage(props: PageProps<"countryCode">) {
-	const params = await props.params;
+export default function CheckoutPage() {
+	const { cart, lineItems } = useCart();
+	const [isLoading, setIsLoading] = React.useState(false);
+	const [type, setType] = React.useState<"delivery" | "onsite">("delivery");
+	const router = useRouter();
 
-	const { countryCode } = params;
+	// const shippingMethods = (await listCartShippingMethods(cart.id)) || [];
+	// const paymentMethods = (await listCartPaymentMethods(cart.region_id!)) || [];
 
-	const cart = await getCart();
+	const methods = useForm<OnsiteCheckoutForm | DeliveryCheckoutForm>({
+		resolver: zodResolver(
+			DeliveryCheckoutFormSchema.or(OnsiteCheckoutFormSchema),
+		),
+		defaultValues: {
+			email: cart?.email ?? "",
+			phone: cart?.phone ?? "",
+			fullName: cart?.fullName ?? "",
+			...(cart?.shippingAddress && {
+				shippingAddress:
+					cart?.shippingAddress as DeliveryCheckoutForm["shippingAddress"],
+			}),
+		},
+	});
+	const onSubmit = async (data: DeliveryCheckoutForm | OnsiteCheckoutForm) => {
+		if (lineItems.length === 0 || !cart) {
+			return;
+		}
 
-	if (!cart || (cart.items?.length || 0) === 0) {
-		return redirect(`/${countryCode}/`);
-	}
+		setIsLoading(true);
 
-	if (cart?.items?.length) {
-		cart.items = (await enrichLineItems(
-			cart.items,
-			cart.region_id,
-		)) as HttpTypes.StoreCartLineItem[];
-	}
+		const response = await client.cart["complete-cart"].$post(
+			{
+				json: {
+					checkoutInfo: data,
+					id: cart.id,
+					type,
+				},
+			},
 
-	const shippingMethods = (await listCartShippingMethods(cart.id)) || [];
-	const paymentMethods = (await listCartPaymentMethods(cart.region_id!)) || [];
+			{
+				headers: {
+					"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				},
+			},
+		);
+		if (response.ok) {
+			const { result: orderIDs } = await response.json();
+
+			if (orderIDs.length > 0) {
+				return router.push(
+					`/order/confirmed?${orderIDs.map((id) => `id=${id}`).join("&")}`,
+				);
+			}
+		}
+
+		setIsLoading(false);
+		return router.push("/error?error=Something wrong happened");
+	};
 
 	return (
-		<div className="w-full flex flex-col  max-w-max-screen">
-			<section className="mx-auto flex w-full flex-col-reverse gap-8 px-4 py-8 md:flex-row md:gap-20 md:px-8 lg:justify-between lg:pb-20 lg:pt-5">
-				<CheckoutForm
-					cart={cart}
-					paymentMethods={paymentMethods}
-					shippingMethods={shippingMethods}
-				/>
-				<CartDetails cart={cart} />
-			</section>
-		</div>
+		<FormProvider {...methods}>
+			<form onSubmit={methods.handleSubmit(onSubmit)}>
+				<div className="w-full flex flex-col  max-w-max-screen">
+					<section className="mx-auto flex w-full flex-col-reverse gap-8 px-4 py-8 md:flex-row md:gap-20 md:px-8 lg:justify-between lg:pb-20 lg:pt-5">
+						<CheckoutForm setType={setType} type={type} />
+						<div>
+							<CartDetails />
+							<Cta loading={isLoading} size="sm" type="submit">
+								Оформить
+							</Cta>
+						</div>
+					</section>
+				</div>
+			</form>
+		</FormProvider>
 	);
 }

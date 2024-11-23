@@ -1,32 +1,22 @@
 "use client";
-import type { StoreProduct } from "@medusajs/types";
 
 import Body from "@/components/shared/typography/body";
-import { getProductPrice } from "@/utils/medusa/get-product-price";
 
-import { useProductVariants } from "../product-context";
+import Price from "@/components/price";
+import type { Variant } from "@blazzing-app/validators/client";
 
-export default function Price({
-	product,
+export function PriceDetail({
+	variant,
 }: {
-	product: Pick<StoreProduct, "id" | "variants">;
+	variant: Variant | undefined;
 }) {
-	const { activeVariant } = useProductVariants();
-
-	const { cheapestPrice, variantPrice } = getProductPrice({
-		product,
-		variantId: activeVariant?.id,
-	});
-
+	if (!variant?.prices?.[0]) return null;
 	return (
-		(variantPrice?.calculated_price || cheapestPrice?.calculated_price) && (
-			<Body desktopSize="xl" font="sans" mobileSize="lg">
-				{variantPrice?.calculated_price ? (
-					variantPrice.calculated_price
-				) : (
-					<>от {cheapestPrice?.calculated_price}</>
-				)}
-			</Body>
-		)
+		<Body desktopSize="xl" font="sans" mobileSize="lg">
+			<Price
+				amount={variant.prices[0].amount ?? 0}
+				currencyCode={variant?.prices?.[0]?.currencyCode ?? "BYN"}
+			/>
+		</Body>
 	);
 }

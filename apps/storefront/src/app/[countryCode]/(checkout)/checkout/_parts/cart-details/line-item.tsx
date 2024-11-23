@@ -1,42 +1,46 @@
 "use client";
-import type { StoreCartLineItem } from "@medusajs/types";
 
 import Body from "@/components/shared/typography/body";
-import { convertToLocale } from "@/utils/medusa/money";
+import { convertToLocale } from "@/utils/business/money";
+import type { LineItem as LineItemType } from "@blazzing-app/validators/client";
 import Image from "next/image";
+import React from "react";
 
-export default function LineItem(props: StoreCartLineItem) {
-	const item = props;
-
+export function LineItem({ item }: { item: LineItemType }) {
 	if (!((item?.quantity || 0) > 0)) return null;
 
-	const unit_price = convertToLocale({
-		amount: item?.unit_price || 0,
-		currency_code: (item?.variant?.calculated_price?.currency_code || null)!,
-	});
+	const unit_price = React.useMemo(
+		() =>
+			convertToLocale({
+				amount: item?.variant.prices?.[0].amount || 0,
+				currencyCode: (item?.variant.prices?.[0].currencyCode || null)!,
+			}),
+		[item],
+	);
 
-	const item_price = convertToLocale({
-		amount: (item?.unit_price || 0) * (item?.quantity || 1),
-		currency_code: (item?.variant?.calculated_price?.currency_code || null)!,
-	});
+	const item_price = React.useMemo(
+		() =>
+			convertToLocale({
+				amount: (item?.variant.prices?.[0].amount || 0) * (item?.quantity || 1),
+				currencyCode: (item?.variant.prices?.[0].currencyCode || null)!,
+			}),
+		[item],
+	);
 
 	return (
 		<div className="flex items-start justify-between gap-2 space-x-4">
 			<Image
-				alt={props.title}
+				alt={item.variant.title ?? "Item image"}
 				className="h-[100px] w-[100px] rounded-lg border-[1.5px] border-accent object-cover"
 				height={100}
-				src={props.product?.thumbnail || ""}
+				src={item.variant?.thumbnail?.url || ""}
 				width={100}
 			/>
 			<div className="flex w-full flex-col items-start justify-start gap-4">
 				<div className="flex w-full justify-between gap-3">
 					<div>
 						<Body className="leading-[130%]" font="sans" mobileSize="lg">
-							{props.product?.title}
-						</Body>
-						<Body className="mt-1" font="sans" mobileSize="sm">
-							{props.title}
+							{item.variant?.title}
 						</Body>
 					</div>
 					<div className="flex min-w-[100px] flex-col items-end">

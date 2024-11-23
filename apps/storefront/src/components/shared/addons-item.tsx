@@ -1,40 +1,30 @@
-import type { StoreProduct } from "@medusajs/types";
-
 import { AddToCartButton } from "@/app/[countryCode]/(website)/products/[handle]/_parts/add-to-cart";
-import { getProductPrice } from "@/utils/medusa/get-product-price";
 import { cx } from "cva";
 import Image from "next/image";
 
 import LocalizedLink from "./localized-link";
 import Body from "./typography/body";
+import type { Product } from "@blazzing-app/validators/client";
+import { PriceDetail } from "@/app/[countryCode]/(website)/products/[handle]/_parts/price";
 
 type Props = {
-	region_id: string;
+	product: Product;
 	variant?: "PDP" | "cart";
-} & StoreProduct;
+};
 
-export function AddonsItem({ region_id, variant = "PDP", ...product }: Props) {
-	const { cheapestPrice } = getProductPrice({
-		product,
-	});
-
-	const default_variant = product.variants?.[0];
-	const variantWithProduct = !default_variant
-		? default_variant
-		: { ...default_variant, product };
-
+export function AddonsItem({ product, variant = "PDP" }: Props) {
 	return (
 		<LocalizedLink
 			className="flex w-full gap-xs"
-			href={`/products/${product.handle}`}
+			href={`/products/${product.baseVariant.handle}`}
 			prefetch
 		>
-			{product.images?.[0].url && (
+			{product.baseVariant?.thumbnail?.url && (
 				<Image
-					alt={product.title}
+					alt={product.baseVariant.title ?? "Product Image"}
 					className="aspect-square h-[100px] w-[100px] rounded-lg border-[1.5px] border-accent"
 					height={100}
-					src={product.images?.[0].url}
+					src={product.baseVariant.thumbnail.url}
 					width={100}
 				/>
 			)}
@@ -46,10 +36,10 @@ export function AddonsItem({ region_id, variant = "PDP", ...product }: Props) {
 						font="sans"
 						mobileSize="base"
 					>
-						{product.title}
+						{product.baseVariant.title}
 					</Body>
 					<Body desktopSize="base" font="sans" mobileSize="sm">
-						{default_variant?.title} / {cheapestPrice?.calculated_price}
+						<PriceDetail variant={product.baseVariant} />
 					</Body>
 				</div>
 				<AddToCartButton
@@ -57,8 +47,15 @@ export function AddonsItem({ region_id, variant = "PDP", ...product }: Props) {
 						"mr-4": variant === "cart",
 					})}
 					label="Add +"
-					productVariant={variantWithProduct}
-					regionId={region_id}
+					selectedVariant={
+						(product.variants ?? []).length > 1
+							? product.variants![0].id !== product.baseVariantID
+								? product.variants![0]
+								: product.variants![1]
+							: product.baseVariant
+					}
+					baseVariantID={product.baseVariantID}
+					variants={product.variants ?? []}
 					size={variant === "PDP" ? "md" : variant === "cart" ? "sm" : null}
 					variant="outline"
 				/>

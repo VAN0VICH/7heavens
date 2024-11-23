@@ -1,25 +1,22 @@
-import type { StoreProduct } from "@medusajs/types";
-
 import LocalizedLink from "@/components/shared/localized-link";
 import Body from "@/components/shared/typography/body";
+import type { Product } from "@blazzing-app/validators/client";
 
 export default function BreadCrumbs({
-	collection,
-	title,
-}: Pick<StoreProduct, "collection" | "title">) {
+	baseVariant,
+	collectionHandle,
+}: Pick<Product, "collectionHandle" | "baseVariant">) {
 	return (
 		<Body className="-mb-1" desktopSize="base" font="sans" mobileSize="sm">
 			<LocalizedLink href="/">Home</LocalizedLink>{" "}
-			{collection && (
+			{collectionHandle && (
 				<>
 					{" / "}
-					<LocalizedLink href={`/products?collection=${collection.id}`}>
-						{collection.title}
-					</LocalizedLink>{" "}
+					{collectionHandle}
 				</>
 			)}
 			{" / "}
-			{title}
+			{baseVariant.title}
 		</Body>
 	);
 }

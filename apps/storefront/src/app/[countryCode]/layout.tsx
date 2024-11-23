@@ -4,7 +4,6 @@ import type { PropsWithChildren } from "react";
 import { CountryCodeProvider } from "@/components/context/country-code-context";
 import { ExitPreview } from "@/components/exit-preview";
 import { CartProvider } from "@/components/global/header/cart/cart-context";
-import { getEnrichedCart } from "@/data/medusa/cart";
 import { PartykitProvider } from "@/data/partykit/client";
 import { StoreReplicacheProvider } from "@/providers/replicache/store";
 import { GlobalStoreProvider } from "@/zustand/store";
@@ -20,15 +19,13 @@ type LayoutProps = PropsWithChildren<
 
 export default async function Layout(props: LayoutProps) {
 	const params = await props.params;
-	const cart = await getEnrichedCart();
-
 	const { children } = props;
 
 	const shouldEnableDraftModeToggle =
 		process.env.NODE_ENV === "development" && (await draftMode()).isEnabled;
 	return (
 		<StoreReplicacheProvider>
-			<CartProvider cart={cart} countryCode={params.countryCode}>
+			<CartProvider countryCode={params.countryCode}>
 				<GlobalStoreProvider>
 					<GlobalStoreMutator>
 						<PartykitProvider />

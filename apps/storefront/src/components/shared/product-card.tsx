@@ -1,12 +1,10 @@
-import type { StoreProduct } from "@medusajs/types";
-
-import { getProductPrice } from "@/utils/medusa/get-product-price";
 import { cx } from "cva";
 import Image from "next/image";
 
 import LocalizedLink from "./localized-link";
 import Tag from "./tag";
 import Body from "./typography/body";
+import type { Product } from "@blazzing-app/validators/client";
 
 export default function ProductCard({
 	index,
@@ -14,12 +12,12 @@ export default function ProductCard({
 	size = "default",
 }: {
 	index?: number;
-	product: StoreProduct | undefined;
+	product: Product;
 	size?: "PLP" | "default";
 }) {
 	if (!product) return null;
 
-	const thumbnail = product.thumbnail || product.images?.[0]?.url;
+	const thumbnail = product.baseVariant.thumbnail?.url;
 
 	return (
 		<LocalizedLink
@@ -29,13 +27,13 @@ export default function ProductCard({
 					"w-[88vw] max-w-[450px]": size === "default",
 				},
 			)}
-			href={`/products/${product?.handle}`}
+			href={`/products/${product.baseVariant.handle}`}
 			prefetch
 		>
 			<div className="relative w-full">
 				{thumbnail && (
 					<Image
-						alt={product.title}
+						alt={product.baseVariant.title ?? "Product image"}
 						className="aspect-square w-full rounded-lg"
 						height={450}
 						priority={index !== undefined && index <= 2}
@@ -43,12 +41,12 @@ export default function ProductCard({
 						width={450}
 					/>
 				)}
-				{product.type?.value && (
+				{/* {product.type?.value && (
 					<Tag
 						className="absolute right-4 top-3"
 						text={product.type.value || ""}
 					/>
-				)}
+				)} */}
 			</div>
 
 			<div className="pointer-events-none flex flex-1 flex-col items-center justify-center gap-1 px-lg py-s">
@@ -58,7 +56,7 @@ export default function ProductCard({
 					font="sans"
 					mobileSize="lg"
 				>
-					{product.title}
+					{product.baseVariant.title}
 				</Body>
 			</div>
 		</LocalizedLink>

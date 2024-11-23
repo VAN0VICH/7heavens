@@ -13,7 +13,7 @@ import Body from "@/components/shared/typography/body";
 import { useCart } from "./cart-context";
 import CartFooter from "./cart-footer";
 import CartHeading from "./cart-heading";
-import LineItem from "./line-item";
+import { LineItem } from "./line-item";
 import OpenCart from "./open-cart-button";
 
 type Props = Pick<Header, "cartAddons">;
@@ -21,8 +21,8 @@ type Props = Pick<Header, "cartAddons">;
 export default function CartUI({
 	addons,
 }: { addons: React.ReactElement | null } & Props) {
-	const { cart } = useCart();
-	const isEmptyCart = !cart?.items || cart.items.length === 0;
+	const { cart, lineItems } = useCart();
+	const isEmptyCart = lineItems.length === 0;
 
 	return (
 		<Dialog>
@@ -44,7 +44,9 @@ export default function CartUI({
 									Your bag is currently empty.
 								</Body>
 							) : (
-								cart.items?.map((item) => <LineItem key={item.id} {...item} />)
+								lineItems?.map((item) => (
+									<LineItem key={item.id} lineItem={item} />
+								))
 							)}
 						</div>
 						{addons}

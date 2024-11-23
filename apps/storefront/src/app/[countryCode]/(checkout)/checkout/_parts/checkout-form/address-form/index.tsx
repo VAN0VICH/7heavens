@@ -1,206 +1,108 @@
 "use client";
-import type { StoreCart, StoreCartAddress } from "@medusajs/types";
-import type { BaseRegionCountry } from "@medusajs/types/dist/http/region/common";
-import type { Dispatch, SetStateAction } from "react";
-import { setCheckoutAddresses } from "@/actions/medusa/order";
-import { Cta } from "@/components/shared/button";
 import Input from "@/components/shared/input";
-import InputCombobox from "@/components/shared/input-combobox";
-import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
-import { useResetableActionState } from "@/hooks/use-resetable-action-state";
-import { useEffect, useTransition } from "react";
-import { useFormStatus } from "react-dom";
+import type { DeliveryCheckoutForm } from "@blazzing-app/validators";
+import { useFormContext } from "react-hook-form";
 
-export default function AddressForm({
-	active,
-	cart,
-	nextStep,
-	setStep,
-}: {
-	active: boolean;
-	cart: StoreCart;
-	nextStep: "addresses" | "delivery" | "payment" | "review";
-	setStep: Dispatch<
-		SetStateAction<"addresses" | "delivery" | "payment" | "review">
-	>;
-}) {
-	const [, startTransition] = useTransition();
-
-	const [{ status }, action, , reset] = useResetableActionState(
-		setCheckoutAddresses,
-		{
-			error: null,
-			status: "idle",
-		},
-	);
-
-	useEffect(() => {
-		if (status === "success") {
-			setStep(nextStep);
-			startTransition(() => reset());
-		}
-	}, [status, setStep, nextStep, reset]);
-
-	const isFilled = !active && !!cart.shipping_address?.address_1;
-
+export default function AddressForm() {
 	return (
-		<form
-			action={action}
-			className="flex flex-col gap-8 border-t border-accent py-8"
-		>
+		<div className="flex flex-col gap-8 border-t border-accent py-8">
 			<div className="flex items-center justify-between">
 				<Heading desktopSize="xs" font="sans" mobileSize="xs" tag="h6">
 					Адрес доставки
 				</Heading>
-				{isFilled && (
-					<Cta onClick={() => setStep("addresses")} size="sm" variant="outline">
-						Edit
-					</Cta>
-				)}
 			</div>
-			{isFilled && (
-				<div className="flex w-full flex-col gap-4 lg:flex-row">
-					<div className="flex flex-1 flex-col gap-4">
-						<Body className="font-semibold" font="sans">
-							Адрес доставки
-						</Body>
-						<div className="flex flex-col gap-[6px]">
-							<Body font="sans">
-								{cart.shipping_address?.first_name}{" "}
-								{cart.shipping_address?.last_name}
-							</Body>
-							<Body font="sans">{cart.shipping_address?.address_1}</Body>
-							<Body font="sans">
-								{cart.shipping_address?.postal_code},{" "}
-								{cart.shipping_address?.city}
-							</Body>
-						</div>
-					</div>
-					<div className="flex flex-1 flex-col gap-4">
-						<Body className="font-semibold" font="sans">
-							Contact
-						</Body>
-						<Body font="sans">{cart.email}</Body>
-					</div>
+			<div className="flex flex-col gap-4">
+				<div className="grid gap-4 lg:grid-cols-2">
+					<AddressInputs />
 				</div>
-			)}
-			{active && (
-				<div className="flex flex-col gap-4">
-					<div className="grid gap-4 lg:grid-cols-2">
-						<AddressInputs
-							address={cart.shipping_address}
-							addressName="shipping_address"
-							countries={cart.region?.countries}
-						/>
-					</div>
-					<div className="grid gap-4 lg:grid-cols-2">
-						<Input
-							defaultValue={cart.email}
-							name="email"
-							placeholder="Email"
-							required
-						/>
-						{cart.shipping_address?.phone}
-						<Input
-							defaultValue={cart.shipping_address?.phone}
-							name="phone"
-							placeholder="Phone"
-						/>
-					</div>
-
-					<SubmitButton />
+				<div className="grid gap-4 lg:grid-cols-2">
+					<CustomerInputs />
 				</div>
-			)}
-		</form>
+			</div>
+		</div>
 	);
 }
 
-function SubmitButton() {
-	const { pending } = useFormStatus();
+function CustomerInputs() {
+	const { register, formState, clearErrors } =
+		useFormContext<DeliveryCheckoutForm>();
 	return (
-		<Cta loading={pending} size="sm" type="submit">
-			Continue to delivery
-		</Cta>
+		<>
+			<div className="grid gap-2">
+				<Input
+					{...register("fullName")}
+					onChange={(e) => {
+						register("fullName").onChange(e);
+						clearErrors();
+					}}
+					placeholder="Имя"
+					required
+				/>
+				<p className="text-red-500">{formState.errors.fullName?.message}</p>
+			</div>
+			<div className="grid gap-2">
+				<Input
+					{...register("email")}
+					onChange={(e) => {
+						register("email").onChange(e);
+						clearErrors();
+					}}
+					placeholder="Электронная почта"
+					required
+				/>
+				<p className="text-red-500">{formState.errors.email?.message}</p>
+			</div>
+			<div className="grid gap-2">
+				<Input
+					{...register("phone")}
+					onChange={(e) => {
+						register("phone").onChange(e);
+						clearErrors();
+					}}
+					placeholder="Мобильный телефон"
+				/>
+				<p className="text-red-500">{formState.errors.phone?.message}</p>
+			</div>
+		</>
 	);
 }
 
-function AddressInputs({
-	address,
-	addressName,
-	countries,
-}: {
-	address?: StoreCartAddress;
-	addressName: string;
-	countries?: BaseRegionCountry[];
-}) {
-	const inputName = (name: string) => `${addressName}.${name}`;
+function AddressInputs() {
+	const { register, formState, control, clearErrors } =
+		useFormContext<DeliveryCheckoutForm>();
 
 	return (
 		<>
-			<Input
-				defaultValue={address?.first_name}
-				name={inputName("first_name")}
-				placeholder="Имя"
-				required
-			/>
-			<Input
-				defaultValue={address?.last_name}
-				name={inputName("last_name")}
-				placeholder="Last name"
-				required
-			/>
-			<Input
-				defaultValue={address?.address_1}
-				name={inputName("address_1")}
-				placeholder="Address"
-				required
-			/>
-			<Input
-				defaultValue={address?.company}
-				name={inputName("company")}
-				placeholder="Company"
-			/>
-			<Input
-				defaultValue={address?.postal_code}
-				name={inputName("postal_code")}
-				placeholder="Postal code"
-				required
-			/>
-			<Input
-				defaultValue={address?.city}
-				name={inputName("city")}
-				placeholder="City"
-				required
-			/>
-			<InputCombobox
-				defaultValue={address?.country_code}
-				name={inputName("country_code")}
-				options={
-					countries
-						?.filter(
-							(
-								country,
-							): country is {
-								display_name: string;
-								iso_2: string;
-							} & BaseRegionCountry =>
-								!!country.display_name && !!country.iso_2,
-						)
-						.map(({ display_name, iso_2 }) => ({
-							id: iso_2,
-							label: display_name,
-						})) || []
-				}
-				placeholder="Country"
-				required
-			/>
-			<Input
-				defaultValue={address?.province}
-				name={inputName("province")}
-				placeholder="State/Province"
-				required
-			/>
+			<div className="grid gap-2">
+				<Input
+					{...register("shippingAddress.line1")}
+					placeholder="Улица"
+					required
+					onChange={(e) => {
+						register("shippingAddress.line1").onChange(e);
+						clearErrors();
+					}}
+				/>
+				<p className="text-red-500">
+					{formState.errors.shippingAddress?.line1?.message}
+				</p>
+			</div>
+
+			<div className="grid gap-2">
+				<Input
+					placeholder="Город"
+					{...register("shippingAddress.city")}
+					onChange={(e) => {
+						register("shippingAddress.city").onChange(e);
+						clearErrors();
+					}}
+					required
+				/>
+				<p className="text-red-500">
+					{formState.errors.shippingAddress?.city?.message}
+				</p>
+			</div>
 		</>
 	);
 }

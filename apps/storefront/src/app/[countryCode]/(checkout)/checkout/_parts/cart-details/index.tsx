@@ -1,62 +1,81 @@
-import type { HttpTypes } from "@medusajs/types";
+"use client";
 
 import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
-import { convertToLocale } from "@/utils/medusa/money";
+import { convertToLocale } from "@/utils/business/money";
 
-import LineItem from "./line-item";
+import { useCart } from "@/components/global/header/cart/cart-context";
+import type {
+	Cart,
+	LineItem as LineItemType,
+} from "@blazzing-app/validators/client";
+import React from "react";
+import { LineItem } from "@/components/global/header/cart/line-item";
 
-export default function CartDetails({ cart }: { cart: HttpTypes.StoreCart }) {
+export function CartDetails() {
+	const { lineItems, cart, subtotal } = useCart();
 	return (
 		<div className="flex h-fit w-full flex-col gap-4 rounded-lg border border-accent p-4 md:max-w-[420px]">
 			<Heading desktopSize="xl" font="serif" mobileSize="lg" tag="h3">
 				Заказ
 			</Heading>
-			{cart.items?.map((item) => (
-				<LineItem key={item.id} {...item} />
+			{lineItems?.map((item) => (
+				<LineItem key={item.id} lineItem={item} />
 			))}
 			<div className="h-px w-full bg-accent" />
-			<CheckoutSummary cart={cart} />
+			{cart && (
+				<CheckoutSummary
+					cart={cart}
+					lineItems={lineItems}
+					subtotal={subtotal}
+				/>
+			)}
 		</div>
 	);
 }
 
-export function CheckoutSummary({ cart }: { cart: HttpTypes.StoreCart }) {
+export function CheckoutSummary({
+	cart,
+	lineItems,
+	subtotal,
+}: { cart: Cart; lineItems: LineItemType[]; subtotal: number }) {
 	const summaryItems = [
-		{ amount: cart.subtotal, label: "Цена" },
-		{ amount: cart.tax_total, label: "Налоги" },
-		{ amount: cart.shipping_total, label: "Доставка" },
+		{ amount: subtotal, label: "Цена" },
+		// { amount: cart.tax_total, label: "Налоги" },
+		// { amount: cart.shipping_total, label: "Доставка" },
 	];
-
-	const total = { amount: cart.total, label: "Total", type: "total" };
 
 	return (
 		<>
 			{summaryItems.map((item) => (
 				<CheckoutSummaryItem
 					amount={item.amount}
-					currency_code={cart.currency_code}
+					currencyCode={cart.currencyCode}
 					key={item.label}
 					label={item.label}
 				/>
 			))}
-			<CheckoutTotal {...total} currency_code={cart.currency_code} />
+			<CheckoutTotal
+				amount={subtotal}
+				label="Total"
+				currencyCode={cart.currencyCode}
+			/>
 		</>
 	);
 }
 
 export function CheckoutSummaryItem({
 	amount,
-	currency_code,
+	currencyCode,
 	label,
 }: {
 	amount: number;
-	currency_code: string;
+	currencyCode: string;
 	label: string;
 }) {
 	const display = convertToLocale({
 		amount,
-		currency_code: currency_code,
+		currencyCode,
 	});
 
 	return (
@@ -76,16 +95,16 @@ export function CheckoutSummaryItem({
 
 export function CheckoutTotal({
 	amount,
-	currency_code,
+	currencyCode,
 	label,
 }: {
 	amount: number;
-	currency_code: string;
+	currencyCode: string;
 	label: string;
 }) {
 	const display = convertToLocale({
 		amount,
-		currency_code: currency_code,
+		currencyCode,
 	});
 
 	return (

@@ -1,18 +1,16 @@
 "use client";
 
-import type { StoreProduct, StoreProductVariant } from "@medusajs/types";
+import type { Product, Variant } from "@blazzing-app/validators/client";
 import type { PropsWithChildren } from "react";
-
-import { parseAsString, useQueryStates } from "nuqs";
-import type React from "react";
-import { createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
 
 interface ProductVariantsContextType {
-	activeVariant: StoreProductVariant | undefined;
-	selectedOptions: Record<string, string | undefined>;
-	setSelectedOptions: React.Dispatch<
-		React.SetStateAction<Record<string, string | undefined>>
-	>;
+	selectedVariant: Variant | undefined;
+	variantOptions: Record<string, string>;
+	setVariantOptions: (
+		value: React.SetStateAction<Record<string, string>>,
+	) => void;
+	setVariant: (options: Record<string, string>) => void;
 }
 
 const ProductVariantsContext = createContext<
@@ -22,42 +20,81 @@ const ProductVariantsContext = createContext<
 export function ProductVariantsProvider({
 	children,
 	product,
+	handle,
+	variant,
 }: PropsWithChildren<{
-	product: StoreProduct;
+	product: Product;
+	handle: string;
+	variant: Variant;
 }>) {
-	const [selectedOptions, setSelectedOptions] = useQueryStates(
-		Object.fromEntries(
-			product.options?.map((option) => [
-				option.title.toLowerCase(),
-				parseAsString.withDefault(
-					option.values?.[0]?.value.toLowerCase() ?? "",
-				),
-			]) ?? [],
-		),
-		{
-			history: "push",
-		},
+	const [selectedVariantHandle, _setSelectedVariantHandle] =
+		React.useState<string>(handle);
+
+	const setSelectedVariantHandle = React.useCallback((handle: string) => {
+		_setSelectedVariantHandle(handle);
+		window.history.replaceState({}, "", `/products/${handle}`);
+	}, []);
+
+	const selectedVariant = React.useMemo(
+		() =>
+			product.variants?.find((v) => v.handle === selectedVariantHandle) ??
+			variant,
+		[selectedVariantHandle, product, variant],
 	);
 
-	const activeVariant =
-		product.variants?.find((variant) => {
-			return variant?.options?.every(
-				({ option, value }) =>
-					selectedOptions[option?.title.toLowerCase() || ""] ===
-					value.toLowerCase(),
-			);
-		}) || product.variants?.[0];
+	const [variantOptions, setVariantOptions] = React.useState<
+		Record<string, string>
+	>({});
 
-	const activeVariantWithProduct = !activeVariant
-		? activeVariant
-		: { ...activeVariant, product };
+	React.useEffect(() => {
+		if (selectedVariant) {
+			const variantOptions = (selectedVariant?.optionValues ?? []).reduce(
+				(acc, curr) => {
+					acc[curr.optionValue.optionID] = curr.optionValue.value;
+					return acc;
+				},
+				{} as Record<string, string>,
+			);
+			setVariantOptions(variantOptions);
+		} else {
+			setVariantOptions({});
+		}
+	}, [selectedVariant]);
+
+	const setVariant = React.useCallback(
+		(options: Record<string, string>) => {
+			if (Object.keys(options).length > 0) {
+				let variantFound = false;
+				for (const variant of product.variants ?? []) {
+					let optionValuesEqual = true;
+					if (variant.optionValues?.length === 0) optionValuesEqual = false;
+					for (const value of variant.optionValues ?? []) {
+						if (
+							options[value.optionValue.optionID] !== value.optionValue.value
+						) {
+							optionValuesEqual = false;
+						}
+					}
+					if (optionValuesEqual) {
+						variantFound = true;
+						setSelectedVariantHandle(variant.handle ?? "");
+						break;
+					}
+				}
+				//variant not found
+				if (!variantFound) setSelectedVariantHandle(handle);
+			}
+		},
+		[handle, product.variants, setSelectedVariantHandle],
+	);
 
 	return (
 		<ProductVariantsContext.Provider
 			value={{
-				activeVariant: activeVariantWithProduct,
-				selectedOptions,
-				setSelectedOptions,
+				selectedVariant,
+				setVariant,
+				setVariantOptions,
+				variantOptions,
 			}}
 		>
 			{children}
