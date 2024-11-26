@@ -2,7 +2,8 @@
 import Heading from "@/components/shared/typography/heading";
 
 import Checkbox from "@/components/shared/checkbox";
-import AddressForm from "./address-form";
+import { AddressForm } from "./address-form";
+import { OnsiteForm } from "./onsite-form";
 
 export function CheckoutForm(
 	// 	{
@@ -22,13 +23,13 @@ export function CheckoutForm(
 ) {
 	return (
 		<div className="w-full">
-			<div className="w-full flex flex-wrap gap-6 md:gap-10 items-center">
+			<div className="w-full pb-4 flex flex-wrap gap-6 md:gap-10 items-center">
 				<div className="flex gap-3 items-center">
 					<Checkbox
 						checked={type === "delivery"}
 						onCheckedChange={() => setType("delivery")}
 					/>
-					<p className="text-base md:text-lg font-medium whitespace-nowrap">
+					<p className="text-lg md:text-2xl font-medium whitespace-nowrap">
 						Достaвка
 					</p>
 				</div>
@@ -37,7 +38,7 @@ export function CheckoutForm(
 						checked={type === "onsite"}
 						onCheckedChange={() => setType("onsite")}
 					/>
-					<p className="text-base md:text-lg font-medium whitespace-nowrap">
+					<p className="text-lg md:text-2xl font-medium whitespace-nowrap">
 						На месте
 					</p>
 				</div>
@@ -45,7 +46,7 @@ export function CheckoutForm(
 			<Heading desktopSize="2xl" font="serif" mobileSize="xl" tag="h3">
 				Оформление заказа
 			</Heading>
-			<AddressForm />
+			{type === "delivery" ? <AddressForm /> : <OnsiteForm />}
 			{/* {shippingMethods.length > 0 && (
 					<Delivery
 						active={step === "delivery"}

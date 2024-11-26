@@ -1,4 +1,3 @@
-import { cn } from "@/utils/cn";
 import React, { useMemo } from "react";
 
 const Price = ({
@@ -30,9 +29,9 @@ const Price = ({
 	return (
 		<p suppressHydrationWarning={true} className={className}>
 			{formattedAmount}
-			<span className={cn("ml-1 inline", currencyCodeClassName)}>
+			{/* <span className={cn("ml-1 inline", currencyCodeClassName)}>
 				{currencyCode}
-			</span>
+			</span> */}
 		</p>
 	);
 };

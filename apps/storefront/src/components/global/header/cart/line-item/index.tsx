@@ -4,10 +4,10 @@ import Icon from "@/components/shared/icon";
 import Body from "@/components/shared/typography/body";
 import Image from "next/image";
 import { PriceDetail } from "@/app/[countryCode]/(website)/products/[handle]/_parts/price";
-import type { LineItem as LineItemType } from "@blazzing-app/validators/client";
+import type { StoreLineItem } from "@blazzing-app/validators";
 import React from "react";
 import { useCart } from "../cart-context";
-export function LineItem({ lineItem }: { lineItem: LineItemType }) {
+export function LineItem({ lineItem }: { lineItem: StoreLineItem }) {
 	const { deleteItem, updateItem } = useCart();
 
 	const reduceQuantity = React.useCallback(async () => {
@@ -30,13 +30,10 @@ export function LineItem({ lineItem }: { lineItem: LineItemType }) {
 				src={lineItem.variant.thumbnail?.url ?? ""}
 				width={100}
 			/>
-			<div className="flex w-full flex-col items-start justify-start gap-4">
+			<div className="flex w-full flex-col items-start justify-between h-full gap-4">
 				<div className="flex w-full justify-between gap-3">
 					<div>
 						<Body className="leading-[130%]" font="sans" mobileSize="lg">
-							{lineItem.title}
-						</Body>
-						<Body className="mt-1" font="sans" mobileSize="sm">
 							{lineItem.title}
 						</Body>
 					</div>

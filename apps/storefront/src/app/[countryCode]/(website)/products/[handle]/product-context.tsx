@@ -1,16 +1,18 @@
 "use client";
 
-import type { Product, Variant } from "@blazzing-app/validators/client";
+import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import type { PropsWithChildren } from "react";
 import React, { createContext, useContext } from "react";
 
 interface ProductVariantsContextType {
-	selectedVariant: Variant | undefined;
+	selectedVariant: StoreVariant | undefined;
 	variantOptions: Record<string, string>;
 	setVariantOptions: (
 		value: React.SetStateAction<Record<string, string>>,
 	) => void;
 	setVariant: (options: Record<string, string>) => void;
+	isShaking: boolean;
+	setIsShaking: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProductVariantsContext = createContext<
@@ -23,10 +25,11 @@ export function ProductVariantsProvider({
 	handle,
 	variant,
 }: PropsWithChildren<{
-	product: Product;
+	product: StoreProduct;
 	handle: string;
-	variant: Variant;
+	variant: StoreVariant;
 }>) {
+	const [isShaking, setIsShaking] = React.useState(false);
 	const [selectedVariantHandle, _setSelectedVariantHandle] =
 		React.useState<string>(handle);
 
@@ -37,8 +40,9 @@ export function ProductVariantsProvider({
 
 	const selectedVariant = React.useMemo(
 		() =>
-			product.variants?.find((v) => v.handle === selectedVariantHandle) ??
-			variant,
+			(product.variants?.find((v) => v.handle === selectedVariantHandle) as
+				| StoreVariant
+				| undefined) ?? variant,
 		[selectedVariantHandle, product, variant],
 	);
 
@@ -91,6 +95,8 @@ export function ProductVariantsProvider({
 	return (
 		<ProductVariantsContext.Provider
 			value={{
+				isShaking,
+				setIsShaking,
 				selectedVariant,
 				setVariant,
 				setVariantOptions,

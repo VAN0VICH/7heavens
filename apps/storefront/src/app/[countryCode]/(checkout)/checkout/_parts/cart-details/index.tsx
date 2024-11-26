@@ -2,15 +2,11 @@
 
 import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
-import { convertToLocale } from "@/utils/business/money";
 
 import { useCart } from "@/components/global/header/cart/cart-context";
-import type {
-	Cart,
-	LineItem as LineItemType,
-} from "@blazzing-app/validators/client";
-import React from "react";
 import { LineItem } from "@/components/global/header/cart/line-item";
+import Price from "@/components/price";
+import type { StoreCart } from "@blazzing-app/validators";
 
 export function CartDetails() {
 	const { lineItems, cart, subtotal } = useCart();
@@ -23,22 +19,15 @@ export function CartDetails() {
 				<LineItem key={item.id} lineItem={item} />
 			))}
 			<div className="h-px w-full bg-accent" />
-			{cart && (
-				<CheckoutSummary
-					cart={cart}
-					lineItems={lineItems}
-					subtotal={subtotal}
-				/>
-			)}
+			{cart && <CheckoutSummary cart={cart} subtotal={subtotal} />}
 		</div>
 	);
 }
 
 export function CheckoutSummary({
 	cart,
-	lineItems,
 	subtotal,
-}: { cart: Cart; lineItems: LineItemType[]; subtotal: number }) {
+}: { cart: StoreCart; subtotal: number }) {
 	const summaryItems = [
 		{ amount: subtotal, label: "Цена" },
 		// { amount: cart.tax_total, label: "Налоги" },
@@ -73,11 +62,6 @@ export function CheckoutSummaryItem({
 	currencyCode: string;
 	label: string;
 }) {
-	const display = convertToLocale({
-		amount,
-		currencyCode,
-	});
-
 	return (
 		<>
 			<div className="flex items-center justify-between">
@@ -86,7 +70,7 @@ export function CheckoutSummaryItem({
 				</Body>
 
 				<Body font="sans" mobileSize="lg">
-					{display}
+					<Price amount={amount} currencyCode={currencyCode} />
 				</Body>
 			</div>
 		</>
@@ -102,11 +86,6 @@ export function CheckoutTotal({
 	currencyCode: string;
 	label: string;
 }) {
-	const display = convertToLocale({
-		amount,
-		currencyCode,
-	});
-
 	return (
 		<>
 			<div className="h-px w-full bg-accent" />
@@ -116,7 +95,7 @@ export function CheckoutTotal({
 				</Heading>
 
 				<Heading desktopSize="base" font="sans" mobileSize="base" tag="h3">
-					{display}
+					<Price amount={amount} currencyCode={currencyCode} />
 				</Heading>
 			</div>
 		</>

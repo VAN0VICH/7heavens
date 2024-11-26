@@ -8,17 +8,21 @@ import { setCartId } from "@/actions/set-cart-id";
 import { generateID } from "@/utils/generate";
 import { useReplicache } from "@/zustand/replicache";
 import { useGlobalStore } from "@/zustand/store";
-import type { Product, Variant } from "@blazzing-app/validators/client";
+import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { useProductVariants } from "../product-context";
+import React from "react";
 
 export default function AddToCart({
 	variant,
 	product,
+	cartID,
 }: {
 	variant: "PDP" | "sticky";
-	product: Product;
+	product: StoreProduct;
+	cartID: string | undefined;
 }) {
-	const { selectedVariant } = useProductVariants();
+	const { selectedVariant, setIsShaking } = useProductVariants();
+	console.log("product variants", product.variants);
 	return (
 		<AddToCartButton
 			className={cx("", {
@@ -31,16 +35,19 @@ export default function AddToCart({
 			variants={product.variants ?? []}
 			size={variant === "PDP" ? "xl" : "md"}
 			variant={variant === "PDP" ? "outline" : "primary"}
+			cartID={cartID}
+			setIsShaking={setIsShaking}
 		/>
 	);
 }
 
 type AddToCartButtonProps = {
 	label: string;
-	selectedVariant: Variant | undefined;
-	variants: Variant[];
+	selectedVariant: StoreVariant | undefined;
+	variants: StoreVariant[];
 	baseVariantID: string;
-	cartID?: string;
+	cartID: string | undefined;
+	setIsShaking?: React.Dispatch<React.SetStateAction<boolean>>;
 } & Omit<ButtonProps, "onClick">;
 
 export function AddToCartButton({
@@ -49,20 +56,24 @@ export function AddToCartButton({
 	baseVariantID,
 	variants,
 	cartID,
+	setIsShaking,
 	...buttonProps
 }: AddToCartButtonProps) {
 	const rep = useReplicache((state) => state.storeRep);
 	const items = useGlobalStore((state) => state.lineItems);
 
-	const itemsIDs = new Map(items.map((i) => [i.variantID, i]));
-	const handleAddToCart = async () => {
+	const itemsIDs = React.useMemo(
+		() => new Map(items.map((i) => [i.variantID, i])),
+		[items],
+	);
+	const handleAddToCart = React.useCallback(async () => {
 		if (
 			!selectedVariant ||
 			(variants.length > 1 && !selectedVariant) ||
 			(variants.length > 1 && selectedVariant.id === baseVariantID)
 		) {
-			// setIsShaking(true);
-			// setTimeout(setIsShaking, 250);
+			setIsShaking?.(true);
+			setIsShaking && setTimeout(setIsShaking, 250);
 
 			return;
 		}
@@ -100,7 +111,15 @@ export function AddToCartButton({
 					newCartID,
 				}),
 			}));
-	};
+	}, [
+		variants,
+		baseVariantID,
+		cartID,
+		itemsIDs,
+		rep,
+		selectedVariant,
+		setIsShaking,
+	]);
 
 	return (
 		<Cta

@@ -1,6 +1,7 @@
-import type { Product } from "@blazzing-app/validators/client";
+import Price from "@/components/price";
+import type { StoreProduct } from "@blazzing-app/validators";
 
-export default function ProductOg({ product }: { product: Product }) {
+export default function ProductOg({ product }: { product: StoreProduct }) {
 	const thumbnail = product.baseVariant.thumbnail?.url;
 	return (
 		<div tw="flex justify-between p-8 items-center w-full h-full text-[#FF5227] bg-[#FFF6E6]">
@@ -20,7 +21,10 @@ export default function ProductOg({ product }: { product: Product }) {
 						tw="font-sans text-[20px] leading-[150%] flex"
 					>
 						от{" "}
-						{`${product.baseVariant.prices?.[0].amount} ${product.baseVariant.prices?.[0].currencyCode}`}
+						<Price
+							amount={product.baseVariant.prices?.[0].amount}
+							currencyCode={product.baseVariant.prices?.[0].currencyCode}
+						/>
 					</div>
 				</div>
 				<div tw="flex py-[6px] px-[36px] text-[#FFF6E6] bg-[#FF5227] rounded-full text-[40px] leading-[150%] tracking-[-1px]">

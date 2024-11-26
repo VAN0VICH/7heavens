@@ -13,6 +13,7 @@ export const GlobalStoreMutator = ({
 	const diffVariants = useGlobalStore((state) => state.diffVariants);
 	const diffOrders = useGlobalStore((state) => state.diffOrders);
 	const diffCarts = useGlobalStore((state) => state.diffCarts);
+	const diffLineItems = useGlobalStore((state) => state.diffLineItems);
 
 	const rep = useReplicache((state) => state.storeRep);
 
@@ -27,13 +28,13 @@ export const GlobalStoreMutator = ({
 
 	React.useEffect(() => {
 		return rep?.experimentalWatch(diffProducts, {
-			prefix: "prod",
+			prefix: "product",
 			initialValuesInFirstDiff: true,
 		});
 	}, [rep, diffProducts]);
 	React.useEffect(() => {
 		return rep?.experimentalWatch(diffVariants, {
-			prefix: "var",
+			prefix: "variant",
 			initialValuesInFirstDiff: true,
 		});
 	}, [rep, diffVariants]);
@@ -45,9 +46,15 @@ export const GlobalStoreMutator = ({
 	}, [rep, diffCarts]);
 	React.useEffect(() => {
 		return rep?.experimentalWatch(diffOrders, {
-			prefix: "ord",
+			prefix: "order",
 			initialValuesInFirstDiff: true,
 		});
 	}, [rep, diffOrders]);
+	React.useEffect(() => {
+		return rep?.experimentalWatch(diffLineItems, {
+			prefix: "line_item",
+			initialValuesInFirstDiff: true,
+		});
+	}, [rep, diffLineItems]);
 	return <>{children}</>;
 };

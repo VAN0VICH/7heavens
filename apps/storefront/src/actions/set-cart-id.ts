@@ -9,7 +9,7 @@ export async function setCartId(cartId: string): Promise<void> {
 
 	const cookieStore = cookies();
 
-	(await cookieStore).set("_medusa_cart_id", cartId, {
+	(await cookieStore).set("cart_id", cartId, {
 		httpOnly: true,
 		secure: process.env.NODE_ENV === "production",
 		sameSite: "strict",

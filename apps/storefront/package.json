@@ -17,9 +17,10 @@
 		"format": "biome format ./src"
 	},
 	"dependencies": {
-		"@blazzing-app/functions": "^0.1.8",
-		"@blazzing-app/replicache": "^0.1.8",
-		"@blazzing-app/validators": "^0.1.8",
+		"@blazzing-app/functions": "^0.1.19",
+		"@blazzing-app/replicache": "^0.1.15",
+		"@blazzing-app/validators": "^0.1.15",
+		"@formkit/auto-animate": "^0.8.2",
 		"@hookform/resolvers": "^3.9.0",
 		"@next/env": "15.0.0",
 		"@portabletext/react": "^3.1.0",

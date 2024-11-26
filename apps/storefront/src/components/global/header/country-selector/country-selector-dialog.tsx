@@ -87,7 +87,7 @@ export default function CountrySelectorDialog({
 								mobileSize="base"
 								tag="h2"
 							>
-								Select your country
+								Выбери страну
 							</Heading>
 						</Title>
 						<CloseDialog

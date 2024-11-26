@@ -4,7 +4,7 @@ import Heading from "@/components/shared/typography/heading";
 import type { DeliveryCheckoutForm } from "@blazzing-app/validators";
 import { useFormContext } from "react-hook-form";
 
-export default function AddressForm() {
+export function AddressForm() {
 	return (
 		<div className="flex flex-col gap-8 border-t border-accent py-8">
 			<div className="flex items-center justify-between">
@@ -14,10 +14,10 @@ export default function AddressForm() {
 			</div>
 			<div className="flex flex-col gap-4">
 				<div className="grid gap-4 lg:grid-cols-2">
-					<AddressInputs />
+					<CustomerInputs />
 				</div>
 				<div className="grid gap-4 lg:grid-cols-2">
-					<CustomerInputs />
+					<AddressInputs />
 				</div>
 			</div>
 		</div>
@@ -49,7 +49,6 @@ function CustomerInputs() {
 						clearErrors();
 					}}
 					placeholder="Электронная почта"
-					required
 				/>
 				<p className="text-red-500">{formState.errors.email?.message}</p>
 			</div>
@@ -61,6 +60,7 @@ function CustomerInputs() {
 						clearErrors();
 					}}
 					placeholder="Мобильный телефон"
+					required
 				/>
 				<p className="text-red-500">{formState.errors.phone?.message}</p>
 			</div>
@@ -69,7 +69,7 @@ function CustomerInputs() {
 }
 
 function AddressInputs() {
-	const { register, formState, control, clearErrors } =
+	const { register, formState, clearErrors } =
 		useFormContext<DeliveryCheckoutForm>();
 
 	return (

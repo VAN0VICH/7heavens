@@ -2,15 +2,15 @@ import { AddonsItem } from "@/components/shared/addons-item";
 import CarouselSection from "@/components/shared/carousel-section";
 import Heading from "@/components/shared/typography/heading";
 import { getProductsByHandles } from "@/data/blazzing-app/product-and-variant";
-
 type Props = { handles: string[]; isEmptyCart: boolean };
 
 export default async function CartAddons({ handles, isEmptyCart }: Props) {
 	const products = await getProductsByHandles(handles);
+	// const cartID = await getCartId();
 
 	const slides = products.map((product) => (
 		<div className="w-[380px]" key={product.id}>
-			<AddonsItem variant="cart" product={product} />
+			<AddonsItem variant="cart" product={product} cartID={undefined} />
 		</div>
 	));
 

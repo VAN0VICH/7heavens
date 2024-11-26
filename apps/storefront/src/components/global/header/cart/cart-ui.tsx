@@ -15,14 +15,16 @@ import CartFooter from "./cart-footer";
 import CartHeading from "./cart-heading";
 import { LineItem } from "./line-item";
 import OpenCart from "./open-cart-button";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type Props = Pick<Header, "cartAddons">;
 
 export default function CartUI({
 	addons,
 }: { addons: React.ReactElement | null } & Props) {
-	const { cart, lineItems } = useCart();
+	const { lineItems } = useCart();
 	const isEmptyCart = lineItems.length === 0;
+	const [parent] = useAutoAnimate(/* optional config */);
 
 	return (
 		<Dialog>
@@ -38,7 +40,7 @@ export default function CartUI({
 						<Icon className="h-9 w-9" name="Close" />
 					</CloseDialog>
 					<div className="flex flex-1 flex-col justify-between overflow-y-scroll">
-						<div className="flex flex-col gap-4 p-4">
+						<div className="flex flex-col gap-4 p-4" ref={parent}>
 							{isEmptyCart ? (
 								<Body font="sans" mobileSize="base">
 									Your bag is currently empty.

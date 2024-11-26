@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 
 import ProductOg from "./product-og";
 import { getProductByHandle } from "@/data/blazzing-app/product-and-variant";
-import type { Product } from "@blazzing-app/validators/client";
+import type { StoreProduct } from "@blazzing-app/validators";
 
 export const runtime = "edge";
 
@@ -62,7 +62,7 @@ export async function GET(_: NextRequest, props: PageProps<"...info">) {
 			return new Response("Product not found", { status: 404 });
 		}
 		return new ImageResponse(
-			<ProductOg product={product as Product} />,
+			<ProductOg product={product as StoreProduct} />,
 			responseOptions,
 		);
 	} catch (error) {

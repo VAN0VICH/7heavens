@@ -2,19 +2,12 @@
 
 import { Link } from "@/components/shared/button";
 import Body from "@/components/shared/typography/body";
-import { convertToLocale } from "@/utils/business/money";
 
+import Price from "@/components/price";
 import { useCart } from "./cart-context";
 
 export default function CartFooter() {
 	const { cart, lineItems, subtotal } = useCart();
-
-	const total = cart
-		? convertToLocale({
-				amount: subtotal,
-				currencyCode: cart.currencyCode,
-			})
-		: null;
 
 	const cartIsEmpty = lineItems.length === 0;
 
@@ -30,9 +23,9 @@ export default function CartFooter() {
 							Заказ
 						</Body>
 					</div>
-					{total && (
+					{subtotal && (
 						<Body font="sans" mobileSize="base">
-							{total}
+							<Price amount={subtotal} currencyCode={cart?.currencyCode} />
 						</Body>
 					)}
 				</div>

@@ -20,7 +20,7 @@ import { Cta } from "@/components/shared/button";
 export default function CheckoutPage() {
 	const { cart, lineItems } = useCart();
 	const [isLoading, setIsLoading] = React.useState(false);
-	const [type, setType] = React.useState<"delivery" | "onsite">("delivery");
+	const [type, setType] = React.useState<"delivery" | "onsite">("onsite");
 	const router = useRouter();
 
 	// const shippingMethods = (await listCartShippingMethods(cart.id)) || [];
@@ -80,14 +80,20 @@ export default function CheckoutPage() {
 		<FormProvider {...methods}>
 			<form onSubmit={methods.handleSubmit(onSubmit)}>
 				<div className="w-full flex flex-col  max-w-max-screen">
-					<section className="mx-auto flex w-full flex-col-reverse gap-8 px-4 py-8 md:flex-row md:gap-20 md:px-8 lg:justify-between lg:pb-20 lg:pt-5">
-						<CheckoutForm setType={setType} type={type} />
+					<section className="mx-auto flex w-full max-w-5xl flex-col-reverse gap-8 px-4 py-8 md:flex-row md:gap-20 md:px-8 lg:justify-between lg:pb-20 lg:pt-5">
 						<div>
-							<CartDetails />
-							<Cta loading={isLoading} size="sm" type="submit">
-								Оформить
+							<CheckoutForm setType={setType} type={type} />
+							<Cta
+								disabled={type === "delivery"}
+								loading={isLoading}
+								size="lg"
+								className="w-full"
+								type="submit"
+							>
+								{type === "delivery" ? "Временно недоступно" : "Оформить"}
 							</Cta>
 						</div>
+						<CartDetails />
 					</section>
 				</div>
 			</form>

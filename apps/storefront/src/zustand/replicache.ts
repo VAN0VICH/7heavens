@@ -1,9 +1,6 @@
 import type { Replicache } from "replicache";
 import { create } from "zustand";
-import type {
-	StorefrontMutators,
-	StorefrontMutatorsType,
-} from "@blazzing-app/replicache";
+import type { StorefrontMutatorsType } from "@blazzing-app/replicache";
 
 interface ReplicacheState {
 	storeRep: Replicache<StorefrontMutatorsType> | null;

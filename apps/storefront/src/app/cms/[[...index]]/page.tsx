@@ -11,7 +11,16 @@ export const metadata: Metadata = {
 export default function StudioPage() {
 	return (
 		<body>
+			{/* <StoreReplicacheProvider>
+				<CartProvider countryCode={"by"}>
+					<GlobalStoreProvider>
+						<GlobalStoreMutator>
+							<PartykitProvider /> */}
 			<Studio />
+			{/* </GlobalStoreMutator>
+					</GlobalStoreProvider>
+				</CartProvider>
+			</StoreReplicacheProvider> */}
 		</body>
 	);
 }

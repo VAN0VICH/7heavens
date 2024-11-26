@@ -1,11 +1,11 @@
 import LocalizedLink from "@/components/shared/localized-link";
 import Body from "@/components/shared/typography/body";
-import type { Product } from "@blazzing-app/validators/client";
+import type { StoreProduct } from "@blazzing-app/validators";
 
 export default function BreadCrumbs({
 	baseVariant,
 	collectionHandle,
-}: Pick<Product, "collectionHandle" | "baseVariant">) {
+}: Pick<StoreProduct, "collectionHandle" | "baseVariant">) {
 	return (
 		<Body className="-mb-1" desktopSize="base" font="sans" mobileSize="sm">
 			<LocalizedLink href="/">Home</LocalizedLink>{" "}

@@ -1,21 +1,27 @@
 "use client";
 
 import { cx } from "cva";
-import { useEffect, useState } from "react";
+import React from "react";
 
+import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { ProductVariantsProvider } from "../product-context";
 import AddToCart from "./add-to-cart";
 import OptionsSelect from "./options";
-import type { Product, Variant } from "@blazzing-app/validators/client";
 
 export default function StickyAtc({
 	product,
 	handle,
+	cartID,
 	variant,
-}: { product: Product; variant: Variant; handle: string }) {
-	const [isVisible, setIsVisible] = useState(true);
+}: {
+	product: StoreProduct;
+	variant: StoreVariant;
+	handle: string;
+	cartID: string | undefined;
+}) {
+	const [isVisible, setIsVisible] = React.useState(true);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		const handleScroll = () => {
 			const footer = document.getElementById("footer");
 			if (footer) {
@@ -53,7 +59,7 @@ export default function StickyAtc({
 							<OptionsSelect options={product.options} />
 						</div>
 					)}
-					<AddToCart product={product} variant="sticky" />
+					<AddToCart product={product} variant="sticky" cartID={cartID} />
 				</div>
 			</div>
 		</ProductVariantsProvider>

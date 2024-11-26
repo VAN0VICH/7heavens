@@ -3,12 +3,12 @@
 import Body from "@/components/shared/typography/body";
 
 import Price from "@/components/price";
-import type { Variant } from "@blazzing-app/validators/client";
+import type { StoreVariant } from "@blazzing-app/validators";
 
 export function PriceDetail({
 	variant,
 }: {
-	variant: Variant | undefined;
+	variant: StoreVariant | undefined;
 }) {
 	if (!variant?.prices?.[0]) return null;
 	return (

@@ -1,9 +1,9 @@
 import Body from "@/components/shared/typography/body";
 import { convertToLocale } from "@/utils/business/money";
-import type { LineItem } from "@blazzing-app/validators/client";
+import type { StoreLineItem } from "@blazzing-app/validators";
 import Image from "next/image";
 
-export default function OrderItem({ item }: { item: LineItem }) {
+export default function OrderItem({ item }: { item: StoreLineItem }) {
 	const price = convertToLocale({
 		amount: item.variant.prices![0]!.amount * item.quantity,
 		currencyCode: item.variant.prices![0]!.currencyCode,

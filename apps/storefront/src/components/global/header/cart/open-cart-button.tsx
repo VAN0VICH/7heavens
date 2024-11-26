@@ -8,7 +8,10 @@ import { useCart } from "./cart-context";
 export default function OpenCart() {
 	const { lineItems } = useCart();
 
-	const count = (lineItems?.length || 0).toFixed();
+	const count = (lineItems || []).reduce(
+		(total, item) => total + (item.quantity || 0),
+		0,
+	);
 
 	return (
 		<OpenDialog>

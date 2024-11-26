@@ -2,9 +2,8 @@ import { cx } from "cva";
 import Image from "next/image";
 
 import LocalizedLink from "./localized-link";
-import Tag from "./tag";
 import Body from "./typography/body";
-import type { Product } from "@blazzing-app/validators/client";
+import type { StoreProduct } from "@blazzing-app/validators";
 
 export default function ProductCard({
 	index,
@@ -12,7 +11,7 @@ export default function ProductCard({
 	size = "default",
 }: {
 	index?: number;
-	product: Product;
+	product: StoreProduct;
 	size?: "PLP" | "default";
 }) {
 	if (!product) return null;

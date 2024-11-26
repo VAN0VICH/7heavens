@@ -1,8 +1,12 @@
 import { PriceNotFound } from "@blazzing-app/validators";
-import type { Cart, LineItem, Order } from "@blazzing-app/validators/client";
+import type {
+	StoreCart,
+	StoreLineItem,
+	StoreOrder,
+} from "@blazzing-app/validators";
 
 export const getLineItemPriceAmount = (
-	lineItem: LineItem,
+	lineItem: StoreLineItem,
 	currencyCode: string,
 ): number => {
 	const price = lineItem.variant.prices.find(
@@ -17,8 +21,8 @@ export const getLineItemPriceAmount = (
 };
 
 export const cartSubtotal = (
-	lineItems: LineItem[],
-	cartOrOrder: Cart | Order,
+	lineItems: StoreLineItem[],
+	cartOrOrder: StoreCart | StoreOrder,
 ): number => {
 	try {
 		return lineItems.reduce((subtotal, item) => {

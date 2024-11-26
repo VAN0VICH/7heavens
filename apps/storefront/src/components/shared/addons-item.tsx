@@ -4,15 +4,16 @@ import Image from "next/image";
 
 import LocalizedLink from "./localized-link";
 import Body from "./typography/body";
-import type { Product } from "@blazzing-app/validators/client";
+import type { StoreProduct } from "@blazzing-app/validators";
 import { PriceDetail } from "@/app/[countryCode]/(website)/products/[handle]/_parts/price";
 
 type Props = {
-	product: Product;
+	product: StoreProduct;
+	cartID: string | undefined;
 	variant?: "PDP" | "cart";
 };
 
-export function AddonsItem({ product, variant = "PDP" }: Props) {
+export function AddonsItem({ product, cartID, variant = "PDP" }: Props) {
 	return (
 		<LocalizedLink
 			className="flex w-full gap-xs"
@@ -43,6 +44,7 @@ export function AddonsItem({ product, variant = "PDP" }: Props) {
 					</Body>
 				</div>
 				<AddToCartButton
+					cartID={cartID}
 					className={cx("self-end", {
 						"mr-4": variant === "cart",
 					})}

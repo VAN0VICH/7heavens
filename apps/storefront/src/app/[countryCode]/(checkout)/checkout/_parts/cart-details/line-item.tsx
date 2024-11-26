@@ -2,11 +2,11 @@
 
 import Body from "@/components/shared/typography/body";
 import { convertToLocale } from "@/utils/business/money";
-import type { LineItem as LineItemType } from "@blazzing-app/validators/client";
+import type { StoreLineItem } from "@blazzing-app/validators";
 import Image from "next/image";
 import React from "react";
 
-export function LineItem({ item }: { item: LineItemType }) {
+export function LineItem({ item }: { item: StoreLineItem }) {
 	if (!((item?.quantity || 0) > 0)) return null;
 
 	const unit_price = React.useMemo(

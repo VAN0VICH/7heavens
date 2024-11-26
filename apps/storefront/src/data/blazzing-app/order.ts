@@ -1,6 +1,6 @@
 "use server";
 import { env } from "@/app/env";
-import type { Order } from "@blazzing-app/validators/client";
+import type { StoreOrder } from "@blazzing-app/validators";
 import { unstable_cache } from "next/cache";
 import { client } from "./client";
 
@@ -19,7 +19,7 @@ export const getOrder = unstable_cache(async (id: string | string[]) => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result ?? (null as any as Order[]);
+		return result ?? (null as any as StoreOrder[]);
 	}
 	return [];
 });

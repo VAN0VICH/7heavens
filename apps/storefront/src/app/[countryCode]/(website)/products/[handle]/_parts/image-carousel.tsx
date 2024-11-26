@@ -6,13 +6,13 @@ import {
 	SlidesWrapper,
 	useCarousel,
 } from "@/components/shared/carousel";
-import type { Variant } from "@blazzing-app/validators/client";
+import type { StoreVariant } from "@blazzing-app/validators";
 import { cx } from "cva";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 
 type CommonProductImagesCarouselProps = {
-	variant: Variant;
+	variant: StoreVariant;
 };
 
 export function ProductImagesCarousel({
@@ -55,7 +55,7 @@ export function ProductImagesCarousel({
 							<ItemCarousel
 								index={index}
 								key={index}
-								mediaItem={mediaItem as Variant["images"][0]}
+								mediaItem={mediaItem as StoreVariant["images"][0]}
 								selectedImageIndex={selectedImageIndex}
 								setSelectedImageIdex={(index) => {
 									setSelectedImageIdex(index);
@@ -90,7 +90,7 @@ function ItemCarousel({
 	setSelectedImageIdex,
 }: {
 	index: number;
-	mediaItem: Variant["images"][0];
+	mediaItem: StoreVariant["images"][0];
 	selectedImageIndex: number;
 	setSelectedImageIdex: (index: number) => void;
 }) {

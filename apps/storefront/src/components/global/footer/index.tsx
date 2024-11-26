@@ -4,7 +4,6 @@ import { RichText } from "@/components/shared/rich-text";
 import { SanityImage } from "@/components/shared/sanity-image";
 
 import BottomLinks from "./parts/bottom-links";
-import Newsletter from "./parts/newsletter";
 import TopLinks from "./parts/top-links";
 
 interface FooterProps extends NonNullable<Footer> {
@@ -42,7 +41,7 @@ export default function FooterComponent({
 
 	return (
 		<>
-			<Newsletter {...props} />
+			{/* <Newsletter {...props} /> */}
 			<footer className="w-full bg-accent" id="footer">
 				<div className="mx-auto flex w-full max-w-max-screen flex-col gap-2xl px-m pb-m pt-6xl text-background lg:px-xl lg:pb-xl">
 					<TopLinks {...props} />

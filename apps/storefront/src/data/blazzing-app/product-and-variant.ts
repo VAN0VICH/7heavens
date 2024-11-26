@@ -1,5 +1,5 @@
 import { env } from "@/app/env";
-import type { Product, Variant } from "@blazzing-app/validators/client";
+import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { unstable_cache } from "next/cache";
 import { client } from "./client";
 
@@ -19,7 +19,7 @@ export const getProductById = unstable_cache(async (id: string) => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result[0] ?? (null as any as Product | null);
+		return result[0] ?? (null as any as StoreProduct | null);
 	}
 	return null;
 });
@@ -40,7 +40,7 @@ export const getProductByHandle = unstable_cache(async (handle: string) => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result[0] ?? (null as any as Product | null);
+		return result[0] ?? (null as any as StoreProduct | null);
 	}
 	return null;
 });
@@ -61,7 +61,7 @@ export const getProductsByHandles = unstable_cache(async (handle: string[]) => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result as any as Product[];
+		return result as any as StoreProduct[];
 	}
 	return [];
 });
@@ -81,7 +81,7 @@ export const getVariantByHandle = unstable_cache(async (handle: string) => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result[0] ?? (null as any as Variant | null);
+		return result[0] ?? (null as any as StoreVariant | null);
 	}
 	return null;
 });
@@ -102,7 +102,7 @@ export const getVariantsByHandles = unstable_cache(async (handle: string[]) => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result as any as Variant[];
+		return result as any as StoreVariant[];
 	}
 	return [];
 });
@@ -122,7 +122,7 @@ export const getProducts = unstable_cache(async () => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result as any as Product[];
+		return result as any as StoreProduct[];
 	}
 	return [];
 });
@@ -144,7 +144,7 @@ export const getProductsByCollectionHandle = unstable_cache(
 		);
 		if (response.ok) {
 			const { result } = await response.json();
-			return result as any as Product[];
+			return result as any as StoreProduct[];
 		}
 		return [];
 	},

@@ -44,7 +44,7 @@ export default function MediaText(
 				<div className="aspect-square rounded-lg lg:w-1/2">
 					<SanityImage
 						alt="arrow-right"
-						className="aspect-square"
+						className="aspect-square rounded-lg"
 						data={props.image}
 					/>
 				</div>

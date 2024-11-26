@@ -1,14 +1,22 @@
 import Icon from "@/components/shared/icon";
 
-import { getProducts } from "@/data/blazzing-app/product-and-variant";
+import { getProductsByCollectionHandle } from "@/data/blazzing-app/product-and-variant";
 import { ProductGrid } from "./grid";
+import Heading from "@/components/shared/typography/heading";
 
-export default async function PaginatedProducts() {
-	const products = await getProducts();
+export async function PaginatedCollectionProducts({
+	handle,
+	title,
+}: { handle: string; title: string }) {
+	console.log("handle collection", handle);
+	const products = await getProductsByCollectionHandle(handle);
 
 	return (
-		<div className="grid grid-cols-2 gap-x-2 gap-y-4 lg:grid-cols-3">
-			<ProductGrid products={products} />
+		<div className="grid gap-2">
+			<Heading tag="h2">{title}</Heading>
+			<div className="grid grid-cols-2 gap-x-2 gap-y-4 lg:grid-cols-3">
+				<ProductGrid products={products} />
+			</div>
 		</div>
 	);
 }
@@ -16,7 +24,7 @@ export default async function PaginatedProducts() {
 export function ProductsSkeleton() {
 	return (
 		<div className="grid grid-cols-2 gap-x-2 gap-y-4 lg:grid-cols-3">
-			{[...Array(9)].map((_, index) => (
+			{[...Array(4)].map((_, index) => (
 				<div key={index}>
 					<div className="relative aspect-square w-full rounded-lg border border-accent">
 						<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

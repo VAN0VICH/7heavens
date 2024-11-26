@@ -6,7 +6,7 @@ import type { Routes } from "@blazzing-app/functions";
 import { hc } from "hono/client";
 import usePartySocket from "partysocket/react";
 
-function PartykitProvider() {
+function PartykitProvider({ cartID }: { cartID: string | undefined }) {
 	const globalRep = useReplicache((state) => state.storeRep);
 	//@ts-ignore
 	const client = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL);
@@ -14,7 +14,7 @@ function PartykitProvider() {
 	usePartySocket({
 		// usePartySocket takes the same arguments as PartySocket.
 		host: env.NEXT_PUBLIC_PARTYKIT_HOST, // or localhost:1999 in dev
-		room: "store",
+		room: "storefront",
 
 		// in addition, you can provide socket lifecycle event handlers
 		// (equivalent to using ws.addEventListener in an effect hook)
@@ -27,14 +27,22 @@ function PartykitProvider() {
 			if (globalRep) {
 				//@ts-ignore
 				globalRep.puller = async (req) => {
-					const response = await client.replicache.pull.$post({
-						//@ts-ignore
-						json: req,
-						query: {
-							spaceID: "store" as const,
-							subspaces,
+					const response = await client.replicache.pull.$post(
+						{
+							//@ts-ignore
+							json: req,
+							query: {
+								spaceID: "storefront" as const,
+								subspaces,
+							},
 						},
-					});
+						{
+							headers: {
+								"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+								...(cartID && { "x-cart-id": cartID }),
+							},
+						},
+					);
 
 					return {
 						response:

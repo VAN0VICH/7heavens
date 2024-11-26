@@ -104,6 +104,7 @@ const config: Config = {
 				exitToLeft: "exitToLeft 450ms ease",
 				fadeInUp: "fadeInUp 450ms ease",
 				fadeOutLeft: "fadeOutLeft var(--duration) ease-in-out",
+				shake: "shake 0.5s linear infinite",
 			},
 			keyframes: {
 				marquee: {
@@ -168,6 +169,13 @@ const config: Config = {
 				fadeOutLeft: {
 					from: { opacity: "1", transform: "translateX(0)" },
 					to: { opacity: "0", transform: "translateX(-40px)" },
+				},
+				shake: {
+					"0%": { transform: "translateX(0)" },
+					"25%": { transform: "translateX(15px)" },
+					"50%": { transform: "translateX(-15px)" },
+					"75%": { transform: "translateX(15px)" },
+					"100%": { transform: "translateX(0)" },
 				},
 			},
 		},

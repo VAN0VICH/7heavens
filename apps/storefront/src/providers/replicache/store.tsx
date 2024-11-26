@@ -9,8 +9,10 @@ import { Replicache } from "replicache";
 
 export function StoreReplicacheProvider({
 	children,
+	cartID,
 }: Readonly<{
 	children: React.ReactNode;
+	cartID: string | undefined;
 }>) {
 	const rep = useReplicache((state) => state.storeRep);
 	const setRep = useReplicache((state) => state.setStoreRep);
@@ -29,13 +31,21 @@ export function StoreReplicacheProvider({
 			mutators: StorefrontMutators,
 			//@ts-ignore
 			puller: async (req) => {
-				const response = await client.replicache.pull.$post({
-					//@ts-ignore
-					json: req,
-					query: {
-						spaceID: "store" as const,
+				const response = await client.replicache.pull.$post(
+					{
+						//@ts-ignore
+						json: req,
+						query: {
+							spaceID: "storefront" as const,
+						},
 					},
-				});
+					{
+						headers: {
+							"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+							...(cartID && { "x-cart-id": cartID }),
+						},
+					},
+				);
 
 				return {
 					response: response.status === 200 ? await response.json() : undefined,
@@ -46,13 +56,20 @@ export function StoreReplicacheProvider({
 				};
 			},
 			pusher: async (req) => {
-				const response = await client.replicache.push.$post({
-					//@ts-ignore
-					json: req,
-					query: {
-						spaceID: "store" as const,
+				const response = await client.replicache.push.$post(
+					{
+						//@ts-ignore
+						json: req,
+						query: {
+							spaceID: "storefront" as const,
+						},
 					},
-				});
+					{
+						headers: {
+							"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+						},
+					},
+				);
 				return {
 					httpRequestInfo: {
 						httpStatusCode: response.status,
@@ -62,7 +79,7 @@ export function StoreReplicacheProvider({
 			},
 		});
 		setRep(r);
-	}, [rep, setRep]);
+	}, [rep, setRep, cartID]);
 
 	return <>{children}</>;
 }

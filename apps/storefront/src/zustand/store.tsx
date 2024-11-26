@@ -2,15 +2,15 @@
 
 import React from "react";
 import type { ExperimentalDiff, ReadonlyJSONValue } from "replicache";
-import { createStore, useStore } from "zustand";
+import { create, createStore, useStore } from "zustand";
 import type { SearchWorkerRequest } from "../types/worker";
 import type {
-	Cart,
-	LineItem,
-	Order,
-	Product,
-	Variant,
-} from "@blazzing-app/validators/client";
+	StoreCart,
+	StoreLineItem,
+	StoreOrder,
+	StoreProduct,
+	StoreVariant,
+} from "@blazzing-app/validators";
 type Entity = ReadonlyJSONValue & { id: string };
 type ExtractState<S> = S extends {
 	getState: () => infer T;
@@ -78,16 +78,16 @@ function commonDiffReducer({
 
 interface GlobalStore {
 	isInitialized: boolean;
-	carts: Cart[];
-	products: Product[];
-	variants: Variant[];
-	lineItems: LineItem[];
-	cartMap: Map<string, Cart>;
-	lineItemMap: Map<string, LineItem>;
-	productsMap: Map<string, Product>;
-	variantsMap: Map<string, Variant>;
-	orders: Order[];
-	orderMap: Map<string, Order>;
+	carts: StoreCart[];
+	products: StoreProduct[];
+	variants: StoreVariant[];
+	lineItems: StoreLineItem[];
+	cartMap: Map<string, StoreCart>;
+	lineItemMap: Map<string, StoreLineItem>;
+	productsMap: Map<string, StoreProduct>;
+	variantsMap: Map<string, StoreVariant>;
+	orders: StoreOrder[];
+	orderMap: Map<string, StoreOrder>;
 	setIsInitialized(newValue: boolean): void;
 	diffCarts(diff: ExperimentalDiff): void;
 	diffOrders(diff: ExperimentalDiff): void;
@@ -95,105 +95,79 @@ interface GlobalStore {
 	diffVariants(diff: ExperimentalDiff): void;
 	diffLineItems(diff: ExperimentalDiff): void;
 }
-const createGlobalStore = () =>
-	createStore<GlobalStore>((set, get) => ({
-		isInitialized: false,
-		carts: [],
-		users: [],
-		products: [],
-		variants: [],
-		orders: [],
-		notifications: [],
+const useGlobalStore = create<GlobalStore>()((set, get) => ({
+	isInitialized: false,
+	carts: [],
+	users: [],
+	products: [],
+	variants: [],
+	orders: [],
+	notifications: [],
 
-		lineItems: [],
-		productsMap: new Map(),
-		variantsMap: new Map(),
-		userMap: new Map(),
-		cartMap: new Map(),
-		orderMap: new Map(),
-		lineItemMap: new Map(),
-		notificationMap: new Map(),
+	lineItems: [],
+	productsMap: new Map(),
+	variantsMap: new Map(),
+	userMap: new Map(),
+	cartMap: new Map(),
+	orderMap: new Map(),
+	lineItemMap: new Map(),
+	notificationMap: new Map(),
 
-		setIsInitialized(newValue: boolean) {
-			set({ isInitialized: newValue });
-		},
-		diffProducts(diff: ExperimentalDiff) {
-			const { newEntities, newMap } = commonDiffReducer({
-				diff,
-				map: get().productsMap,
-			});
-			set({
-				products: newEntities as Product[],
-				productsMap: newMap as Map<string, Product>,
-			});
-		},
-		diffVariants(diff: ExperimentalDiff) {
-			const { newEntities, newMap } = commonDiffReducer({
-				diff,
-				map: get().variantsMap as Map<string, Entity>,
-			});
-			set({
-				variants: newEntities as Variant[],
-				variantsMap: newMap as Map<string, Variant>,
-			});
-		},
-		diffCarts(diff: ExperimentalDiff, cartId?: string) {
-			const { newEntities, newMap } = commonDiffReducer({
-				diff,
-				map: get().cartMap as Map<string, Entity>,
-				...(cartId && { cartId }),
-			});
-			set({
-				carts: newEntities as Cart[],
-				cartMap: newMap as Map<string, Cart>,
-			});
-		},
-		diffOrders(diff: ExperimentalDiff) {
-			const { newEntities, newMap } = commonDiffReducer({
-				diff,
-				map: get().orderMap as Map<string, Entity>,
-			});
-			set({
-				orders: newEntities as Order[],
-				orderMap: newMap as Map<string, Order>,
-			});
-		},
-		diffLineItems(diff: ExperimentalDiff) {
-			const { newEntities, newMap } = commonDiffReducer({
-				diff,
-				map: get().lineItemMap as Map<string, Entity>,
-			});
-			set({
-				lineItems: newEntities as LineItem[],
-				lineItemMap: newMap as Map<string, LineItem>,
-			});
-		},
-	}));
-
-const GlobalStoreContext = React.createContext<ReturnType<
-	typeof createGlobalStore
-> | null>(null);
-const GlobalStoreProvider = ({ children }: { children: React.ReactNode }) => {
-	const [store] = React.useState(createGlobalStore);
-
-	return (
-		<GlobalStoreContext.Provider value={store}>
-			{children}
-		</GlobalStoreContext.Provider>
-	);
-};
-
-const useGlobalStore = <_, U>(
-	selector: (
-		state: ExtractState<ReturnType<typeof createGlobalStore> | null>,
-	) => U,
-) => {
-	const store = React.useContext(GlobalStoreContext);
-	if (!store) {
-		throw new Error("Missing GlobalProvider");
-	}
-	return useStore(store, selector);
-};
+	setIsInitialized(newValue: boolean) {
+		set({ isInitialized: newValue });
+	},
+	diffProducts(diff: ExperimentalDiff) {
+		const { newEntities, newMap } = commonDiffReducer({
+			diff,
+			map: get().productsMap,
+		});
+		set({
+			products: newEntities as StoreProduct[],
+			productsMap: newMap as Map<string, StoreProduct>,
+		});
+	},
+	diffVariants(diff: ExperimentalDiff) {
+		const { newEntities, newMap } = commonDiffReducer({
+			diff,
+			map: get().variantsMap as Map<string, Entity>,
+		});
+		set({
+			variants: newEntities as StoreVariant[],
+			variantsMap: newMap as Map<string, StoreVariant>,
+		});
+	},
+	diffCarts(diff: ExperimentalDiff, cartId?: string) {
+		const { newEntities, newMap } = commonDiffReducer({
+			diff,
+			map: get().cartMap as Map<string, Entity>,
+			...(cartId && { cartId }),
+		});
+		set({
+			carts: newEntities as StoreCart[],
+			cartMap: newMap as Map<string, StoreCart>,
+		});
+	},
+	diffOrders(diff: ExperimentalDiff) {
+		const { newEntities, newMap } = commonDiffReducer({
+			diff,
+			map: get().orderMap as Map<string, Entity>,
+		});
+		set({
+			orders: newEntities as StoreOrder[],
+			orderMap: newMap as Map<string, StoreOrder>,
+		});
+	},
+	diffLineItems(diff: ExperimentalDiff) {
+		const { newEntities, newMap } = commonDiffReducer({
+			diff,
+			map: get().lineItemMap as Map<string, Entity>,
+		});
+		set({
+			lineItems: newEntities as StoreLineItem[],
+			lineItemMap: newMap as Map<string, StoreLineItem>,
+		});
+	},
+}));
 
 interface GlobalSearch {
 	globalSearchWorker: Worker | undefined;
@@ -213,7 +187,7 @@ const GlobalSearchContext = React.createContext<ReturnType<
 > | null>(null);
 const GlobalSearchProvider = ({ children }: { children: React.ReactNode }) => {
 	const [store] = React.useState(createGlobalSearch);
-	const state = store.getState();
+	// const state = store.getState();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	// useEffect(() => {
@@ -251,9 +225,7 @@ const useGlobalSearch = <_, U>(
 
 export {
 	createGlobalSearch,
-	createGlobalStore,
 	GlobalSearchProvider,
-	GlobalStoreProvider,
 	useGlobalSearch,
 	useGlobalStore,
 };

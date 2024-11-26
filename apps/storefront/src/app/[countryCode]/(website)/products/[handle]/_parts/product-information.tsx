@@ -1,21 +1,21 @@
 import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
 
+import type { PRODUCT_QUERYResult } from "@/types/sanity.generated";
+import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { ProductVariantsProvider } from "../product-context";
 import AddToCart from "./add-to-cart";
-import BreadCrumbs from "./breadcrumbs";
-import OptionsSelect from "./options";
-import ProductSpecs from "./specs";
-import type { PRODUCT_QUERYResult } from "@/types/sanity.generated";
-import type { Product, Variant } from "@blazzing-app/validators/client";
-import { PriceDetail } from "./price";
 import { Addons } from "./addons";
+import OptionsSelect from "./options";
+import { PriceDetail } from "./price";
+import ProductSpecs from "./specs";
 
 type Props = {
 	content: PRODUCT_QUERYResult;
-	variant: Variant;
-	product: Product;
+	variant: StoreVariant;
+	product: StoreProduct;
 	handle: string;
+	cartID: string | undefined;
 };
 
 export function ProductInformation({
@@ -23,6 +23,7 @@ export function ProductInformation({
 	variant,
 	product,
 	handle,
+	cartID,
 }: Props) {
 	return (
 		<ProductVariantsProvider
@@ -50,12 +51,8 @@ export function ProductInformation({
 					{variant.description}
 				</Body>
 				<div className="mt-s flex flex-col gap-s">
-					{variant.product?.options && (
-						<OptionsSelect options={variant.product.options} />
-					)}
-					{variant.product && (
-						<AddToCart variant="PDP" product={variant.product} />
-					)}
+					<OptionsSelect options={product.options} />
+					<AddToCart variant="PDP" product={product} cartID={cartID} />
 				</div>
 				<Addons addons={content?.addons} />
 				<ProductSpecs specs={content?.specs} />

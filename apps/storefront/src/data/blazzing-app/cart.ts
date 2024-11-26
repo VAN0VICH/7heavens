@@ -1,7 +1,7 @@
 import { cache } from "react";
 
 import { env } from "@/app/env";
-import type { Cart } from "@blazzing-app/validators/client";
+import type { StoreCart } from "@blazzing-app/validators";
 import { client } from "./client";
 import { getCartId } from "./cookies";
 
@@ -26,7 +26,7 @@ export const getCart = cache(async () => {
 	);
 	if (response.ok) {
 		const { result } = await response.json();
-		return result ?? (null as any as Cart | null);
+		return result ?? (null as any as StoreCart | null);
 	}
 	return null;
 });

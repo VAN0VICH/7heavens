@@ -49,11 +49,11 @@ export const removeAuthToken = async () => {
 };
 
 export const getCartId = async () => {
-	return (await cookies()).get("_medusa_cart_id")?.value;
+	return (await cookies()).get("cart_id")?.value;
 };
 
 export const setCartId = async (cartId: string) => {
-	(await cookies()).set("_medusa_cart_id", cartId, {
+	(await cookies()).set("cart_id", cartId, {
 		httpOnly: true,
 		maxAge: 60 * 60 * 24 * 7,
 		sameSite: "strict",

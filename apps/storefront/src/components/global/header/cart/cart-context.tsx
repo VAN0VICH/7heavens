@@ -7,13 +7,13 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useReplicache } from "@/zustand/replicache";
 import { useGlobalStore } from "@/zustand/store";
-import type { Cart, LineItem } from "@blazzing-app/validators/client";
+import type { StoreCart, StoreLineItem } from "@blazzing-app/validators";
 import { cartSubtotal } from "@/utils/business/cart-subtotal";
 
 const CartContext = createContext<
 	| {
-			cart: Cart | null;
-			lineItems: LineItem[];
+			cart: StoreCart | null;
+			lineItems: StoreLineItem[];
 			subtotal: number;
 			cartOpen: boolean;
 			deleteItem: (id: string) => Promise<void>;
@@ -27,7 +27,7 @@ export function CartProvider({
 	cartID,
 	children,
 }: PropsWithChildren<{
-	cartID?: string;
+	cartID: string | undefined;
 	countryCode: string;
 }>) {
 	const [cartOpen, setCartOpen] = useState(false);
@@ -35,12 +35,18 @@ export function CartProvider({
 	const rep = useReplicache((state) => state.storeRep);
 	const cartMap = useGlobalStore((state) => state.cartMap);
 	const cart = cartMap.get(cartID ?? "");
-	const lineItems = useGlobalStore((state) =>
-		state.lineItems.filter((item) => item.cartID === cartID),
+
+	console.log("cart id ", cartID);
+	console.log("cart", cart);
+	const allLineItems = useGlobalStore((state) => state.lineItems);
+
+	const lineItems = React.useMemo(
+		() => allLineItems.filter((item) => item.cartID === cartID),
+		[allLineItems, cartID],
 	);
 
 	const subtotal = React.useMemo(
-		() => cartSubtotal(lineItems, cart as Cart),
+		() => cartSubtotal(lineItems, cart as StoreCart),
 		[lineItems, cart],
 	);
 

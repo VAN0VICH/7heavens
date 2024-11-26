@@ -3,22 +3,22 @@
 import { Link } from "@/components/shared/button";
 import LocalizedLink from "@/components/shared/localized-link";
 import { SanityImage } from "@/components/shared/sanity-image";
-import Tag from "@/components/shared/tag";
 import Body from "@/components/shared/typography/body";
 import { cx } from "cva";
 import Image from "next/image";
 import { useState } from "react";
 
-import type { ModularPageSection } from "../types";
+import Price from "@/components/price";
 import { cleanHandle } from "@/sanity/lib/utils";
-import type { Product } from "@blazzing-app/validators/client";
+import type { StoreProduct } from "@blazzing-app/validators";
+import type { ModularPageSection } from "../types";
 
 export default function HotspotsUi({
 	image,
 	productHotSpots,
 	products,
 }: {
-	products: Product[];
+	products: StoreProduct[];
 } & Pick<
 	ModularPageSection<"section.shopTheLook">,
 	"image" | "productHotSpots"
@@ -118,20 +118,23 @@ export default function HotspotsUi({
 					<div className="flex flex-1 flex-col items-center justify-center gap-1 px-lg py-s">
 						<Body
 							className="text-center"
-							desktopSize="xl"
-							font="sans"
+							desktopSize="4xl"
+							font="display"
 							mobileSize="lg"
 						>
 							{product.baseVariant.title}
 						</Body>
 						<Body
 							className="text-center"
-							desktopSize="base"
+							desktopSize="2xl"
 							font="sans"
 							mobileSize="sm"
 						>
 							от{" "}
-							{`${product.baseVariant.prices?.[0].amount} ${product.baseVariant.prices?.[0].currencyCode}`}
+							<Price
+								amount={product.baseVariant.prices?.[0].amount}
+								currencyCode={product.baseVariant.prices?.[0].currencyCode}
+							/>
 						</Body>
 					</div>
 				</div>
@@ -166,13 +169,15 @@ export default function HotspotsUi({
 									width={100}
 								/>
 							) : null}
-							<div className="flex flex-col items-start justify-start gap-1 py-xs">
+							<div className="flex flex-col items-start justify-start gap-1 ">
 								<Body className="text-pretty" font="sans" mobileSize="lg">
 									{product?.baseVariant.title}
 								</Body>
 								<Body font="sans" mobileSize="sm">
-									от{" "}
-									{`${product.baseVariant.prices?.[0].amount} ${product.baseVariant.prices?.[0].currencyCode}`}
+									<Price
+										amount={product.baseVariant.prices?.[0].amount}
+										currencyCode={product.baseVariant.prices?.[0].currencyCode}
+									/>
 								</Body>
 							</div>
 						</LocalizedLink>

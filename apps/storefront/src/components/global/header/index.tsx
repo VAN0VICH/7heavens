@@ -1,14 +1,13 @@
 import type { Header } from "@/types/sanity.generated";
 
-import Icon from "@/components/shared/icon";
 import LocalizedLink from "@/components/shared/localized-link";
 import { Suspense } from "react";
 
+import { Cart } from "./cart";
 import AnnouncementBar from "./parts/announcement-bar";
 import BottomBorder from "./parts/bottom-border";
-import Navigation from "./parts/navigation";
 import HamburgerContainer from "./parts/hamburger/container";
-import { Cart } from "./cart";
+import Navigation from "./parts/navigation";
 
 export default function HeaderComponent(
 	props: { countryCode: string } & Header,

@@ -4,7 +4,7 @@ import type { Header } from "@/types/sanity.generated";
 import { Suspense } from "react";
 
 import CartAddons from "./cart-addons";
-import { CartProvider, useCart } from "./cart-context";
+import { useCart } from "./cart-context";
 import CartUI from "./cart-ui";
 
 type Props = Pick<Header, "cartAddons">;

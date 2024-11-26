@@ -3,14 +3,15 @@
 import Select from "@/components/shared/select";
 
 import { useProductVariants } from "../product-context";
-import type { ProductOption } from "@blazzing-app/validators/client";
+import type { StoreProductOption } from "@blazzing-app/validators";
+import { cn } from "@/utils/cn";
 
 type Props = {
-	options: ProductOption[];
+	options: StoreProductOption[];
 };
 
 export default function OptionsSelect({ options }: Props) {
-	const { selectedVariant, setVariant, setVariantOptions, variantOptions } =
+	const { setVariant, setVariantOptions, variantOptions, isShaking } =
 		useProductVariants();
 
 	return options?.map((option) => {
@@ -31,10 +32,12 @@ export default function OptionsSelect({ options }: Props) {
 
 		return (
 			<Select
-				className="w-fit"
+				className={cn("w-fit", isShaking && "animate-shake duration-300")}
 				key={option.id}
 				options={values}
-				placeholder={variantOptions[option.id] ?? ""}
+				placeholder={
+					option.name === "size" ? "Выберите размер" : "Выберите опцию"
+				}
 				setOption={setOption}
 				variant="outline"
 			/>

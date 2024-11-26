@@ -4,14 +4,11 @@ import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
 
 // import PaymentButton from "./payment/button";
-import type { Cart } from "@blazzing-app/validators/client";
 
 export default function Review({
 	active,
-	cart,
 }: {
 	active: boolean;
-	cart: Cart;
 }) {
 	if (!active) return null;
 

@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { env } from "@/app/env";
 import { cartSubtotal } from "@/utils/business/cart-subtotal";
 import type { Routes } from "@blazzing-app/functions";
-import type { LineItem, Order } from "@blazzing-app/validators/client";
+import type { StoreLineItem, StoreOrder } from "@blazzing-app/validators";
 import { hc } from "hono/client";
 import OrderItem from "./_parts/order-item";
 
@@ -39,7 +39,7 @@ export default async function OrderConfirmedPage({
 		}
 		const order = orders[0]!;
 		const total = convertToLocale({
-			amount: cartSubtotal(order.items as LineItem[], order as Order),
+			amount: cartSubtotal(order.items as StoreLineItem[], order as StoreOrder),
 			currencyCode: order.currencyCode,
 		});
 		return (
@@ -78,7 +78,7 @@ export default async function OrderConfirmedPage({
 					</Heading>
 					<div className="flex flex-col gap-s">
 						{order.items.map((item) => {
-							return <OrderItem key={item.id} item={item as LineItem} />;
+							return <OrderItem key={item.id} item={item as StoreLineItem} />;
 						})}
 						<Separator />
 						<SubLineItem title="Subtotal" value={total} />

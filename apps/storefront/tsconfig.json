@@ -16,6 +16,7 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"incremental": true,
+		"noUnusedLocals": true,
 		"plugins": [
 			{
 				"name": "next"
@@ -32,5 +33,5 @@
 		".next/types/**/*.ts",
 		"/worker/*.ts"
 	],
-	"exclude": ["node_modules", "src/mode_modules"]
+	"exclude": ["node_modules"]
 }
