@@ -76,6 +76,8 @@ import {
 	ChevronDown,
 	ChevronUp,
 	ListCollapseIcon,
+	Lock,
+	LockOpen,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -94,6 +96,8 @@ export const Icons = {
 	Marketplace: Earth,
 	Settings: Settings,
 	Sun: Sun,
+	Lock,
+	Unlock: LockOpen,
 	Moon: Moon,
 	Left: ChevronLeft,
 	Down: ChevronDown,

@@ -10,9 +10,11 @@ import { Replicache } from "replicache";
 export function StoreReplicacheProvider({
 	children,
 	cartID,
+	tempUserID,
 }: Readonly<{
 	children: React.ReactNode;
 	cartID: string | undefined;
+	tempUserID: string | undefined;
 }>) {
 	const rep = useReplicache((state) => state.storeRep);
 	const setRep = useReplicache((state) => state.setStoreRep);
@@ -43,6 +45,7 @@ export function StoreReplicacheProvider({
 						headers: {
 							"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
 							...(cartID && { "x-cart-id": cartID }),
+							...(tempUserID && { "x-temp-user-id": tempUserID }),
 						},
 					},
 				);
@@ -67,6 +70,7 @@ export function StoreReplicacheProvider({
 					{
 						headers: {
 							"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+							...(tempUserID && { "x-temp-user-id": tempUserID }),
 						},
 					},
 				);
@@ -79,7 +83,7 @@ export function StoreReplicacheProvider({
 			},
 		});
 		setRep(r);
-	}, [rep, setRep, cartID]);
+	}, [rep, setRep, cartID, tempUserID]);
 
 	return <>{children}</>;
 }

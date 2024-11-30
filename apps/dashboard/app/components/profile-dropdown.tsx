@@ -46,7 +46,7 @@ const ProfileDropdown = () => {
 			<DropdownMenu.Trigger>
 				<button
 					type="button"
-					className="bg-component dark:bg-gray-3 dark:shadow-accent-2  flex justify-center items-center size-[45px] shadow-sm text-accent-11 hover:bg-accent-2 hover:border-accent-6 border-accent-4 border rounded-[7px] focus-visible:ring-accent-8 focus-visible:outline-none focus-visible:ring-2"
+					className="bg-component dark:bg-gray-3 dark:shadow-accent-2  flex justify-center items-center size-[45px] shadow-sm text-accent-11 hover:bg-accent-2 hover:border-accent-6 border-accent-4 border rounded-[4px] focus-visible:ring-accent-8 focus-visible:outline-none focus-visible:ring-2"
 				>
 					{/* {isLoggingOut ? (
 						<Spinner />

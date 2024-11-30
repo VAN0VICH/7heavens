@@ -16,6 +16,7 @@ type Props = {
 	product: StoreProduct;
 	handle: string;
 	cartID: string | undefined;
+	tempUserID: string | undefined;
 };
 
 export function ProductInformation({
@@ -24,6 +25,7 @@ export function ProductInformation({
 	product,
 	handle,
 	cartID,
+	tempUserID,
 }: Props) {
 	return (
 		<ProductVariantsProvider
@@ -52,7 +54,12 @@ export function ProductInformation({
 				</Body>
 				<div className="mt-s flex flex-col gap-s">
 					<OptionsSelect options={product.options} />
-					<AddToCart variant="PDP" product={product} cartID={cartID} />
+					<AddToCart
+						variant="PDP"
+						product={product}
+						cartID={cartID}
+						tempUserID={tempUserID}
+					/>
 				</div>
 				<Addons addons={content?.addons} />
 				<ProductSpecs specs={content?.specs} />

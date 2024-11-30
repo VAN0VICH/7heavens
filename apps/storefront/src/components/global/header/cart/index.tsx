@@ -1,15 +1,16 @@
 "use client";
 import type { Header } from "@/types/sanity.generated";
 
-import { Suspense } from "react";
-
-import CartAddons from "./cart-addons";
+import { CartAddons } from "./cart-addons";
 import { useCart } from "./cart-context";
 import CartUI from "./cart-ui";
 
-type Props = Pick<Header, "cartAddons">;
+type Props = Pick<Header, "cartAddons"> & {
+	cartID: string | undefined;
+	tempUserID: string | undefined;
+};
 
-export function Cart({ cartAddons }: Props) {
+export function Cart({ cartAddons, cartID, tempUserID }: Props) {
 	const { lineItems } = useCart();
 
 	const addonHandles = (
@@ -21,9 +22,12 @@ export function Cart({ cartAddons }: Props) {
 	const isEmptyCart = !lineItems || lineItems.length === 0;
 	const addons =
 		addonHandles.length > 0 ? (
-			<Suspense>
-				<CartAddons handles={addonHandles} isEmptyCart={isEmptyCart} />
-			</Suspense>
+			<CartAddons
+				handles={addonHandles}
+				isEmptyCart={isEmptyCart}
+				cartID={cartID}
+				tempUserID={tempUserID}
+			/>
 		) : null;
 
 	return <CartUI addons={addons} />;

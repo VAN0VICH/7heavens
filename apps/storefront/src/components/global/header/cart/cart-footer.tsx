@@ -19,12 +19,17 @@ export default function CartFooter() {
 			<div className="flex w-full flex-col justify-between gap-4 p-s">
 				<div className="flex w-full justify-between gap-4">
 					<div>
-						<Body className="font-semibold" font="sans" mobileSize="base">
+						<Body
+							className="font-semibold"
+							desktopSize="xl"
+							font="sans"
+							mobileSize="base"
+						>
 							Заказ
 						</Body>
 					</div>
 					{subtotal && (
-						<Body font="sans" mobileSize="base">
+						<Body font="sans" mobileSize="base" desktopSize="xl">
 							<Price amount={subtotal} currencyCode={cart?.currencyCode} />
 						</Body>
 					)}

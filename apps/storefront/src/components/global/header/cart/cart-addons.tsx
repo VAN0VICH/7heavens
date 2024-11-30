@@ -1,16 +1,36 @@
 import { AddonsItem } from "@/components/shared/addons-item";
 import CarouselSection from "@/components/shared/carousel-section";
 import Heading from "@/components/shared/typography/heading";
-import { getProductsByHandles } from "@/data/blazzing-app/product-and-variant";
-type Props = { handles: string[]; isEmptyCart: boolean };
+import { useGlobalStore } from "@/zustand/store";
+import React from "react";
+type Props = {
+	handles: string[];
+	isEmptyCart: boolean;
+	cartID: string | undefined;
+	tempUserID: string | undefined;
+};
 
-export default async function CartAddons({ handles, isEmptyCart }: Props) {
-	const products = await getProductsByHandles(handles);
+export function CartAddons({
+	handles,
+	isEmptyCart,
+	cartID,
+	tempUserID,
+}: Props) {
+	const products_ = useGlobalStore((state) => state.products);
+	const products = React.useMemo(
+		() => products_.filter((p) => handles.includes(p.collectionHandle ?? "")),
+		[products_, handles],
+	);
 	// const cartID = await getCartId();
 
 	const slides = products.map((product) => (
 		<div className="w-[380px]" key={product.id}>
-			<AddonsItem variant="cart" product={product} cartID={undefined} />
+			<AddonsItem
+				variant="cart"
+				product={product}
+				cartID={cartID}
+				tempUserID={tempUserID}
+			/>
 		</div>
 	));
 

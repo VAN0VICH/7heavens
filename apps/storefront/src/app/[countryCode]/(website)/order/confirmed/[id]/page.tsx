@@ -1,6 +1,5 @@
 import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
-import { convertToLocale } from "@/utils/business/money";
 import { notFound } from "next/navigation";
 
 import { env } from "@/app/env";
@@ -9,13 +8,15 @@ import type { Routes } from "@blazzing-app/functions";
 import type { StoreLineItem, StoreOrder } from "@blazzing-app/validators";
 import { hc } from "hono/client";
 import OrderItem from "./_parts/order-item";
+import Price from "@/components/price";
 
 export default async function OrderConfirmedPage({
-	searchParams,
-}: { searchParams: { id?: string[] } }) {
-	const ids = searchParams?.id;
+	params,
+}: { params: { id: string } }) {
+	const id = params.id;
+	console.log("id", id);
 
-	if (!ids || ids.length === 0) {
+	if (!id) {
 		return notFound();
 	}
 	const honoClient = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL);
@@ -23,7 +24,7 @@ export default async function OrderConfirmedPage({
 	const response = await honoClient.order.id.$get(
 		{
 			query: {
-				id: ids,
+				id,
 			},
 		},
 		{
@@ -38,10 +39,10 @@ export default async function OrderConfirmedPage({
 			return notFound;
 		}
 		const order = orders[0]!;
-		const total = convertToLocale({
-			amount: cartSubtotal(order.items as StoreLineItem[], order as StoreOrder),
-			currencyCode: order.currencyCode,
-		});
+		const total = cartSubtotal(
+			order.items as StoreLineItem[],
+			order as StoreOrder,
+		);
 		return (
 			<div className="mx-auto flex max-w-[1200px] flex-col gap-2xl px-s py-2xl md:py-8xl">
 				<div className="flex flex-col gap-xs">
@@ -52,16 +53,16 @@ export default async function OrderConfirmedPage({
 						mobileSize="lg"
 						tag="h1"
 					>
-						Thank you! Your order was placed successfully Спасибо! Ваш заказ
-						успешно выполнен.
+						Спасибо! Ваш заказ успешно выполнен.
 					</Heading>
-
-					<Body className="font-medium" desktopSize="xl" font="sans">
-						We have sent the order confirmation details to {order.email}
-					</Body>
+					{(!!order.email || !!order.phone) && (
+						<Body className="font-medium" desktopSize="xl" font="sans">
+							Мы отправили подтверждение заказа на {order.email ?? order.phone}
+						</Body>
+					)}
 
 					<Body desktopSize="base" font="sans">
-						Order date:{" "}
+						Дата заказа:{" "}
 						{new Date(order?.createdAt).toLocaleDateString("en-US", {
 							day: "numeric",
 							month: "long",
@@ -69,7 +70,7 @@ export default async function OrderConfirmedPage({
 						})}
 					</Body>
 					<Body desktopSize="base" font="sans">
-						Order number: {order.displayId}
+						Номер заказа: {order.displayId}
 					</Body>
 				</div>
 				<div className="flex flex-col gap-s">
@@ -81,7 +82,11 @@ export default async function OrderConfirmedPage({
 							return <OrderItem key={item.id} item={item as StoreLineItem} />;
 						})}
 						<Separator />
-						<SubLineItem title="Subtotal" value={total} />
+						<SubLineItem
+							title="Subtotal"
+							value={total}
+							currencyCode={order.currencyCode ?? "BYN"}
+						/>
 						{/* <SubLineItem title="Taxes" value={convertMoney(order.tax_total)} /> */}
 						{/* <SubLineItem
 							title="Shipping"
@@ -93,7 +98,7 @@ export default async function OrderConfirmedPage({
 								Total
 							</Heading>
 							<Heading desktopSize="base" font="sans" mobileSize="sm" tag="h4">
-								{total}
+								<Price amount={total} currencyCode={order.currencyCode} />
 							</Heading>
 						</div>
 						<Separator />
@@ -150,14 +155,18 @@ function Separator() {
 	return <div className="h-px w-full bg-accent" />;
 }
 
-function SubLineItem({ title, value }: { title: string; value: string }) {
+function SubLineItem({
+	title,
+	value,
+	currencyCode,
+}: { title: string; value: number; currencyCode: string }) {
 	return (
 		<div className="flex items-center justify-between gap-xl">
 			<Body className="mb-[6px] font-semibold" desktopSize="base" font="sans">
 				{title}
 			</Body>
 			<Body className="mb-[6px] font-semibold" desktopSize="base" font="sans">
-				{value}
+				<Price amount={value} currencyCode={currencyCode} />
 			</Body>
 		</div>
 	);

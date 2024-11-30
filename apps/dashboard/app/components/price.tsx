@@ -1,16 +1,13 @@
 import React, { useMemo } from "react";
-import { cn } from "~/ui";
 
 const Price = ({
 	amount,
 	className,
-	currencyCode = "AUD",
-	currencyCodeClassName,
+	currencyCode = "BYN",
 }: {
 	amount: number;
 	className?: string;
 	currencyCode?: string;
-	currencyCodeClassName?: string;
 } & React.ComponentProps<"p">) => {
 	const formatter = useMemo(
 		() =>
@@ -30,9 +27,6 @@ const Price = ({
 	return (
 		<p suppressHydrationWarning={true} className={className}>
 			{formattedAmount}
-			<span className={cn("ml-1 inline", currencyCodeClassName)}>
-				{currencyCode}
-			</span>
 		</p>
 	);
 };

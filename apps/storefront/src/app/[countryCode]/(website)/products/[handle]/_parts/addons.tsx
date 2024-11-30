@@ -3,10 +3,11 @@ import type { Product } from "@/types/sanity.generated";
 import { AddonsItem } from "@/components/shared/addons-item";
 import Heading from "@/components/shared/typography/heading";
 import { getProductsByHandles } from "@/data/blazzing-app/product-and-variant";
-import { getCartId } from "@/data/blazzing-app/cookies";
+import { getCartId, getTempUserID } from "@/data/blazzing-app/cookies";
 
 export async function Addons({ addons }: { addons: Product["addons"] }) {
 	const cartID = await getCartId();
+	const tempUserID = await getTempUserID();
 	const handle = (addons?.products ?? [])
 		.map(({ handle }) => handle)
 		.filter(Boolean) as string[];
@@ -21,7 +22,12 @@ export async function Addons({ addons }: { addons: Product["addons"] }) {
 				{addons?.title}
 			</Heading>
 			{products.map((product) => (
-				<AddonsItem key={product.id} product={product} cartID={cartID} />
+				<AddonsItem
+					key={product.id}
+					product={product}
+					cartID={cartID}
+					tempUserID={tempUserID}
+				/>
 			))}
 		</div>
 	);

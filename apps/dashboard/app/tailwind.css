@@ -14,9 +14,10 @@
 @import "@radix-ui/colors/lime.css";
 @import "@radix-ui/colors/orange.css";
 @import "@radix-ui/colors/pink.css";
+@import "@radix-ui/colors/yellow.css";
 @import "@radix-ui/colors/violet.css";
-@import "@radix-ui/colors/slate.css";
-@import "@radix-ui/colors/slate-alpha.css";
+@import "@radix-ui/colors/sand.css";
+@import "@radix-ui/colors/sand-alpha.css";
 
 /* Dark theme colors */
 @import "@radix-ui/colors/ruby-dark.css";
@@ -32,8 +33,8 @@
 @import "@radix-ui/colors/orange-dark.css";
 @import "@radix-ui/colors/pink-dark.css";
 @import "@radix-ui/colors/violet-dark.css";
-@import "@radix-ui/colors/slate-dark.css";
-@import "@radix-ui/colors/slate-dark-alpha.css";
+@import "@radix-ui/colors/sand-dark.css";
+@import "@radix-ui/colors/sand-dark-alpha.css";
 
 @tailwind base;
 @tailwind components;
@@ -109,6 +110,10 @@
 /* .radix-themes {
 	--color-panel-solid: var(--component);
 } */
+.rt-BaseDialogScrollPadding {
+	padding: 0px;
+}
+
 @layer base {
 	* {
 		@apply border-border;

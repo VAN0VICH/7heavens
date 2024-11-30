@@ -43,7 +43,7 @@ export default function CartUI({
 						<div className="flex flex-col gap-4 p-4" ref={parent}>
 							{isEmptyCart ? (
 								<Body font="sans" mobileSize="base">
-									Your bag is currently empty.
+									Пустая карта.
 								</Body>
 							) : (
 								lineItems?.map((item) => (

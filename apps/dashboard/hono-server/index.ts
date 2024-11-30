@@ -5,6 +5,7 @@ import { staticAssets } from "remix-hono/cloudflare";
 import { remix } from "remix-hono/handler";
 import { getSession, session } from "remix-hono/session";
 import { WebEnvSchema, type WebBindings, type WebEnv } from "~/types/env";
+import { getUserAndSession } from "./get-user";
 
 const app = new Hono<{ Bindings: WebBindings & WebEnv }>();
 let handler: RequestHandler | undefined;
@@ -40,6 +41,10 @@ app
 				const serverBuild = await import("../build/server");
 				const session = getSession(c);
 				const env = WebEnvSchema.parse(c.env);
+				const { session: userSession, user } = await getUserAndSession(
+					c,
+					session,
+				);
 
 				const remixContext = {
 					cloudflare: {
@@ -47,6 +52,8 @@ app
 						bindings: c.env.KV,
 					},
 					session,
+					userSession,
+					authUser: user,
 				} as unknown as AppLoadContext;
 				return remix({
 					//@ts-ignore
@@ -60,6 +67,10 @@ app
 			} else {
 				const session = getSession(c);
 				const env = WebEnvSchema.parse(c.env);
+				const { session: userSession, user } = await getUserAndSession(
+					c,
+					session,
+				);
 
 				const remixContext = {
 					cloudflare: {
@@ -67,6 +78,8 @@ app
 						bindings: c.env.KV,
 					},
 					session,
+					userSession,
+					authUser: user,
 				} as unknown as AppLoadContext;
 				if (!handler) {
 					// @ts-expect-error it's not typed

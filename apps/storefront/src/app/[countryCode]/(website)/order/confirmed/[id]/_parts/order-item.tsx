@@ -1,16 +1,12 @@
+import Price from "@/components/price";
 import Body from "@/components/shared/typography/body";
 import { convertToLocale } from "@/utils/business/money";
 import type { StoreLineItem } from "@blazzing-app/validators";
 import Image from "next/image";
 
 export default function OrderItem({ item }: { item: StoreLineItem }) {
-	const price = convertToLocale({
-		amount: item.variant.prices![0]!.amount * item.quantity,
-		currencyCode: item.variant.prices![0]!.currencyCode,
-	});
-
 	const unit_price_to_locale = convertToLocale({
-		amount: item.variant.prices![0]!.amount,
+		amount: item.variant.prices![0]!.amount / 100,
 		currencyCode: item.variant.prices![0]!.currencyCode,
 	});
 
@@ -39,7 +35,10 @@ export default function OrderItem({ item }: { item: StoreLineItem }) {
 							{item.quantity} x {unit_price_to_locale}
 						</Body>
 						<Body font="sans" mobileSize="base">
-							{price}
+							<Price
+								amount={item.variant.prices![0]!.amount * item.quantity}
+								currencyCode={item.variant.prices![0]!.currencyCode}
+							/>
 						</Body>
 					</div>
 				</div>

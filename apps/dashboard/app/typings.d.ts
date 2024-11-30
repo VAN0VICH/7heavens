@@ -4,7 +4,8 @@ declare global {
 		ENV: {
 			REPLICACHE_KEY: string;
 			PARTYKIT_HOST: string;
-			WORKER_URL: string;
+			BLAZZING_URL: string;
+			BLAZZING_PUBLISHABLE_KEY: string;
 		};
 	}
 }

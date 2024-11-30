@@ -64,3 +64,7 @@ export const setCartId = async (cartId: string) => {
 export const removeCartId = async () => {
 	(await cookies()).set("_medusa_cart_id", "", { maxAge: -1 });
 };
+
+export const getTempUserID = async () => {
+	return (await cookies()).get("temp_user_id")?.value;
+};

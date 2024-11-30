@@ -15,7 +15,7 @@ import { ProductImagesCarousel } from "./_parts/image-carousel";
 import StickyAtc from "./_parts/sticky-atc";
 import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { ProductInformation } from "./_parts/product-information";
-import { getCartId } from "@/data/blazzing-app/cookies";
+import { getCartId, getTempUserID } from "@/data/blazzing-app/cookies";
 
 type ProductPageProps = PageProps<"countryCode" | "handle">;
 
@@ -60,6 +60,7 @@ export async function generateMetadata(
 export default async function ProductPage(props: ProductPageProps) {
 	const params = await props.params;
 	const cartID = await getCartId();
+	const tempUserID = await getTempUserID();
 
 	const variant = await getVariantByHandle(params.handle);
 	if (!variant) {
@@ -84,6 +85,7 @@ export default async function ProductPage(props: ProductPageProps) {
 					handle={params.handle}
 					product={product as StoreProduct}
 					cartID={cartID}
+					tempUserID={tempUserID}
 				/>
 			</section>
 
@@ -99,6 +101,7 @@ export default async function ProductPage(props: ProductPageProps) {
 				product={product as StoreProduct}
 				variant={variant as StoreVariant}
 				cartID={cartID}
+				tempUserID={tempUserID}
 			/>
 		</>
 	);

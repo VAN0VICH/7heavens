@@ -5,24 +5,27 @@ import { Cta } from "@/components/shared/button";
 import { cx } from "cva";
 
 import { setCartId } from "@/actions/set-cart-id";
-import { generateID } from "@/utils/generate";
 import { useReplicache } from "@/zustand/replicache";
 import { useGlobalStore } from "@/zustand/store";
 import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { useProductVariants } from "../product-context";
 import React from "react";
+import { useCart } from "@/components/global/header/cart/cart-context";
+import { generateID } from "@blazzing-app/utils";
+import { setTempUserID } from "@/actions/set-temp-user-id";
 
 export default function AddToCart({
 	variant,
 	product,
 	cartID,
+	tempUserID,
 }: {
 	variant: "PDP" | "sticky";
 	product: StoreProduct;
 	cartID: string | undefined;
+	tempUserID: string | undefined;
 }) {
 	const { selectedVariant, setIsShaking } = useProductVariants();
-	console.log("product variants", product.variants);
 	return (
 		<AddToCartButton
 			className={cx("", {
@@ -37,6 +40,7 @@ export default function AddToCart({
 			variant={variant === "PDP" ? "outline" : "primary"}
 			cartID={cartID}
 			setIsShaking={setIsShaking}
+			tempUserID={tempUserID}
 		/>
 	);
 }
@@ -47,6 +51,7 @@ type AddToCartButtonProps = {
 	variants: StoreVariant[];
 	baseVariantID: string;
 	cartID: string | undefined;
+	tempUserID: string | undefined;
 	setIsShaking?: React.Dispatch<React.SetStateAction<boolean>>;
 } & Omit<ButtonProps, "onClick">;
 
@@ -56,11 +61,13 @@ export function AddToCartButton({
 	baseVariantID,
 	variants,
 	cartID,
+	tempUserID,
 	setIsShaking,
 	...buttonProps
 }: AddToCartButtonProps) {
 	const rep = useReplicache((state) => state.storeRep);
 	const items = useGlobalStore((state) => state.lineItems);
+	const { setCartOpen } = useCart();
 
 	const itemsIDs = React.useMemo(
 		() => new Map(items.map((i) => [i.variantID, i])),
@@ -84,6 +91,7 @@ export function AddToCartButton({
 				id: item.id,
 				quantity: item.quantity + 1,
 			});
+			setCartOpen(true);
 			return;
 		}
 		const newID = generateID({ prefix: "line_item" });
@@ -91,6 +99,9 @@ export function AddToCartButton({
 
 		if (!cartID) {
 			await setCartId(newCartID);
+		}
+		if (!tempUserID) {
+			await setTempUserID(generateID({ prefix: "user" }));
 		}
 
 		selectedVariant.product &&
@@ -111,6 +122,7 @@ export function AddToCartButton({
 					newCartID,
 				}),
 			}));
+		setCartOpen(true);
 	}, [
 		variants,
 		baseVariantID,
@@ -119,6 +131,8 @@ export function AddToCartButton({
 		rep,
 		selectedVariant,
 		setIsShaking,
+		setCartOpen,
+		tempUserID,
 	]);
 
 	return (

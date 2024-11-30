@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import baseConfig from "@7heavens/tailwind-config/web";
 
 export default {
-	content: ["./app/**/*.{ts,tsx}", "../../packages/ui/src/*.{ts,tsx}"],
+	content: ["./app/**/*.{ts,tsx}"],
 	presets: [baseConfig],
 	theme: {
 		extend: {

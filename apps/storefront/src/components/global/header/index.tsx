@@ -9,8 +9,12 @@ import BottomBorder from "./parts/bottom-border";
 import HamburgerContainer from "./parts/hamburger/container";
 import Navigation from "./parts/navigation";
 
-export default function HeaderComponent(
-	props: { countryCode: string } & Header,
+export function HeaderComponent(
+	props: {
+		countryCode: string;
+		cartID: string | undefined;
+		tempUserID: string | undefined;
+	} & Header,
 ) {
 	return (
 		<header className="sticky top-0 z-50 flex w-full flex-col items-center bg-background">
@@ -42,7 +46,11 @@ export default function HeaderComponent(
 							</div>
 						}
 					> */}
-					<Cart cartAddons={props.cartAddons} />
+					<Cart
+						cartAddons={props.cartAddons}
+						cartID={props.cartID}
+						tempUserID={props.tempUserID}
+					/>
 					{/* </Suspense> */}
 				</div>
 			</div>

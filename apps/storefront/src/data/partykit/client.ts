@@ -6,7 +6,10 @@ import type { Routes } from "@blazzing-app/functions";
 import { hc } from "hono/client";
 import usePartySocket from "partysocket/react";
 
-function PartykitProvider({ cartID }: { cartID: string | undefined }) {
+function PartykitProvider({
+	cartID,
+	tempUserID,
+}: { cartID: string | undefined; tempUserID: string | undefined }) {
 	const globalRep = useReplicache((state) => state.storeRep);
 	//@ts-ignore
 	const client = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL);
@@ -40,6 +43,7 @@ function PartykitProvider({ cartID }: { cartID: string | undefined }) {
 							headers: {
 								"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
 								...(cartID && { "x-cart-id": cartID }),
+								...(tempUserID && { "x-temp-user-id": tempUserID }),
 							},
 						},
 					);

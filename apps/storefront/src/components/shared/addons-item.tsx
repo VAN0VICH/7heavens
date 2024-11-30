@@ -11,9 +11,15 @@ type Props = {
 	product: StoreProduct;
 	cartID: string | undefined;
 	variant?: "PDP" | "cart";
+	tempUserID: string | undefined;
 };
 
-export function AddonsItem({ product, cartID, variant = "PDP" }: Props) {
+export function AddonsItem({
+	product,
+	cartID,
+	variant = "PDP",
+	tempUserID,
+}: Props) {
 	return (
 		<LocalizedLink
 			className="flex w-full gap-xs"
@@ -44,6 +50,7 @@ export function AddonsItem({ product, cartID, variant = "PDP" }: Props) {
 					</Body>
 				</div>
 				<AddToCartButton
+					tempUserID={tempUserID}
 					cartID={cartID}
 					className={cx("self-end", {
 						"mr-4": variant === "cart",

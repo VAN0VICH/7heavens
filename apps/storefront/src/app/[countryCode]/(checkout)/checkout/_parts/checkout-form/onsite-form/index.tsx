@@ -30,11 +30,15 @@ export function OnsiteForm() {
 					</div>
 					<div className="grid gap-2">
 						<Input
-							{...register("tableNumber")}
+							{...register("tableNumber", {
+								setValueAs: (value) =>
+									value === "" ? undefined : Number(value),
+							})}
 							onChange={(e) => {
-								register("fullName").onChange(e);
+								register("tableNumber").onChange(e);
 								clearErrors();
 							}}
+							type="number"
 							placeholder="Номер столика"
 							required
 						/>

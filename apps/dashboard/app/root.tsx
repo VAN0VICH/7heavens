@@ -13,16 +13,21 @@ import { Toploader } from "./components/top-loader";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 // import { PartykitProvider } from "./client/partykit.client";
+import type { AuthSession, Server } from "@blazzing-app/validators";
 import { ClientHintCheck, getHints } from "./hooks/use-hints";
 import { useNonce } from "./hooks/use-nonce";
-import { useUserPreferences } from "./hooks/use-user-preferences";
-import { prefs, userContext } from "./server/sessions.server";
+import { userContext } from "./server/sessions.server";
 import sonnerStyles from "./sonner.css?url";
 import "./tailwind.css";
 import type { Preferences } from "./types/state";
 import { Toaster } from "./ui/toaster";
 import { getDomainUrl } from "./utils/helpers";
 import vaulStyles from "./vaul.css?url";
+import { DashboardReplicacheProvider } from "./providers/replicache/storefront-dashboard";
+import { ClientOnly } from "remix-utils/client-only";
+import { DashboardStoreMutator } from "./zustand/store-mutator";
+import { DashboardStoreProvider } from "./zustand/store";
+import { PartykitProvider } from "./client/partykit.client";
 export const links: LinksFunction = () => {
 	return [
 		// Preload svg sprite as a resource to avoid render blocking
@@ -37,7 +42,10 @@ export type RootLoaderData = {
 		hints: ReturnType<typeof getHints>;
 		origin: string;
 		path: string;
-		preferences: Preferences;
+		userContext: {
+			authUser: Server.AuthUser | null;
+			userSession: AuthSession | null;
+		};
 	};
 };
 
@@ -46,29 +54,27 @@ export const loader: LoaderFunction = async (args) => {
 		request,
 		context: { authUser, cloudflare, userSession },
 	} = args;
-	const { REPLICACHE_KEY, PARTYKIT_HOST, WORKER_URL } = cloudflare.env;
+	const {
+		REPLICACHE_KEY,
+		PARTYKIT_HOST,
+		BLAZZING_URL,
+		BLAZZING_PUBLISHABLE_KEY,
+	} = cloudflare.env;
 
 	const cookieHeader = request.headers.get("Cookie");
-	const prefsCookie = (await prefs.parse(cookieHeader)) || {};
 	const userContextCookie = (await userContext.parse(cookieHeader)) || {};
 	return Response.json({
 		ENV: {
 			REPLICACHE_KEY,
 			PARTYKIT_HOST,
-			WORKER_URL,
+			BLAZZING_URL,
+			BLAZZING_PUBLISHABLE_KEY,
 		},
 
 		requestInfo: {
 			hints: getHints(request),
 			origin: getDomainUrl(request),
 			path: new URL(request.url).pathname,
-			userPrefs: {
-				theme: prefsCookie.theme,
-				sidebarState: prefsCookie.sidebarState,
-				accentColor: prefsCookie.accentColor,
-				scaling: prefsCookie.scaling,
-				grayColor: prefsCookie.grayColor,
-			},
 			userContext: {
 				cartID: userContextCookie.cartID,
 				authUser: userContextCookie.authUser ?? authUser,
@@ -81,22 +87,27 @@ export const loader: LoaderFunction = async (args) => {
 function App() {
 	const data = useLoaderData<RootLoaderData>();
 	const nonce = useNonce();
-	const preferences = useUserPreferences();
 	return (
-		<Document nonce={nonce} env={data.ENV} theme={preferences.theme ?? "light"}>
-			<Theme
-				accentColor={preferences.accentColor ?? "ruby"}
-				grayColor={preferences.grayColor ?? "mauve"}
-				radius="large"
-				panelBackground="solid"
-				appearance={preferences.theme ?? "light"}
-			>
-				<Toploader />
-				<Outlet />
-				<Toaster />
+		<Document nonce={nonce} env={data.ENV} theme={"light"}>
+			<DashboardReplicacheProvider>
+				<DashboardStoreProvider>
+					<DashboardStoreMutator>
+						<Theme
+							accentColor={"orange"}
+							grayColor={"sand"}
+							radius="small"
+							panelBackground="solid"
+							appearance={"light"}
+						>
+							<Toploader />
+							<Outlet />
+							<Toaster />
 
-				{/* <ClientOnly>{() => <PartykitProvider />}</ClientOnly> */}
-			</Theme>
+							<ClientOnly>{() => <PartykitProvider />}</ClientOnly>
+						</Theme>
+					</DashboardStoreMutator>
+				</DashboardStoreProvider>
+			</DashboardReplicacheProvider>
 		</Document>
 	);
 }
@@ -147,7 +158,6 @@ function Document({
 export function ErrorBoundary() {
 	// the nonce doesn't rely on the loader so we can access that
 	const nonce = useNonce();
-	const preferences = useUserPreferences();
 
 	// NOTE: you cannot use useLoaderData in an ErrorBoundary because the loader
 	// likely failed to run so we have to do the best we can.
@@ -158,7 +168,7 @@ export function ErrorBoundary() {
 	// to give the user a better UX.
 
 	return (
-		<Document nonce={nonce} theme={preferences.theme ?? "light"}>
+		<Document nonce={nonce} theme={"light"}>
 			<GeneralErrorBoundary />
 		</Document>
 	);

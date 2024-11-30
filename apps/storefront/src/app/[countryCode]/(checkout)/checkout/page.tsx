@@ -1,21 +1,20 @@
 "use client";
 
-import { CartDetails } from "./_parts/cart-details";
-import { CheckoutForm } from "./_parts/checkout-form";
-import { FormProvider, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { env } from "@/app/env";
 import { useCart } from "@/components/global/header/cart/cart-context";
+import { Cta } from "@/components/shared/button";
+import { client } from "@/data/blazzing-app/client";
 import {
 	DeliveryCheckoutFormSchema,
 	OnsiteCheckoutFormSchema,
 	type DeliveryCheckoutForm,
 	type OnsiteCheckoutForm,
 } from "@blazzing-app/validators";
-import { client } from "@/data/blazzing-app/client";
-import { env } from "@/app/env";
-import React from "react";
 import { useRouter } from "next/navigation";
-import { Cta } from "@/components/shared/button";
+import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { CartDetails } from "./_parts/cart-details";
+import { CheckoutForm } from "./_parts/checkout-form";
 
 export default function CheckoutPage() {
 	const { cart, lineItems } = useCart();
@@ -27,12 +26,9 @@ export default function CheckoutPage() {
 	// const paymentMethods = (await listCartPaymentMethods(cart.region_id!)) || [];
 
 	const methods = useForm<OnsiteCheckoutForm | DeliveryCheckoutForm>({
-		resolver: zodResolver(
-			DeliveryCheckoutFormSchema.or(OnsiteCheckoutFormSchema),
-		),
 		defaultValues: {
-			email: cart?.email ?? "",
-			phone: cart?.phone ?? "",
+			email: cart?.email ?? undefined,
+			phone: cart?.phone ?? undefined,
 			fullName: cart?.fullName ?? "",
 			...(cart?.shippingAddress && {
 				shippingAddress:
@@ -40,7 +36,60 @@ export default function CheckoutPage() {
 			}),
 		},
 	});
-	const onSubmit = async (data: DeliveryCheckoutForm | OnsiteCheckoutForm) => {
+	const onSubmit = async () => {
+		const values = methods.getValues();
+		const actualValues = {
+			fullName: values.fullName,
+			...(values.phone && { phone: values.phone }),
+			...(values.email && { email: values.email }),
+			...("shippingAddress" in values &&
+				values.shippingAddress && {
+					shippingAddress: values.shippingAddress,
+				}),
+			...("tableNumber" in values &&
+				values.tableNumber && {
+					tableNumber: values.tableNumber,
+				}),
+		};
+
+		if (type === "onsite") {
+			const parsedValues = OnsiteCheckoutFormSchema.safeParse(actualValues);
+			if (!parsedValues.success) {
+				// Extract errors from Zod validation
+				const zodErrors = parsedValues.error.formErrors.fieldErrors;
+
+				// Set errors in React Hook Form
+				// biome-ignore lint/complexity/noForEach: input size is not that long.
+				Object.entries(zodErrors).forEach(([fieldName, messages]) => {
+					if (messages) {
+						methods.setError(fieldName as keyof OnsiteCheckoutForm, {
+							type: "validation",
+							message: messages.join(", "), // Combine multiple error messages
+						});
+					}
+				});
+				return;
+			}
+		} else {
+			const parsedValues = DeliveryCheckoutFormSchema.safeParse(actualValues);
+			if (!parsedValues.success) {
+				// Extract errors from Zod validation
+				const zodErrors = parsedValues.error.formErrors.fieldErrors;
+
+				// Set errors in React Hook Form
+				// biome-ignore lint/complexity/noForEach: input size is not that long.
+				Object.entries(zodErrors).forEach(([fieldName, messages]) => {
+					if (messages) {
+						methods.setError(fieldName as keyof OnsiteCheckoutForm, {
+							type: "validation",
+							message: messages.join(", "), // Combine multiple error messages
+						});
+					}
+				});
+				return;
+			}
+		}
+
 		if (lineItems.length === 0 || !cart) {
 			return;
 		}
@@ -50,7 +99,7 @@ export default function CheckoutPage() {
 		const response = await client.cart["complete-cart"].$post(
 			{
 				json: {
-					checkoutInfo: data,
+					checkoutInfo: actualValues,
 					id: cart.id,
 					type,
 				},
@@ -66,9 +115,7 @@ export default function CheckoutPage() {
 			const { result: orderIDs } = await response.json();
 
 			if (orderIDs.length > 0) {
-				return router.push(
-					`/order/confirmed?${orderIDs.map((id) => `id=${id}`).join("&")}`,
-				);
+				return router.push(`/order/confirmed/${orderIDs[0]}`);
 			}
 		}
 
@@ -78,25 +125,24 @@ export default function CheckoutPage() {
 
 	return (
 		<FormProvider {...methods}>
-			<form onSubmit={methods.handleSubmit(onSubmit)}>
-				<div className="w-full flex flex-col  max-w-max-screen">
-					<section className="mx-auto flex w-full max-w-5xl flex-col-reverse gap-8 px-4 py-8 md:flex-row md:gap-20 md:px-8 lg:justify-between lg:pb-20 lg:pt-5">
-						<div>
-							<CheckoutForm setType={setType} type={type} />
-							<Cta
-								disabled={type === "delivery"}
-								loading={isLoading}
-								size="lg"
-								className="w-full"
-								type="submit"
-							>
-								{type === "delivery" ? "Временно недоступно" : "Оформить"}
-							</Cta>
-						</div>
-						<CartDetails />
-					</section>
-				</div>
-			</form>
+			<div className="w-full flex flex-col  max-w-max-screen">
+				<section className="mx-auto flex w-full max-w-5xl flex-col-reverse gap-8 px-4 py-8 md:flex-row md:gap-20 md:px-8 lg:justify-between lg:pb-20 lg:pt-5">
+					<div>
+						<CheckoutForm setType={setType} type={type} />
+						<Cta
+							disabled={type === "delivery"}
+							loading={isLoading}
+							size="lg"
+							className="w-full"
+							type="submit"
+							onClick={onSubmit}
+						>
+							{type === "delivery" ? "Временно недоступно" : "Оформить"}
+						</Cta>
+					</div>
+					<CartDetails />
+				</section>
+			</div>
 		</FormProvider>
 	);
 }

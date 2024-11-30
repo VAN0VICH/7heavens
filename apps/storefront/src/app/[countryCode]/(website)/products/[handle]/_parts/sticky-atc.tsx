@@ -13,11 +13,13 @@ export default function StickyAtc({
 	handle,
 	cartID,
 	variant,
+	tempUserID,
 }: {
 	product: StoreProduct;
 	variant: StoreVariant;
 	handle: string;
 	cartID: string | undefined;
+	tempUserID: string | undefined;
 }) {
 	const [isVisible, setIsVisible] = React.useState(true);
 
@@ -59,7 +61,12 @@ export default function StickyAtc({
 							<OptionsSelect options={product.options} />
 						</div>
 					)}
-					<AddToCart product={product} variant="sticky" cartID={cartID} />
+					<AddToCart
+						product={product}
+						variant="sticky"
+						cartID={cartID}
+						tempUserID={tempUserID}
+					/>
 				</div>
 			</div>
 		</ProductVariantsProvider>
