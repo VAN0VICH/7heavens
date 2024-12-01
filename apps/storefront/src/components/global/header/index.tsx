@@ -8,6 +8,7 @@ import AnnouncementBar from "./parts/announcement-bar";
 import BottomBorder from "./parts/bottom-border";
 import HamburgerContainer from "./parts/hamburger/container";
 import Navigation from "./parts/navigation";
+import Link from "next/link";
 
 export function HeaderComponent(
 	props: {
@@ -46,6 +47,8 @@ export function HeaderComponent(
 							</div>
 						}
 					> */}
+					<Link href="/orders/my">Мои заказы</Link>
+
 					<Cart
 						cartAddons={props.cartAddons}
 						cartID={props.cartID}

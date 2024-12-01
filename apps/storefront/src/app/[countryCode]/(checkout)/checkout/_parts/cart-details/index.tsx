@@ -46,7 +46,7 @@ export function CheckoutSummary({
 			))}
 			<CheckoutTotal
 				amount={subtotal}
-				label="Total"
+				label="Всего"
 				currencyCode={cart.currencyCode}
 			/>
 		</>

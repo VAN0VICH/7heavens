@@ -30,17 +30,17 @@ importers:
   apps/dashboard:
     dependencies:
       '@blazzing-app/functions':
-        specifier: ^0.1.52
-        version: 0.1.52(@effect/schema@0.70.4(effect@3.10.15))(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+        specifier: ^0.1.60
+        version: 0.1.60(@effect/schema@0.70.4(effect@3.10.15))(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
       '@blazzing-app/replicache':
-        specifier: ^0.1.52
-        version: 0.1.52(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+        specifier: ^0.1.60
+        version: 0.1.60(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
       '@blazzing-app/utils':
-        specifier: ^0.1.52
-        version: 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+        specifier: ^0.1.60
+        version: 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       '@blazzing-app/validators':
-        specifier: ^0.1.52
-        version: 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+        specifier: ^0.1.60
+        version: 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       '@conform-to/zod':
         specifier: ^1.2.2
         version: 1.2.2(zod@3.23.8)
@@ -214,17 +214,17 @@ importers:
   apps/storefront:
     dependencies:
       '@blazzing-app/functions':
-        specifier: ^0.1.52
-        version: 0.1.52(@effect/schema@0.70.4(effect@3.10.15))(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+        specifier: ^0.1.60
+        version: 0.1.60(@effect/schema@0.70.4(effect@3.10.15))(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
       '@blazzing-app/replicache':
-        specifier: ^0.1.52
-        version: 0.1.52(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+        specifier: ^0.1.60
+        version: 0.1.60(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
       '@blazzing-app/utils':
-        specifier: ^0.1.52
-        version: 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+        specifier: ^0.1.60
+        version: 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       '@blazzing-app/validators':
-        specifier: ^0.1.52
-        version: 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+        specifier: ^0.1.60
+        version: 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       '@formkit/auto-animate':
         specifier: ^0.8.2
         version: 0.8.2
@@ -247,6 +247,9 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
       '@radix-ui/react-radio-group':
+        specifier: ^1.2.1
+        version: 1.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-scroll-area':
         specifier: ^1.2.1
         version: 1.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
       '@radix-ui/react-select':
@@ -300,6 +303,9 @@ importers:
       cva:
         specifier: npm:class-variance-authority@^0.7.0
         version: class-variance-authority@0.7.0
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       embla-carousel:
         specifier: ^8.3.0
         version: 8.3.1
@@ -1285,26 +1291,26 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@blazzing-app/core@0.1.52':
-    resolution: {integrity: sha512-C/SR2PpLrGC0PZhQ+zNGRHAN1QcTfwwZ7EwJXZQl7RUdqwATBHGRrerNQXCJNX8Elsv3No03Ejb0YMbuTkUHRQ==}
+  '@blazzing-app/core@0.1.60':
+    resolution: {integrity: sha512-4FBYVABTgBrvf+p0ujQjrnSqYbZqm3cSv7GspPiUZ53GufbQR9GO656B36Lf1f/XD7pjHeBW1BgTnnTbJx4OnA==}
 
-  '@blazzing-app/db@0.1.52':
-    resolution: {integrity: sha512-FqKc0QUxlZXdw/cIy004EnW3BGmRg0pAhSeZpWdPImV53N0F5YUxC3hPJmRtKUOIMw5w9qV5YsOvM3X3lsKbxQ==}
+  '@blazzing-app/db@0.1.60':
+    resolution: {integrity: sha512-mcVRRNSvaHS/2W+AQuQqQ0vCZxmoFkwI/WClXxIC7z2XqPWRnjUp+cp9DyB9lyixXAuMP76e7gwsksUuA0RyQA==}
 
-  '@blazzing-app/functions@0.1.52':
-    resolution: {integrity: sha512-S46ipARteht6bDCUHebHk3lL9eYcLbockEE5vbVWh+xhdfiijhWFrWUkYwcZ5Y7B90+eX1dWsDKFBjltBhzcZg==}
+  '@blazzing-app/functions@0.1.60':
+    resolution: {integrity: sha512-krYCGonGvt+EoAtRrlAR30n3A9lQaO+nt3aUK9jaMg3SyZsfY5J7iX8ISWPsyZsO120XCLYs8hIYvUrXlpXz6Q==}
 
-  '@blazzing-app/replicache@0.1.52':
-    resolution: {integrity: sha512-C3Rtlv1Zlg7pihtq5vFAAlP/ufmbdSGR6Uj1sYkDexNV90ACMs3e2j9kInuxeCX/o6C04WeRNGAOAZrzZeabqg==}
+  '@blazzing-app/replicache@0.1.60':
+    resolution: {integrity: sha512-Zk1W1BooUX3iqF7lAdYYzQFHCS+7dxApS6M7hCvvQYxFkOBv8wFAugfGzOBpsUqR/w43GCvo7Jmrk2YUIfSxww==}
 
-  '@blazzing-app/shared@0.1.52':
-    resolution: {integrity: sha512-FWhRJJA84Iex2uzF2fWHYjjl7Y6ZKanXFmBBRGlL6jVytXIdhHSzMlUFDYQSYDZywXuqxL1DNf/RUvVkmeQhsA==}
+  '@blazzing-app/shared@0.1.60':
+    resolution: {integrity: sha512-7wFdXIpNtfe+/B/CSHkpvgGV+dOCeew/Hags7wqrUG4fNxOh4oDgDiWUWoceeW9JUuicM2aca13WZ549/Tp68A==}
 
-  '@blazzing-app/utils@0.1.52':
-    resolution: {integrity: sha512-PYj1/wWGv53oL4trIaSF5nVpY80VLTPoAdUH85e6cEQsf3chjIssMSKbXy/er/PeyatkWR3L8tw+qT0i79EfSA==}
+  '@blazzing-app/utils@0.1.60':
+    resolution: {integrity: sha512-+mbafcbPWlwiWKs9D+1NchwoFscugWpHyzi3O4nQ2cFOKS7xAr+NczWu1RMMeWUf3Hr5QwSJhwGsNlb9ylY5Fg==}
 
-  '@blazzing-app/validators@0.1.52':
-    resolution: {integrity: sha512-Sn58MeZTiX7m85zbNqpLLSJ8I9dGyPVyP0BY35gbJ/G1Y9i9/YFtLOUeL39FLru7lMtgnKNLerLZmIIA/qeMKA==}
+  '@blazzing-app/validators@0.1.60':
+    resolution: {integrity: sha512-nRtZPSylUsnndtnyKuIPlrYo8Agmr51mQaM3RK9YSFCdU6oGfkLRtB/ch95GxOIL2TugaxkDJhLwDajfleeCew==}
 
   '@bufbuild/protobuf@1.10.0':
     resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
@@ -12035,13 +12041,13 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@blazzing-app/core@0.1.52(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
+  '@blazzing-app/core@0.1.60(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
-      '@blazzing-app/db': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/replicache': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/shared': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/utils': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
-      '@blazzing-app/validators': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/db': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/replicache': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/shared': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/utils': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/validators': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       '@effect/platform': 0.66.3(@effect/schema@0.70.4(effect@3.10.15))(effect@3.10.15)
       '@effect/schema': 0.70.4(effect@3.10.15)
       arctic: 1.9.2
@@ -12084,7 +12090,7 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@blazzing-app/db@0.1.52(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
+  '@blazzing-app/db@0.1.60(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
       '@effect/schema': 0.70.4(effect@3.10.15)
       '@neondatabase/serverless': 0.10.3
@@ -12124,14 +12130,14 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@blazzing-app/functions@0.1.52(@effect/schema@0.70.4(effect@3.10.15))(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
+  '@blazzing-app/functions@0.1.60(@effect/schema@0.70.4(effect@3.10.15))(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
-      '@blazzing-app/core': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/db': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/replicache': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/shared': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/utils': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
-      '@blazzing-app/validators': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/core': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/db': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/replicache': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/shared': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/utils': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/validators': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       '@cloudflare/workers-types': 4.20241106.0
       '@effect/platform': 0.66.3(@effect/schema@0.70.4(effect@3.10.15))(effect@3.10.15)
       '@hono/zod-openapi': 0.16.4(hono@4.6.11)(zod@3.23.8)
@@ -12174,12 +12180,12 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@blazzing-app/replicache@0.1.52(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
+  '@blazzing-app/replicache@0.1.60(@cloudflare/workers-types@4.20241106.0)(@effect/schema@0.70.4(effect@3.10.15))(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
-      '@blazzing-app/db': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/shared': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/utils': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
-      '@blazzing-app/validators': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/db': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/shared': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/utils': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/validators': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       '@effect/platform': 0.66.3(@effect/schema@0.70.4(effect@3.10.15))(effect@3.10.15)
       base64-arraybuffer: 1.0.2
       drizzle-orm: 0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
@@ -12221,11 +12227,11 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@blazzing-app/shared@0.1.52(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
+  '@blazzing-app/shared@0.1.60(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
-      '@blazzing-app/db': 0.1.52(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
-      '@blazzing-app/utils': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
-      '@blazzing-app/validators': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/db': 0.1.60(@cloudflare/workers-types@4.20241106.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(effect@3.10.15)(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
+      '@blazzing-app/utils': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/validators': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       drizzle-orm: 0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020)
       effect: 3.10.15
       oslo: 1.2.1
@@ -12264,16 +12270,16 @@ snapshots:
       - sql.js
       - sqlite3
 
-  '@blazzing-app/utils@0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))':
+  '@blazzing-app/utils@0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))':
     dependencies:
-      '@blazzing-app/validators': 0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
+      '@blazzing-app/validators': 0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))
       dayjs: 1.11.13
       effect: 3.10.15
       ulidx: 2.4.1
     transitivePeerDependencies:
       - drizzle-orm
 
-  '@blazzing-app/validators@0.1.52(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))':
+  '@blazzing-app/validators@0.1.60(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))':
     dependencies:
       drizzle-zod: 0.5.1(drizzle-orm@0.36.4(@cloudflare/workers-types@4.20241106.0)(@neondatabase/serverless@0.10.3)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(knex@2.5.1(mysql2@3.11.3)(pg@8.13.1))(mysql2@3.11.3)(pg@8.13.1)(postgres@3.4.4)(react@19.0.0-rc-65a56d0e-20241020))(zod@3.23.8)
       zod: 3.23.8

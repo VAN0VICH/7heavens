@@ -3,18 +3,20 @@ import Heading from "@/components/shared/typography/heading";
 import { notFound } from "next/navigation";
 
 import { env } from "@/app/env";
+import Price from "@/components/price";
+import { Separator } from "@/components/ui/separator";
 import { cartSubtotal } from "@/utils/business/cart-subtotal";
+import { formatISODate } from "@/utils/format";
 import type { Routes } from "@blazzing-app/functions";
 import type { StoreLineItem, StoreOrder } from "@blazzing-app/validators";
 import { hc } from "hono/client";
 import OrderItem from "./_parts/order-item";
-import Price from "@/components/price";
+import { OrderConfirmedStatus } from "./_parts/order-status";
 
 export default async function OrderConfirmedPage({
 	params,
 }: { params: { id: string } }) {
-	const id = params.id;
-	console.log("id", id);
+	const id = await params.id;
 
 	if (!id) {
 		return notFound();
@@ -62,20 +64,35 @@ export default async function OrderConfirmedPage({
 					)}
 
 					<Body desktopSize="base" font="sans">
-						Дата заказа:{" "}
-						{new Date(order?.createdAt).toLocaleDateString("en-US", {
-							day: "numeric",
-							month: "long",
-							year: "numeric",
-						})}
+						Дата заказа: {formatISODate(order.createdAt)}
 					</Body>
-					<Body desktopSize="base" font="sans">
-						Номер заказа: {order.displayId}
+					<Body
+						desktopSize="base"
+						font="sans"
+						className="flex gap-2 items-center"
+					>
+						Номер заказа:
+						<Heading
+							tag="h2"
+							desktopSize={"lg"}
+							mobileSize="lg"
+							className="border-2 border-orange-500 p-1 rounded-[5px] bg-orange-200 px-4"
+						>
+							{order.displayId}
+						</Heading>
+					</Body>
+					<Body
+						desktopSize="base"
+						font="sans"
+						className="flex gap-2 items-center"
+					>
+						Статус заказа:
+						<OrderConfirmedStatus orderID={order.id} />
 					</Body>
 				</div>
 				<div className="flex flex-col gap-s">
 					<Heading desktopSize="xl" font="serif" mobileSize="lg" tag="h2">
-						Summary
+						Заказ
 					</Heading>
 					<div className="flex flex-col gap-s">
 						{order.items.map((item) => {
@@ -83,7 +100,7 @@ export default async function OrderConfirmedPage({
 						})}
 						<Separator />
 						<SubLineItem
-							title="Subtotal"
+							title="Итого"
 							value={total}
 							currencyCode={order.currencyCode ?? "BYN"}
 						/>
@@ -95,7 +112,7 @@ export default async function OrderConfirmedPage({
 						<Separator />
 						<div className="flex justify-between">
 							<Heading desktopSize="base" font="sans" mobileSize="sm" tag="h4">
-								Total
+								Всего
 							</Heading>
 							<Heading desktopSize="base" font="sans" mobileSize="sm" tag="h4">
 								<Price amount={total} currencyCode={order.currencyCode} />
@@ -104,7 +121,6 @@ export default async function OrderConfirmedPage({
 						<Separator />
 					</div>
 				</div>
-				{}
 				{order.type === "delivery" && (
 					<div className="flex flex-col gap-s">
 						<Heading desktopSize="xl" font="serif" mobileSize="lg" tag="h2">
@@ -151,11 +167,7 @@ export default async function OrderConfirmedPage({
 	// const shippingMethod = order.shi?.[0];
 }
 
-function Separator() {
-	return <div className="h-px w-full bg-accent" />;
-}
-
-function SubLineItem({
+export function SubLineItem({
 	title,
 	value,
 	currencyCode,

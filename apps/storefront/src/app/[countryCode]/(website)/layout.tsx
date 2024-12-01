@@ -36,6 +36,7 @@ export default async function Layout(props: LayoutProps) {
 	const data = await loadGlobalData();
 	const cartID = await getCartId();
 	const tempUserID = await getTempUserID();
+	console.log("temp user id", tempUserID);
 
 	return (
 		<>

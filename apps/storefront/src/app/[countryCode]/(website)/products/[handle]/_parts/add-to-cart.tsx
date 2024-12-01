@@ -67,6 +67,9 @@ export function AddToCartButton({
 }: AddToCartButtonProps) {
 	const rep = useReplicache((state) => state.storeRep);
 	const items = useGlobalStore((state) => state.lineItems);
+	const productsMap = useGlobalStore((state) => state.productsMap);
+	const product = productsMap.get(selectedVariant?.productID ?? "");
+	const available = product?.available === undefined ? true : product.available;
 	const { setCartOpen } = useCart();
 
 	const itemsIDs = React.useMemo(
@@ -74,6 +77,7 @@ export function AddToCartButton({
 		[items],
 	);
 	const handleAddToCart = React.useCallback(async () => {
+		if (!available) return;
 		if (
 			!selectedVariant ||
 			(variants.length > 1 && !selectedVariant) ||
@@ -133,18 +137,23 @@ export function AddToCartButton({
 		setIsShaking,
 		setCartOpen,
 		tempUserID,
+		available,
 	]);
 
 	return (
 		<Cta
 			{...buttonProps}
-			disabled={!selectedVariant}
+			disabled={!selectedVariant || !available}
 			onClick={async (e) => {
 				e.preventDefault();
 				await handleAddToCart();
 			}}
 		>
-			{label}
+			{!available
+				? "Временно не доступен"
+				: !selectedVariant
+					? "Выберите опцию"
+					: label}
 		</Cta>
 	);
 }
