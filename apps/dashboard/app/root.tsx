@@ -27,6 +27,8 @@ import { getDomainUrl } from "./utils/helpers";
 import vaulStyles from "./vaul.css?url";
 import { DashboardStoreProvider } from "./zustand/store";
 import { DashboardStoreMutator } from "./zustand/store-mutator";
+import { rootAuthLoader } from "@clerk/remix/ssr.server";
+import { ClerkApp } from "@clerk/remix";
 export const links: LinksFunction = () => {
 	return [
 		// Preload svg sprite as a resource to avoid render blocking
@@ -45,35 +47,33 @@ export type RootLoaderData = {
 };
 
 export const loader: LoaderFunction = async (args) => {
-	const {
-		request,
-		context: { cloudflare },
-	} = args;
-	const {
-		REPLICACHE_KEY,
-		PARTYKIT_HOST,
-		BLAZZING_URL,
-		BLAZZING_PUBLISHABLE_KEY,
-	} = cloudflare.env;
-
-	const cookieHeader = request.headers.get("Cookie");
-	const userContextCookie = (await userContext.parse(cookieHeader)) || {};
-	return Response.json({
-		ENV: {
+	return rootAuthLoader(args, async ({ request, context: { cloudflare } }) => {
+		const {
 			REPLICACHE_KEY,
 			PARTYKIT_HOST,
 			BLAZZING_URL,
 			BLAZZING_PUBLISHABLE_KEY,
-		},
+		} = cloudflare.env;
 
-		requestInfo: {
-			hints: getHints(request),
-			origin: getDomainUrl(request),
-			path: new URL(request.url).pathname,
-			userContext: {
-				cartID: userContextCookie.cartID,
+		const cookieHeader = request.headers.get("Cookie");
+		const userContextCookie = (await userContext.parse(cookieHeader)) || {};
+		return {
+			ENV: {
+				REPLICACHE_KEY,
+				PARTYKIT_HOST,
+				BLAZZING_URL,
+				BLAZZING_PUBLISHABLE_KEY,
 			},
-		},
+
+			requestInfo: {
+				hints: getHints(request),
+				origin: getDomainUrl(request),
+				path: new URL(request.url).pathname,
+				userContext: {
+					cartID: userContextCookie.cartID,
+				},
+			},
+		};
 	});
 };
 
@@ -105,7 +105,7 @@ function App() {
 	);
 }
 
-export default App;
+export default ClerkApp(App);
 
 function Document({
 	children,

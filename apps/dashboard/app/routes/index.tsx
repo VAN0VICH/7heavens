@@ -14,6 +14,16 @@ import { OrderPage } from "./pages/order";
 import { ProductsPage } from "./pages/products";
 import { DraftOrderPage } from "./pages/create-order";
 import { OrderDrafts } from "./pages/drafts";
+import { getAuth } from "@clerk/remix/ssr.server";
+export const loader: LoaderFunction = async (args) => {
+	const { userId } = await getAuth(args);
+	console.log("userID", userId);
+
+	if (!userId) {
+		return redirect("/sign-in");
+	}
+	return Response.json({});
+};
 
 export default function Orders() {
 	const orders_ = useDashboardStore((state) => state.orders);
