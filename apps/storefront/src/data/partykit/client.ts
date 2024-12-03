@@ -1,5 +1,6 @@
 "use client";
 
+import { revalidateProducts } from "@/actions/revalidate";
 import { useReplicache } from "@/zustand/replicache";
 import type { Routes } from "@blazzing-app/functions";
 import { hc } from "hono/client";
@@ -25,9 +26,13 @@ function PartykitProvider({
 		onOpen() {
 			console.log("connected");
 		},
-		onMessage(e) {
+		async onMessage(e) {
 			const subspaces = JSON.parse(e.data) as string[];
 			console.log("message", subspaces);
+
+			if (subspaces.includes("products")) {
+				await revalidateProducts();
+			}
 			if (globalRep) {
 				//@ts-ignore
 				globalRep.puller = async (req) => {
