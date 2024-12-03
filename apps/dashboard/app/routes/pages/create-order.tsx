@@ -107,7 +107,6 @@ export const DraftOrderPage = ({
 		setStep,
 		paymentStatus,
 	]);
-	console.log("payment status", paymentStatus);
 	return (
 		<>
 			<Dialog.Root open={draftPageOpened} onOpenChange={setDraftPageOpened}>

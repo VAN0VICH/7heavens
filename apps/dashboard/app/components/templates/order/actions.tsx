@@ -80,7 +80,6 @@ const AddToOrder = ({
 				product,
 				storeID: product.storeID ?? "",
 			};
-			console.log("new line item", newLineItem);
 
 			await rep?.mutate.createLineItem({
 				lineItem: newLineItem,

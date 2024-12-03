@@ -75,7 +75,6 @@ const ProductComponent = ({
 
 	const updateProduct = React.useCallback(
 		async (available: UpdateProduct["updates"]["available"]) => {
-			console.log("rep", rep?.mutate);
 			await rep?.mutate.updateProduct({
 				id: product.id,
 				updates: {

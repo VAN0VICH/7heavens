@@ -8,7 +8,6 @@ export async function PaginatedCollectionProducts({
 	handle,
 	title,
 }: { handle: string; title: string }) {
-	console.log("handle collection", handle);
 	const products = await getProductsByCollectionHandle(handle);
 
 	return (

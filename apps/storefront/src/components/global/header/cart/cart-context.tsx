@@ -36,8 +36,6 @@ export function CartProvider({
 	const cartMap = useGlobalStore((state) => state.cartMap);
 	const cart = cartMap.get(cartID ?? "");
 
-	console.log("cart id ", cartID);
-	console.log("cart", cart);
 	const allLineItems = useGlobalStore((state) => state.lineItems);
 
 	const lineItems = React.useMemo(

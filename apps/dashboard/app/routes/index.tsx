@@ -17,7 +17,6 @@ import { OrderDrafts } from "./pages/drafts";
 import { getAuth } from "@clerk/remix/ssr.server";
 export const loader: LoaderFunction = async (args) => {
 	const { userId } = await getAuth(args);
-	console.log("userID", userId);
 
 	if (!userId) {
 		return redirect("/sign-in");
@@ -28,7 +27,6 @@ export const loader: LoaderFunction = async (args) => {
 export default function Orders() {
 	const orders_ = useDashboardStore((state) => state.orders);
 	const orders = React.useMemo(() => sortOrders(orders_), [orders_]);
-	console.log("orders", orders);
 
 	const [searchResults, setSearchResults] = React.useState<
 		StoreOrder[] | undefined
