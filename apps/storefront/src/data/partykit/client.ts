@@ -11,7 +11,9 @@ function PartykitProvider({
 }: { cartID: string | undefined; tempUserID: string | undefined }) {
 	const globalRep = useReplicache((state) => state.storeRep);
 	//@ts-ignore
-	const client = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL ?? "");
+	const client = hc<Routes>(
+		process.env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL ?? "",
+	);
 
 	usePartySocket({
 		// usePartySocket takes the same arguments as PartySocket.
