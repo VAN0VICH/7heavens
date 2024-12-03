@@ -65,9 +65,9 @@ export default async function ProductPage(props: ProductPageProps) {
 	const variant = await getVariantByHandle(params.handle);
 	if (!variant) {
 		console.log("No variant found", variant);
-		console.log("No variant found", JSON.stringify(variant));
 		return notFound();
 	}
+	console.log("Variant found", JSON.stringify(variant));
 	const product = await getProductById(variant.productID);
 	if (!product) {
 		console.log("No product found", variant.productID);
