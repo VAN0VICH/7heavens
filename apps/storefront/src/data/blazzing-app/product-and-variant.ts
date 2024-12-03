@@ -1,6 +1,8 @@
+"use server";
 import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { client } from "./client";
 export const getProductById = async (id: string) => {
+	"use cache";
 	const response = await client.product.id.$get(
 		{
 			query: {
@@ -23,6 +25,7 @@ export const getProductById = async (id: string) => {
 };
 
 export const getProductByHandle = async (handle: string) => {
+	"use cache";
 	const response = await client.product.handle.$get(
 		{
 			query: {
@@ -45,6 +48,7 @@ export const getProductByHandle = async (handle: string) => {
 };
 
 export const getProductsByHandles = async (handle: string[]) => {
+	"use cache";
 	const response = await client.product.handle.$get(
 		{
 			query: {
@@ -66,6 +70,7 @@ export const getProductsByHandles = async (handle: string[]) => {
 	return [];
 };
 export const getVariantByHandle = async (handle: string) => {
+	"use cache";
 	const response = await client.variant.handle.$get(
 		{
 			query: {
@@ -88,6 +93,7 @@ export const getVariantByHandle = async (handle: string) => {
 };
 
 export const getVariantsByHandles = async (handle: string[]) => {
+	"use cache";
 	const response = await client.variant.handle.$get(
 		{
 			query: {
@@ -110,6 +116,7 @@ export const getVariantsByHandles = async (handle: string[]) => {
 };
 
 export const getProducts = async () => {
+	"use cache";
 	const response = await client.product.list.$get(
 		{
 			query: {
@@ -131,6 +138,7 @@ export const getProducts = async () => {
 };
 
 export const getProductsByCollectionHandle = async (handle: string) => {
+	"use cache";
 	const response = await client.product["collection-handle"].$get(
 		{
 			query: {

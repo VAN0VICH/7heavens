@@ -3,6 +3,7 @@ import type { StoreOrder } from "@blazzing-app/validators";
 import { client } from "./client";
 
 export const getOrder = async (id: string | string[]) => {
+	"use cache";
 	const response = await client.order.id.$get(
 		{
 			query: {
