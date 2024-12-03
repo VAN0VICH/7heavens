@@ -9,7 +9,6 @@ import { useGlobalStore } from "@/zustand/store";
 import type { StoreLineItem } from "@blazzing-app/validators";
 import React, { useMemo } from "react";
 import OrderItem from "../../order/confirmed/[id]/_parts/order-item";
-import { SubLineItem } from "../../order/confirmed/[id]/page";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scrollarea";
@@ -109,11 +108,25 @@ export function DialogDemo({
 								return <OrderItem key={item.id} item={item as StoreLineItem} />;
 							})}
 							<Separator />
-							<SubLineItem
-								title="Итого"
-								value={order?.total ?? -1}
-								currencyCode={order?.currencyCode ?? "BYN"}
-							/>
+							<div className="flex items-center justify-between gap-xl">
+								<Body
+									className="mb-[6px] font-semibold"
+									desktopSize="base"
+									font="sans"
+								>
+									Итого
+								</Body>
+								<Body
+									className="mb-[6px] font-semibold"
+									desktopSize="base"
+									font="sans"
+								>
+									<Price
+										amount={order?.total ?? -1}
+										currencyCode={order?.currencyCode ?? "BYN"}
+									/>
+								</Body>
+							</div>
 							{/* <SubLineItem title="Taxes" value={convertMoney(order.tax_total)} /> */}
 							{/* <SubLineItem
 							title="Shipping"

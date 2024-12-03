@@ -99,11 +99,25 @@ export default async function OrderConfirmedPage({
 							return <OrderItem key={item.id} item={item as StoreLineItem} />;
 						})}
 						<Separator />
-						<SubLineItem
-							title="Итого"
-							value={total}
-							currencyCode={order.currencyCode ?? "BYN"}
-						/>
+						<div className="flex items-center justify-between gap-xl">
+							<Body
+								className="mb-[6px] font-semibold"
+								desktopSize="base"
+								font="sans"
+							>
+								Итого
+							</Body>
+							<Body
+								className="mb-[6px] font-semibold"
+								desktopSize="base"
+								font="sans"
+							>
+								<Price
+									amount={total}
+									currencyCode={order.currencyCode ?? "BYN"}
+								/>
+							</Body>
+						</div>
 						{/* <SubLineItem title="Taxes" value={convertMoney(order.tax_total)} /> */}
 						{/* <SubLineItem
 							title="Shipping"
@@ -165,21 +179,4 @@ export default async function OrderConfirmedPage({
 	}
 
 	// const shippingMethod = order.shi?.[0];
-}
-
-export function SubLineItem({
-	title,
-	value,
-	currencyCode,
-}: { title: string; value: number; currencyCode: string }) {
-	return (
-		<div className="flex items-center justify-between gap-xl">
-			<Body className="mb-[6px] font-semibold" desktopSize="base" font="sans">
-				{title}
-			</Body>
-			<Body className="mb-[6px] font-semibold" desktopSize="base" font="sans">
-				<Price amount={value} currencyCode={currencyCode} />
-			</Body>
-		</div>
-	);
 }
