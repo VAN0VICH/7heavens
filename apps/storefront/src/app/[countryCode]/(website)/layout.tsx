@@ -4,11 +4,10 @@ import type { PropsWithChildren } from "react";
 
 import Footer from "@/components/global/footer";
 import { HeaderComponent } from "@/components/global/header";
-import PreventBackNavigationSmoothScroll from "@/components/prevent-back-navigation-smooth-scroll";
 import config from "@/config";
+import { getCartId, getTempUserID } from "@/data/blazzing-app/cookies";
 import { loadGlobalData } from "@/data/sanity";
 import { getOgImages } from "@/data/sanity/resolve-sanity-route-metadata";
-import { getCartId, getTempUserID } from "@/data/blazzing-app/cookies";
 
 type LayoutProps = PropsWithChildren<
 	Omit<PageProps<"countryCode">, "searchParams">
@@ -39,7 +38,7 @@ export default async function Layout(props: LayoutProps) {
 
 	return (
 		<>
-			<PreventBackNavigationSmoothScroll />
+			{/* <PreventBackNavigationSmoothScroll /> */}
 			{data.header && (
 				<HeaderComponent
 					{...data.header}

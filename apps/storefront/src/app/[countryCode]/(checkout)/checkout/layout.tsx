@@ -4,7 +4,6 @@ import type { PropsWithChildren } from "react";
 
 import Footer from "@/components/global/footer";
 import BottomBorder from "@/components/global/header/parts/bottom-border";
-import PreventBackNavigationSmoothScroll from "@/components/prevent-back-navigation-smooth-scroll";
 import LocalizedLink from "@/components/shared/localized-link";
 import { loadGlobalData } from "@/data/sanity";
 import { getOgImages } from "@/data/sanity/resolve-sanity-route-metadata";
@@ -35,7 +34,7 @@ export default async function Layout(props: LayoutProps) {
 
 	return (
 		<>
-			<PreventBackNavigationSmoothScroll />
+			{/* <PreventBackNavigationSmoothScroll /> */}
 			<div className="sticky top-0 z-[20] w-screen bg-background">
 				<div className="mx-auto my-s w-full max-w-max-screen bg-background px-m lg:px-xl">
 					<LocalizedLink href="/" prefetch>
