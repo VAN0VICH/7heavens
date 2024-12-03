@@ -17,7 +17,6 @@ const config = {
 	},
 	experimental: {
 		taint: true,
-		dynamicIO: true,
 	},
 	rewrites() {
 		return [
