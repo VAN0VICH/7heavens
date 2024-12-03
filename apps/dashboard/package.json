@@ -16,10 +16,10 @@
 		"format": "biome format app"
 	},
 	"dependencies": {
-		"@blazzing-app/functions": "^0.1.68",
-		"@blazzing-app/replicache": "^0.1.68",
-		"@blazzing-app/utils": "^0.1.68",
-		"@blazzing-app/validators": "^0.1.68",
+		"@blazzing-app/functions": "^0.1.70",
+		"@blazzing-app/replicache": "^0.1.70",
+		"@blazzing-app/utils": "^0.1.70",
+		"@blazzing-app/validators": "^0.1.70",
 		"@clerk/remix": "^4.2.58",
 		"@conform-to/zod": "^1.2.2",
 		"@epic-web/client-hints": "^1.3.5",
