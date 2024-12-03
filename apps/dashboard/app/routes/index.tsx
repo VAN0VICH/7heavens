@@ -14,15 +14,6 @@ import { OrderPage } from "./pages/order";
 import { ProductsPage } from "./pages/products";
 import { DraftOrderPage } from "./pages/create-order";
 import { OrderDrafts } from "./pages/drafts";
-export const loader: LoaderFunction = async (args) => {
-	const { context } = args;
-	const { authUser } = context;
-
-	if (!authUser) {
-		return redirect("/login");
-	}
-	return Response.json(authUser);
-};
 
 export default function Orders() {
 	const orders_ = useDashboardStore((state) => state.orders);
