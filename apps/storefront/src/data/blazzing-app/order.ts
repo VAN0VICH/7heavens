@@ -1,9 +1,8 @@
 "use server";
 import type { StoreOrder } from "@blazzing-app/validators";
-import { unstable_cache } from "next/cache";
 import { client } from "./client";
 
-export const getOrder = unstable_cache(async (id: string | string[]) => {
+export const getOrder = async (id: string | string[]) => {
 	const response = await client.order.id.$get(
 		{
 			query: {
@@ -22,4 +21,4 @@ export const getOrder = unstable_cache(async (id: string | string[]) => {
 		return result ?? (null as any as StoreOrder[]);
 	}
 	return [];
-});
+};
