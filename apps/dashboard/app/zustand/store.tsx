@@ -53,7 +53,6 @@ function commonDiffReducer({
 	for (const diffOp of diff) {
 		switch (diffOp.op) {
 			case "add": {
-				console.log("adding...", diffOp.newValue);
 				add(diffOp.key as string, diffOp.newValue as Entity);
 				break;
 			}
