@@ -1,5 +1,4 @@
 "use client";
-import { env } from "@/app/env";
 import { useReplicache } from "@/zustand/replicache";
 import type { Routes } from "@blazzing-app/functions";
 import { StorefrontMutators } from "@blazzing-app/replicache";
@@ -24,11 +23,11 @@ export function StoreReplicacheProvider({
 			return;
 		}
 
-		const client = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL);
+		const client = hc<Routes>(process.env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL!);
 
 		const r = new Replicache({
 			name: "store",
-			licenseKey: env.NEXT_PUBLIC_REPLICACHE_KEY,
+			licenseKey: process.env.NEXT_PUBLIC_REPLICACHE_KEY!,
 			pullInterval: null,
 			mutators: StorefrontMutators,
 			//@ts-ignore
@@ -43,7 +42,8 @@ export function StoreReplicacheProvider({
 					},
 					{
 						headers: {
-							"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+							"x-publishable-key":
+								process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
 							...(cartID && { "x-cart-id": cartID }),
 							...(tempUserID && { "x-temp-user-id": tempUserID }),
 						},
@@ -69,7 +69,8 @@ export function StoreReplicacheProvider({
 					},
 					{
 						headers: {
-							"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+							"x-publishable-key":
+								process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
 							...(tempUserID && { "x-temp-user-id": tempUserID }),
 						},
 					},

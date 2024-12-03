@@ -1,6 +1,5 @@
 "use client";
 
-import { env } from "@/app/env";
 import { useCart } from "@/components/global/header/cart/cart-context";
 import { Cta } from "@/components/shared/button";
 import { client } from "@/data/blazzing-app/client";
@@ -109,7 +108,8 @@ export function CheckoutPageComponent({
 
 			{
 				headers: {
-					"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+					"x-publishable-key":
+						process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 					...(tempUserID && { "x-temp-user-id": tempUserID }),
 				},
 			},

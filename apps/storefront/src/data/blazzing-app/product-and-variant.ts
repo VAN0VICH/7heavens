@@ -1,4 +1,3 @@
-import { env } from "@/app/env";
 import type { StoreProduct, StoreVariant } from "@blazzing-app/validators";
 import { unstable_cache } from "next/cache";
 import { client } from "./client";
@@ -8,12 +7,13 @@ export const getProductById = unstable_cache(async (id: string) => {
 		{
 			query: {
 				id,
-				storeID: env.BLAZZING_STORE_ID,
+				storeID: process.env.BLAZZING_STORE_ID ?? "",
 			},
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);
@@ -29,12 +29,13 @@ export const getProductByHandle = unstable_cache(async (handle: string) => {
 		{
 			query: {
 				handle,
-				storeID: env.BLAZZING_STORE_ID,
+				storeID: process.env.BLAZZING_STORE_ID ?? "",
 			},
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);
@@ -50,12 +51,13 @@ export const getProductsByHandles = unstable_cache(async (handle: string[]) => {
 		{
 			query: {
 				handle,
-				storeID: env.BLAZZING_STORE_ID,
+				storeID: process.env.BLAZZING_STORE_ID ?? "",
 			},
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);
@@ -70,12 +72,13 @@ export const getVariantByHandle = unstable_cache(async (handle: string) => {
 		{
 			query: {
 				handle,
-				storeID: env.BLAZZING_STORE_ID,
+				storeID: process.env.BLAZZING_STORE_ID ?? "",
 			},
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);
@@ -91,12 +94,13 @@ export const getVariantsByHandles = unstable_cache(async (handle: string[]) => {
 		{
 			query: {
 				handle,
-				storeID: env.BLAZZING_STORE_ID,
+				storeID: process.env.BLAZZING_STORE_ID ?? "",
 			},
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);
@@ -111,12 +115,13 @@ export const getProducts = unstable_cache(async () => {
 	const response = await client.product.list.$get(
 		{
 			query: {
-				storeID: env.BLAZZING_STORE_ID,
+				storeID: process.env.BLAZZING_STORE_ID ?? "",
 			},
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);
@@ -133,12 +138,13 @@ export const getProductsByCollectionHandle = unstable_cache(
 			{
 				query: {
 					handle,
-					storeID: env.BLAZZING_STORE_ID,
+					storeID: process.env.BLAZZING_STORE_ID ?? "",
 				},
 			},
 			{
 				headers: {
-					"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+					"x-publishable-key":
+						process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 				},
 			},
 		);

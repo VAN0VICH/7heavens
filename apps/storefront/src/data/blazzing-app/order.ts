@@ -1,5 +1,4 @@
 "use server";
-import { env } from "@/app/env";
 import type { StoreOrder } from "@blazzing-app/validators";
 import { unstable_cache } from "next/cache";
 import { client } from "./client";
@@ -13,7 +12,8 @@ export const getOrder = unstable_cache(async (id: string | string[]) => {
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);

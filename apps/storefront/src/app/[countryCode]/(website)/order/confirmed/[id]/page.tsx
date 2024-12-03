@@ -2,7 +2,6 @@ import Body from "@/components/shared/typography/body";
 import Heading from "@/components/shared/typography/heading";
 import { notFound } from "next/navigation";
 
-import { env } from "@/app/env";
 import Price from "@/components/price";
 import { Separator } from "@/components/ui/separator";
 import { cartSubtotal } from "@/utils/business/cart-subtotal";
@@ -21,7 +20,9 @@ export default async function OrderConfirmedPage({
 	if (!id) {
 		return notFound();
 	}
-	const honoClient = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL);
+	const honoClient = hc<Routes>(
+		process.env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL ?? "",
+	);
 
 	const response = await honoClient.order.id.$get(
 		{
@@ -31,7 +32,8 @@ export default async function OrderConfirmedPage({
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);

@@ -1,6 +1,5 @@
 import { cache } from "react";
 
-import { env } from "@/app/env";
 import type { StoreCart } from "@blazzing-app/validators";
 import { client } from "./client";
 import { getCartId } from "./cookies";
@@ -20,7 +19,8 @@ export const getCart = cache(async () => {
 		},
 		{
 			headers: {
-				"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+				"x-publishable-key":
+					process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY ?? "",
 			},
 		},
 	);

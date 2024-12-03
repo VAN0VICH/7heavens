@@ -1,6 +1,5 @@
 "use client";
 
-import { env } from "@/app/env";
 import { useReplicache } from "@/zustand/replicache";
 import type { Routes } from "@blazzing-app/functions";
 import { hc } from "hono/client";
@@ -12,11 +11,11 @@ function PartykitProvider({
 }: { cartID: string | undefined; tempUserID: string | undefined }) {
 	const globalRep = useReplicache((state) => state.storeRep);
 	//@ts-ignore
-	const client = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL);
+	const client = hc<Routes>(env.NEXT_PUBLIC_BLAZZING_APP_WORKER_URL ?? "");
 
 	usePartySocket({
 		// usePartySocket takes the same arguments as PartySocket.
-		host: env.NEXT_PUBLIC_PARTYKIT_HOST, // or localhost:1999 in dev
+		host: process.env.NEXT_PUBLIC_PARTYKIT_HOST ?? "", // or localhost:1999 in dev
 		room: "storefront",
 
 		// in addition, you can provide socket lifecycle event handlers
@@ -41,7 +40,8 @@ function PartykitProvider({
 						},
 						{
 							headers: {
-								"x-publishable-key": env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
+								"x-publishable-key":
+									process.env.NEXT_PUBLIC_BLAZZING_PUBLISHABLE_KEY,
 								...(cartID && { "x-cart-id": cartID }),
 								...(tempUserID && { "x-temp-user-id": tempUserID }),
 							},
