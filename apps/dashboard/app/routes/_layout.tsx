@@ -1,14 +1,14 @@
+import { getAuth } from "@clerk/remix/ssr.server";
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { Outlet, redirect } from "@remix-run/react";
 
 export const loader: LoaderFunction = async (args) => {
-	const { context } = args;
-	const { authUser } = context;
+	const { userId } = await getAuth(args);
 
-	if (!authUser) {
-		return redirect("/login");
+	if (!userId) {
+		return redirect("/sign-in");
 	}
-	return Response.json(authUser);
+	return Response.json({});
 };
 
 export default function DashboardLayout() {

@@ -1,9 +1,9 @@
 import type { Routes } from "@blazzing-app/functions";
 import { StorefrontDashboardMutators } from "@blazzing-app/replicache";
+import { useAuth } from "@clerk/remix";
 import { hc } from "hono/client";
 import { useEffect } from "react";
 import { Replicache } from "replicache";
-import { useSession } from "~/hooks/use-session";
 import { useReplicache } from "~/zustand/replicache";
 
 function DashboardReplicacheProvider({
@@ -13,12 +13,13 @@ function DashboardReplicacheProvider({
 }>) {
 	const dashboardRep = useReplicache((state) => state.dashboardRep);
 	const setDashboardRep = useReplicache((state) => state.setDashboardRep);
-	const session = useSession();
+	const { getToken } = useAuth();
 
 	useEffect(() => {
-		if (dashboardRep || !session) {
+		if (dashboardRep) {
 			return;
 		}
+		//@ts-ignore
 		const client = hc<Routes>(window.ENV.BLAZZING_URL);
 
 		const r = new Replicache({
@@ -29,6 +30,7 @@ function DashboardReplicacheProvider({
 
 			//@ts-ignore
 			puller: async (req) => {
+				const token = await getToken();
 				const response = await client.replicache.pull.$post(
 					{
 						//@ts-ignore
@@ -39,7 +41,7 @@ function DashboardReplicacheProvider({
 					},
 					{
 						headers: {
-							Authorization: `Bearer ${session.id}`,
+							...(token && { Authorization: `Bearer ${token}` }),
 							"Content-Type": "application/json",
 							"x-publishable-key": window.ENV.BLAZZING_PUBLISHABLE_KEY,
 						},
@@ -55,6 +57,7 @@ function DashboardReplicacheProvider({
 				};
 			},
 			pusher: async (req) => {
+				const token = await getToken();
 				const response = await client.replicache.push.$post(
 					{
 						//@ts-ignore
@@ -65,7 +68,7 @@ function DashboardReplicacheProvider({
 					},
 					{
 						headers: {
-							Authorization: `Bearer ${session.id}`,
+							...(token && { Authorization: `Bearer ${token}` }),
 							"Content-Type": "application/json",
 							"x-publishable-key": window.ENV.BLAZZING_PUBLISHABLE_KEY,
 						},
@@ -80,7 +83,7 @@ function DashboardReplicacheProvider({
 			},
 		});
 		setDashboardRep(r);
-	}, [dashboardRep, setDashboardRep, session]);
+	}, [dashboardRep, setDashboardRep, getToken]);
 	return <>{children}</>;
 }
 

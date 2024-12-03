@@ -73,6 +73,7 @@ const AddToOrder = ({
 				title: selectedVariant.title ?? "",
 				quantity: 1,
 				createdAt: new Date().toISOString(),
+				//@ts-ignore
 				variant: selectedVariant as StoreVariant,
 				variantID: selectedVariant.id,
 				productID: selectedVariant.productID,

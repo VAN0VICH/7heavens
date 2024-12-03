@@ -17,10 +17,10 @@
 		"format": "biome format ./src"
 	},
 	"dependencies": {
-		"@blazzing-app/functions": "^0.1.61",
-		"@blazzing-app/replicache": "^0.1.61",
-		"@blazzing-app/utils": "^0.1.61",
-		"@blazzing-app/validators": "^0.1.61",
+		"@blazzing-app/functions": "^0.1.62",
+		"@blazzing-app/replicache": "^0.1.62",
+		"@blazzing-app/utils": "^0.1.62",
+		"@blazzing-app/validators": "^0.1.62",
 		"@formkit/auto-animate": "^0.8.2",
 		"@hookform/resolvers": "^3.9.0",
 		"@next/env": "15.0.0",
@@ -51,7 +51,7 @@
 		"embla-carousel": "^8.3.0",
 		"embla-carousel-react": "^8.3.0",
 		"fuse.js": "^7.0.0",
-		"hono": "^4.6.11",
+		"hono": "^4.6.12",
 		"jiti": "^2.4.0",
 		"lodash": "^4.17.21",
 		"next": "15.0.3",

@@ -1,14 +1,15 @@
 import type { Routes } from "@blazzing-app/functions";
+import { useAuth } from "@clerk/remix";
 import { hc } from "hono/client";
 import usePartySocket from "partysocket/react";
-import { useSession } from "~/hooks/use-session";
 
 import { useReplicache } from "~/zustand/replicache";
 
 function PartykitProvider() {
 	const dashboardRep = useReplicache((state) => state.dashboardRep);
-	const session = useSession();
+	//@ts-ignore
 	const client = hc<Routes>(window.ENV.BLAZZING_URL);
+	const { getToken } = useAuth();
 
 	usePartySocket({
 		// usePartySocket takes the same arguments as PartySocket.
@@ -20,8 +21,9 @@ function PartykitProvider() {
 		onOpen() {
 			console.log("connected");
 		},
-		onMessage(e) {
+		async onMessage(e) {
 			const subspaces = JSON.parse(e.data) as string[];
+			const token = await getToken();
 			console.log("message", subspaces);
 			if (dashboardRep) {
 				//@ts-ignore
@@ -37,7 +39,7 @@ function PartykitProvider() {
 						},
 						{
 							headers: {
-								Authorization: `Bearer ${session?.id}`,
+								...(token && { Authorization: `Bearer ${token}` }),
 								"Content-Type": "application/json",
 								"x-publishable-key": window.ENV.BLAZZING_PUBLISHABLE_KEY,
 							},

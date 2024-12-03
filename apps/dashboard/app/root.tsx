@@ -13,9 +13,11 @@ import { Toploader } from "./components/top-loader";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 // import { PartykitProvider } from "./client/partykit.client";
-import type { AuthSession, Server } from "@blazzing-app/validators";
+import { ClientOnly } from "remix-utils/client-only";
+import { PartykitProvider } from "./client/partykit.client";
 import { ClientHintCheck, getHints } from "./hooks/use-hints";
 import { useNonce } from "./hooks/use-nonce";
+import { DashboardReplicacheProvider } from "./providers/replicache/storefront-dashboard";
 import { userContext } from "./server/sessions.server";
 import sonnerStyles from "./sonner.css?url";
 import "./tailwind.css";
@@ -23,11 +25,8 @@ import type { Preferences } from "./types/state";
 import { Toaster } from "./ui/toaster";
 import { getDomainUrl } from "./utils/helpers";
 import vaulStyles from "./vaul.css?url";
-import { DashboardReplicacheProvider } from "./providers/replicache/storefront-dashboard";
-import { ClientOnly } from "remix-utils/client-only";
-import { DashboardStoreMutator } from "./zustand/store-mutator";
 import { DashboardStoreProvider } from "./zustand/store";
-import { PartykitProvider } from "./client/partykit.client";
+import { DashboardStoreMutator } from "./zustand/store-mutator";
 export const links: LinksFunction = () => {
 	return [
 		// Preload svg sprite as a resource to avoid render blocking
@@ -42,17 +41,13 @@ export type RootLoaderData = {
 		hints: ReturnType<typeof getHints>;
 		origin: string;
 		path: string;
-		userContext: {
-			authUser: Server.AuthUser | null;
-			userSession: AuthSession | null;
-		};
 	};
 };
 
 export const loader: LoaderFunction = async (args) => {
 	const {
 		request,
-		context: { authUser, cloudflare, userSession },
+		context: { cloudflare },
 	} = args;
 	const {
 		REPLICACHE_KEY,
@@ -77,8 +72,6 @@ export const loader: LoaderFunction = async (args) => {
 			path: new URL(request.url).pathname,
 			userContext: {
 				cartID: userContextCookie.cartID,
-				authUser: userContextCookie.authUser ?? authUser,
-				userSession: userContextCookie.userSession ?? userSession,
 			},
 		},
 	});
