@@ -53,7 +53,7 @@
 		"fuse.js": "^7.0.0",
 		"hono": "^4.6.12",
 		"lodash": "^4.17.21",
-		"next": "15.0.3",
+		"next": "^15.0.4-canary.34",
 		"next-sanity": "^9.7.1",
 		"nuqs": "^1.20.0",
 		"partysocket": "^1.0.2",
