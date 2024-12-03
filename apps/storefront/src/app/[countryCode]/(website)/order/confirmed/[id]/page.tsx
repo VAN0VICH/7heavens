@@ -15,8 +15,8 @@ import { OrderConfirmedStatus } from "./_parts/order-status";
 
 export default async function OrderConfirmedPage({
 	params,
-}: { params: { id: string } }) {
-	const id = await params.id;
+}: { params: Promise<{ id: string }> }) {
+	const id = (await params).id;
 
 	if (!id) {
 		return notFound();
