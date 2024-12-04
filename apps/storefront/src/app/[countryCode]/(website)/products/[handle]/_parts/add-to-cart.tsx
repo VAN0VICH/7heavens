@@ -65,6 +65,7 @@ export function AddToCartButton({
 	setIsShaking,
 	...buttonProps
 }: AddToCartButtonProps) {
+	const [isLoading, setIsLoading] = React.useState(false);
 	const rep = useReplicache((state) => state.storeRep);
 	const items = useGlobalStore((state) => state.lineItems);
 	const productsMap = useGlobalStore((state) => state.productsMap);
@@ -88,6 +89,7 @@ export function AddToCartButton({
 
 			return;
 		}
+		setIsLoading(true);
 
 		const item = itemsIDs.get(selectedVariant.id);
 		if (item) {
@@ -96,6 +98,7 @@ export function AddToCartButton({
 				quantity: item.quantity + 1,
 			});
 			setCartOpen(true);
+			setIsLoading(false);
 			return;
 		}
 		const newID = generateID({ prefix: "line_item" });
@@ -127,6 +130,7 @@ export function AddToCartButton({
 				}),
 			}));
 		setCartOpen(true);
+		setIsLoading(false);
 	}, [
 		variants,
 		baseVariantID,
@@ -144,6 +148,7 @@ export function AddToCartButton({
 		<Cta
 			{...buttonProps}
 			disabled={!selectedVariant || !available}
+			loading={isLoading}
 			onClick={async (e) => {
 				e.preventDefault();
 				await handleAddToCart();
