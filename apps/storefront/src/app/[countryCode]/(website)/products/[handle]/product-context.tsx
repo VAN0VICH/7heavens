@@ -30,13 +30,8 @@ export function ProductVariantsProvider({
 	variant: StoreVariant;
 }>) {
 	const [isShaking, setIsShaking] = React.useState(false);
-	const [selectedVariantHandle, _setSelectedVariantHandle] =
+	const [selectedVariantHandle, setSelectedVariantHandle] =
 		React.useState<string>(handle);
-
-	const setSelectedVariantHandle = React.useCallback((handle: string) => {
-		_setSelectedVariantHandle(handle);
-		window.history.replaceState({}, "", `/products/${handle}`);
-	}, []);
 
 	const selectedVariant = React.useMemo(
 		() =>
@@ -89,7 +84,7 @@ export function ProductVariantsProvider({
 				if (!variantFound) setSelectedVariantHandle(handle);
 			}
 		},
-		[handle, product.variants, setSelectedVariantHandle],
+		[handle, product.variants],
 	);
 
 	return (

@@ -32,12 +32,10 @@ export default function OptionsSelect({ options }: Props) {
 
 		return (
 			<Select
-				className={cn("w-fit", isShaking && "animate-shake duration-300")}
+				className={cn("w-fit ", isShaking && "animate-shake duration-300")}
 				key={option.id}
 				options={values}
-				placeholder={
-					option.name === "size" ? "Выберите размер" : "Выберите опцию"
-				}
+				placeholder={option.name === "size" ? "Размер" : "Опция"}
 				setOption={setOption}
 				variant="outline"
 			/>

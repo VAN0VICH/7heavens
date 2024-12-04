@@ -38,7 +38,7 @@ export default function Select({
 			<RadixSelect.Trigger
 				className={cx(
 					className,
-					"flex items-center justify-between gap-lg truncate bg-background px-s py-[6px] outline-none",
+					"flex items-center px-2 max-w-[100px] sm:max-w-7xl justify-between gap-lg truncate bg-background outline-none",
 					{
 						"rounded-lg border-[1.5px] border-accent": [
 							"filter",
