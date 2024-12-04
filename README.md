@@ -1,7 +1,8 @@
 # Dessert shop
 
 A dessert-shop built using blazzing-app API + Sanity CMS.
-+ dashboard to manage orders in real-time
+# Features:
++ built in dashboard to manage orders in real-time
 
 
 
